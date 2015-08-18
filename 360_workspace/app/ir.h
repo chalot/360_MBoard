@@ -1,66 +1,79 @@
 #ifndef _IR_H_
 #define _IR_H_
 
+/***********************************************************
+按键码：
+确认:					0xff00bf00
+上：					0xf906bf00
+下：					0xfa05bf00
+左：					0xf20dbf00
+右：					0xf10ebf00
+返回：				0xf708bf00
+电源：				0xfd02bf00
+（左视）AV1：	0xe11ebf00
+（右视）AV2：	0xe21dbf00
+（前视）AV3：	0xf609bf00
+（后视）AV4：	0xf50abf00
 
-#define		_BUFFER_LENGTH_IR_Rx_					20
+编码格式：
+操作码反码 + 操作码 + 后缀（都是bf00）
+如，“上” 反码=f9 操作码=06
 
-//方向盘快捷键
-#define		_IR_CMD_DIRECTION_UP_	0xB0		//方向盘按键  UP
-#define		_IR_CMD_DIRECTION_DOWN_	0x88		//方向盘按键 DOWN
-#define	    _IR_CMD_DIRECTION_MUTE_	0x80		//方向盘按键 MUTE
+位值0(Bit-0)  ：H(=0.56 ms) + L(=0.56 ms) 
+位值1(Bit-1)  ：H(=0.56 ms) + L(=1.68 ms) 
 
-//First Colume
-#define		_IR_CMD_POWER			0x20		//电源按键
-#define		_IR_CMD_AUDIO			0x00		//AUDIO
-#define		_IR_CMD_SUBTITLE		0x40		//SUBTITLE
-#define		_IR_CMD_TITLE			0x60		//TITLE
-#define		_IR_CMD_REPEAT			0x50		//REPEAT
-#define		_IR_CMD_A_B				0x70		//A-B
-#define		_IR_CMD_SETUP			0x48		//SETUP
-#define		_IR_CMD_SLOW			0x68		//SLOW
-#define		_IR_CMD_FB				0x58		//FB
-#define		_IR_CMD_MENU_PBC		0x78		//MENU/PBC
-#define		_IR_CMD_I_P				0x08		//I/P
+输出一帧之最长时序约为269.8ms
 
-//Second Colume
-#define		_IR_CMD_1				0xA0		//1
-#define		_IR_CMD_4				0x80		//4
-#define		_IR_CMD_7				0xC0		//7
-#define		_IR_CMD_STEP			0xD0		//STEP
-#define		_IR_CMD_10_PLUS			0xE0		//10+
-#define		_IR_CMD_LEFT			0xF0		//LEFT
-#define		_IR_CMD_DISP			0xC8		//DISPLAY键
-#define		_IR_CMD_STOP			0xE8		//STOP
-#define		_IR_CMD_FF				0xD8		//FF
-#define		_IR_CMD_VOLUME_MINUS	0xF8		//音量-
-#define		_IR_CMD_N_P				0xA8		//N/P
+根据实际接收波形，分析得到发送规则：
 
-//Third Colume
-#define		_IR_CMD_2				0x62		//2
-#define		_IR_CMD_5				0x42		//5
-#define		_IR_CMD_8				0x82		//8
-#define		_IR_CMD_0				0xA2		//0
-#define		_IR_CMD_UP				0x92		//UP
-#define		_IR_CMD_ENTER			0xB2		//ENTER
-#define		_IR_CMD_DOWN			0x8A		//DOWN
-#define		_IR_CMD_PLAY			0xAA		//PLAY\PAUSE
-#define		_IR_CMD_PREV			0x9A		//PREV
-#define		_IR_CMD_VOLUME_PLUS		0xBA		//音量+
-#define		_IR_CMD_SEARCH			0x5A		//SEARCH
+启动码	-----	9ms低电平+4.5ms高电平
 
-//Fourth Colume
-#define		_IR_CMD_3				0xE2		//3
-#define		_IR_CMD_6				0xC2		//6
-#define		_IR_CMD_9				0x02		//9
-#define		_IR_CMD_CLEAR			0x22		//CLEAR
-#define		_IR_CMD_ZOOM			0x12		//ZOOM
-#define		_IR_CMD_RIGHT			0x32		//RIGHT
-#define		_IR_CMD_ANGLE			0x0A		//ANGLE
-#define		_IR_CMD_PROG			0x2A		//RPOG
-#define		_IR_CMD_NEXT			0x1A		//下一曲
-#define		_IR_CMD_MUTE			0x3A		//静音键
-#define		_IR_CMD_RESET			0xFA		//RESET
 
+实际发送电平：
+Bit0：L(=0.56 ms) + H(=0.56 ms) 
+Bit1：L(=0.56 ms) + H(=1.68 ms) 
+
+发送时，逆序发送，从低字节向高字节，从低位向高位
+
+以“电源“按键为例：
+位串：0xfd02bf00
+原码：1111 1101 0000 0010 1011 1111 0000 0000
+实际发送位串，也就是接收顺序：0000 0000 1111 1101 0100 0000 1011 1111
+因此解析位串时，也要逆序解析
+
+
+***********************************************************/
+
+#include "stm8s.h"
+
+/*按键码*/
+#define IR_CMD_OK 			0x00	/*确认:					0xff00bf00 	*/
+#define IR_CMD_UP 			0x06	/*上：					0xf906bf00 	*/
+#define IR_CMD_DOWN 		0x05	/*下：					0xfa05bf00 	*/
+#define IR_CMD_LEFT 		0x0d	/*左：					0xf20dbf00 	*/
+#define IR_CMD_RIGHT 		0x0e	/*右：					0xf10ebf00 	*/
+#define IR_CMD_BACK 		0x08	/*返回：				0xf708bf00 	*/
+#define IR_CMD_POWER 		0x02	/*电源：				0xfd02bf00 	*/
+#define IR_CMD_LF_VIEW 		0x1e	/*（左视）AV1：	0xe11ebf00 	*/
+#define IR_CMD_RT_VIEW 		0x1d	/*（右视）AV2：	0xe21dbf00 	*/
+#define IR_CMD_FR_VIEW 		0x09	/*（前视）AV3：	0xf609bf00 	*/
+#define IR_CMD_BK_VIEW 		0x0a	/*（后视）AV4：	0xf50abf00 	*/
+
+
+#define		_BUFFER_LENGTH_IR_Rx_			20
+
+
+#define 	_IR_CODE_TIME_START				13500		//启动码-----9ms低电平+4.5ms高电平
+//#define 	IR_CODE_TIME_SEQUENTIAL			11500		//连发码-----9ms低电平+2.5ms高电平
+#define 	_IR_CODE_TIME_0					1120		//"0"-----0.56ms低电平+0.56ms高电平
+#define		_IR_CODE_TIME_1					2240		//"1"-----0.56ms低电平+1.68ms高电平
+#define		_IR_CODE_TIME_BIAS				300			//码型格式时长偏移 = 0.3ms
+#define		_IR_DATA_LIMITATION_TIME		20000		//启动码、数据码红外极限时间
+
+//如果超过这个时间，有错，主动复位
+#define		_IR_INTERVAL_LIMITATION_TIME		120000		//数据接收完到连发码之间的时间间隔、以及多个连发码之间的时间间隔
+
+#if 0
 //红外遥控器码型格式时间长度（单位：us）
 #define 	_IR_CODE_TIME_START					13500		//启动码-----9ms低电平+4.5ms高电平
 #define 	_IR_CODE_TIME_SEQUENTIAL			11500		//连发码-----9ms低电平+2.5ms高电平
@@ -72,15 +85,23 @@
 
 //如果超过这个时间，有错，主动复位
 #define		_IR_INTERVAL_LIMITATION_TIME		120000		//数据接收完到连发码之间的时间间隔、以及多个连发码之间的时间间隔
-
+#endif
 
 //红外遥控器编码接收状态
-#define		_IR_RECEIVEDSTATUS_IDLE				0			//接收空闲
-#define		_IR_RECEIVEDSTATUS_START			1			//接收启动码
+#define		_IR_RECEIVEDSTATUS_IDLE					0			//接收空闲
+#define		_IR_RECEIVEDSTATUS_START				1			//接收启动码
 #define		_IR_RECEIVEDSTATUS_32BITSDATA		2			//接收32位数据
-#define		_IR_RECEIVEDSTATUS_CONTINUE			3			//接收连发码
+#define		_IR_RECEIVEDSTATUS_INTERVAL			3			//接收数据结束
+#define		_IR_RECEIVE_TIMEOUT_						50			//接收超时，原20,200ms
+
+#if 0
+#define		_IR_RECEIVEDSTATUS_IDLE					0			//接收空闲
+#define		_IR_RECEIVEDSTATUS_START				1			//接收启动码
+#define		_IR_RECEIVEDSTATUS_32BITSDATA		2			//接收32位数据
+//#define		_IR_RECEIVEDSTATUS_CONTINUE			3			//接收连发码
 #define		_IR_RECEIVEDSTATUS_INTERVAL			4			//接收数据结束
-#define		_IR_RECEIVE_TIMEOUT_				20			//接收超时，200ms
+#define		_IR_RECEIVE_TIMEOUT_						20			//接收超时，200ms
+#endif
 
 //红外遥控器接收状态机
 typedef struct {
@@ -103,9 +124,8 @@ typedef struct {
 	u8 u8ReceiveTimeout;					//接收超时，500ms接收超时
 } tIRFSMType;
 
+extern void IR_Init(void);
 extern void IR_Process(void);
-void IR_Lowlevel_Init();
-
 extern void Isr_IR_Timeout10ms(void);
 extern void Isr_IR_Timeout100us(void);
 extern void ISR_IRReceive(void);

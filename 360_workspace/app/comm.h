@@ -2,9 +2,7 @@
 #define _COMM_H_
 
 #include "stm8s.h"
-
-//typedef unsigned char	u8
-
+#include "key.h"
 
 typedef enum _eMSG_TYPE {
 	MSG_FRONT = 0,		/*方向前*/
@@ -17,7 +15,14 @@ typedef enum _eMSG_TYPE {
 	MSG_ALLVIEW,		/*四路视频同时显示*/
 	MSG_SNAPSHOT,	/*标定-摄像头拍照*/
 	MSG_CALIBRATING,	/*标定-读取标定参数送给DSP*/
-	MSG_SLEEP			/*休眠*/
+	MSG_SLEEP,			/*休眠*/
+	MSG_MENU_BACK,		/*遥控器消息：返回*/
+	MSG_MENU_LEFT,	/*遥控器消息：左*/
+	MSG_MENU_RIGHT,	/*遥控器消息：右*/
+	MSG_MENU_UP,	/*遥控器消息：上*/
+	MSG_MENU_DOWN,	/*遥控器消息：下*/
+	MSG_MENU_OK,	/*遥控器消息：确定*/
+	MSG_MENU_POWER/*遥控器消息：电源*/
 } eMSG_TYPE;
 
 
@@ -48,7 +53,7 @@ typedef struct _tMSG_ACK {
 } tMSG_ACK;
 
 
-#define BUF_SIZE	100
+#define BUF_SIZE	50
 
 ///循环数组
 typedef struct  _tRINGBUF {
@@ -58,19 +63,14 @@ typedef struct  _tRINGBUF {
 
 } tRINGBUF;
 
-static tRINGBUF	tRBuf;
-static int serial_fd = 0;
 
-void COMM_Proc(void);
 int UART_Init(void);
-int UART_Send(int fd, u8 *data, int datalen);
-int UART_Recv(int fd, u8 *data, int datalen);
-void attach2Tail(u8 *buf, u8 len, tRINGBUF *ptRBuf);
 u8 CalChecksum(u8 *data, u8 u8Len);
-int COMM_TakeFrame(tRINGBUF *ptRBuf, tMSG_CMD *ptCmd);
-void COMM_Process();
+void COMM_Init(void);
+void COMM_Process(void);
+void COMM_Lowlevel_Config(void);
 
-void COMM_RequestSendCommand(i, g_KeyState[i]);
+void COMM_RequestSendCommand(eKEYTYPE eKey, eKEYSTATE eState);
 
 
 

@@ -2,8 +2,8 @@
 #define _PERIPH_H_
 
 /*串口*/
-#define UART_A8		UART1	///核心板和底板通信串口
-#define UART_MB		UART3 ///底板调试串口
+#define UART_A8		UART1 ///核心板和底板通信串口
+#define UART_DBG	UART3 ///底板调试串口
 
 /*GPIO*/
 /*ACC，PB6*/
@@ -44,11 +44,11 @@
 #define GPIO_SPI_SCK_PORT	GPIOC
 #define GPIO_SPI_SCK_PIN		GPIO_PIN_5
 /*MISO，PC7*/
-#define GPIO_SPI_SCK_PORT	GPIOC
-#define GPIO_SPI_SCK_PIN		GPIO_PIN_7
+#define GPIO_SPI_MISO_PORT	GPIOC
+#define GPIO_SPI_MISO_PIN		GPIO_PIN_7
 /*MOSI，PC5*/
-#define GPIO_SPI_SCK_PORT	GPIOC
-#define GPIO_SPI_SCK_PIN		GPIO_PIN_6
+#define GPIO_SPI_MOSI_PORT	GPIOC
+#define GPIO_SPI_MOSI_PIN		GPIO_PIN_6
 
 /*CAN*/
 /*CAN RX，PG1*/
@@ -67,8 +67,8 @@
 #define GPIO_GSENSOR_SCL_PORT	GPIOE
 #define GPIO_GSENSOR_SCL_PIN	GPIO_PIN_1
 /*SDA，PE2*/
-#define GPIO_GSENSOR_SCL_PORT	GPIOE
-#define GPIO_GSENSOR_SCL_PIN	GPIO_PIN_2
+#define GPIO_GSENSOR_SDA_PORT	GPIOE
+#define GPIO_GSENSOR_SDA_PIN	GPIO_PIN_2
 /*INT1，PC3*/
 #define GPIO_GSENSOR_INT1_PORT	GPIOC
 #define GPIO_GSENSOR_INT1_PIN	GPIO_PIN_3
@@ -81,11 +81,11 @@
 
 /*IR红外*/
 /*MCU_IR,PD0*/
-#define GPIO_IR_PORT	GPIOD
-#define GPIO_IR_PIN		GPIO_PIN_0
+#define GPIO_IR_PORT	GPIOA
+#define GPIO_IR_PIN		GPIO_PIN_3
 /*IR_CTRL,PB0*/
-#define GPIO_IR_PORT	GPIOB
-#define GPIO_IR_PIN		GPIO_PIN_0
+#define GPIO_IR_CTRL_PORT		GPIOB
+#define GPIO_IR_CTRL_PIN		GPIO_PIN_0
 
 
 
@@ -94,16 +94,23 @@
 #define GPIO_WDG_PIN	GPIO_PIN_7
 
 /*按键类型*/
-typedef enum {
-	KEY_ACC = 0, 
-	KEY_LEFT,
-	KEY_RIGHT,
-	KEY_REAR,
-	KEY_END,
+typedef enum {	
+	KEY_ACC = 0,//ACC 
+	KEY_FRONT,	//前视
+	KEY_LEFT,		//左视
+	KEY_RIGHT,	//右转
+	KEY_REAR,		//后视
+//遥控器消息：
+	MENU_BACK,	//返回
+	MENU_LEFT,	//左翻
+	MENU_RIGHT,	//右翻
+	MENU_UP,		//上翻
+	MENU_DOWN,	//下翻
+	MENU_OK,		//确定
+	MENU_POWER,	//电源
+	KEY_END
 } eKEYTYPE;
 
-
-void Delay_1ms();
 
 
 #endif

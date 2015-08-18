@@ -6,18 +6,25 @@
 #include "stm8s.h"
 #include "periph.h"
 #include "stdio.h"
+#include "key.h"
+#include "beep.h"
+#include "comm.h"
+#include "ir.h"
 
 #define PUTCHAR_PROTOTYPE char putchar (char c)
 
 
 /* Private function prototypes -----------------------------------------------*/
 static void CLK_Config(void);
+static void DBG_Config(void);
 
 
 __IO uint32_t LsiFreq = 0;
 void IWDG_Config(void);
 uint32_t LSIMeasurment(void);
 
+
+#if 0
 
 /*主程序*/
 void main()
@@ -33,10 +40,10 @@ void main()
 	}
 	
 	/* get measured LSI frequency */
-	LsiFreq = LSIMeasurment();	
+//	LsiFreq = LSIMeasurment();	
 	
 	/* IWDG Configuration */
-	IWDG_Config();
+//	IWDG_Config();
 
 	/*底板MCU调试串口配置*/
 	DBG_Config();
@@ -44,8 +51,14 @@ void main()
 	/*按键初始化*/
 	KEY_Init();
 
-	/*通信串口初始化*/
-	COMM_Lowlevel_Config();
+	/*串口初始化*/
+	COMM_Init();
+
+	/*遥控器硬件初始化*/
+	IR_Init();
+	
+	/*打开全局中断*/
+	enableInterrupts();    
 
 	while (1)
 	{
@@ -59,11 +72,11 @@ void main()
 		COMM_Process();
 
 		/*喂狗*/
-		IWDG_ReloadCounter();  
-	
+//		IWDG_ReloadCounter();  
 	}
 		
 }
+#endif
 
 
 /**
@@ -71,11 +84,22 @@ void main()
   * @param  None
   * @retval None
   */
-static void CLK_Config(void)
+void CLK_Config(void)
 {
     /* Initialization of the clock */
     /* Clock divider to HSI/1 */
-    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
+	CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
+	CLK_SYSCLKConfig(CLK_PRESCALER_CPUDIV1);
+	CLK_HSICmd(ENABLE);
+
+	
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER1, ENABLE);			
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER2, ENABLE);	
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER3, ENABLE);	
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER4, ENABLE);	
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART1, ENABLE);
+//	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART3, ENABLE);
+	
 }
 
 
@@ -84,7 +108,7 @@ static void CLK_Config(void)
   * @param  None
   * @retval None
   */
-static void DBG_Config()
+void DBG_Config()
 {
 
 	UART3_DeInit();
@@ -149,7 +173,7 @@ void IWDG_Config(void)
   * @param  None
   * @retval None
   */
-uint32_t LSIMeasurment(void)
+u32 LSIMeasurment(void)
 {
 
   uint32_t lsi_freq_hz = 0x0;
@@ -246,3 +270,76 @@ void assert_failed(uint8_t* file, uint32_t line)
   {
   }
 }
+
+
+/*测试调试串口输出*/
+#if 0
+#include "utility.h"
+
+/*主程序*/
+void main()
+{
+	CLK_Config();
+	
+	/*通信串口初始化*/
+	DBG_Config();
+
+	/*打开全局中断*/
+	enableInterrupts();    
+
+	while (1)
+	{
+		u16 i = 1000;
+		
+		printf("Hello, world! my name is %s\n", "gaozhengdong");
+
+		for(; i > 0; i--)
+		{
+			Delay_1ms();
+		}
+	}
+		
+}
+#endif
+
+
+
+
+/*测试IR*/
+#if 1
+
+/*主程序*/
+void main()
+{	
+	CLK_Config();
+
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER2, ENABLE);	
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER3, ENABLE);	
+
+	/* Check if the system has resumed from IWDG reset */
+	if (RST_GetFlagStatus(RST_FLAG_IWDGF) != RESET)
+	{
+	  /* Clear IWDGF Flag */
+	  RST_ClearFlag(RST_FLAG_IWDGF);
+	}
+	
+	/*通信串口初始化*/
+	DBG_Config();
+	
+	IR_Init();
+	
+	printf("starting...\n");
+
+	/*打开全局中断*/
+	enableInterrupts();    
+
+	while (1)
+	{
+		IR_Process();
+	}
+		
+}
+#endif
+
+
+

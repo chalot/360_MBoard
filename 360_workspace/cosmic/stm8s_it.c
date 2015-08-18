@@ -25,6 +25,9 @@
 #include "stm8s_it.h"
 #include "stm8s.h"
 #include "stm8s_conf.h"
+#include "comm.h"
+#include "ir.h"
+#include "config.h"
 
 extern uint8_t GetVar_TxCounter1(void);
 extern uint8_t GetVar_TxCounter2(void);
@@ -37,6 +40,15 @@ extern uint8_t GetVar_NbrOfDataToTransfer2(void);
 extern uint8_t GetVar_NbrOfDataToRead1(void);
 
 extern void ISR_InputIOHandle();
+
+/*通信串口发送和接收缓区*/
+extern tRINGBUF l_TxRBuf;
+extern tRINGBUF l_RxRBuf;   
+
+/*调试串口发送和接收缓区*/
+#ifdef __DEBUG__ 
+extern tRINGBUF l_TxRBuf_Dbg;
+#endif
 	
 /** @addtogroup Template_Project
   * @{
@@ -133,6 +145,22 @@ INTERRUPT_HANDLER(EXTI_PORTA_IRQHandler, 3)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+  	/*红外遥控器输入检测线*/
+	
+/*	BitStatus bit;
+
+	bit = GPIO_ReadInputPin(GPIO_IR_PORT, GPIO_IR_PIN);
+	if(bit == RESET)
+	{
+		ISR_IRReceive();
+	}
+*/
+	if ((GPIO_ReadInputData(GPIO_IR_PORT) & GPIO_IR_PIN) == 0x00)
+	{
+		ISR_IRReceive();
+	}
+
+
 }
 
 
@@ -169,6 +197,8 @@ INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+
+
 }
 
 /**
@@ -295,6 +325,14 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+	
+ if (TIM2_GetITStatus(TIM2_IT_UPDATE) != RESET)
+  {
+	  TIM2_ClearITPendingBit(TIM2_IT_UPDATE);
+  
+	  Isr_IR_Timeout100us();
+  }
+
  }
 
 /**
@@ -307,6 +345,13 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+	if (TIM2_GetITStatus(TIM2_IT_UPDATE) != RESET)
+	{
+		TIM2_ClearITPendingBit(TIM2_IT_UPDATE);
+
+//		Isr_IR_Timeout100us();
+	}
+	
  }
 #endif /*STM8S903*/
 
@@ -322,6 +367,12 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+	  if (TIM3_GetITStatus(TIM3_IT_UPDATE) != RESET)
+	  {
+		  TIM3_ClearITPendingBit(TIM3_IT_UPDATE);
+	  
+		  Isr_IR_Timeout10ms();
+	  }
  }
 
 /**
@@ -349,18 +400,19 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
     /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
-   /* Write one byte to the transmit data register */
-	UART1_SendData8(l_TxRBuf.buf[l_TxRBuf.read]);
-	l_TxRBuf.read++;
-	if(l_TxRBuf.read >= BUF_SIZE)
-		l_TxRBuf.read = 0;
-	
-    if (l_TxRBuf.read == l_TxRBuf.write)
-    {
-        /* Disable the UART1 Transmit interrupt */
-        UART1_ITConfig(UART1_IT_TXE, DISABLE);
-    }
-
+#ifndef VSP_BOARD
+		 /* Write one byte to the transmit data register */
+		UART1_SendData8(l_TxRBuf.buf[l_TxRBuf.read]);
+		l_TxRBuf.read++;
+		if(l_TxRBuf.read >= BUF_SIZE)
+			l_TxRBuf.read = 0;
+		
+			if (l_TxRBuf.read == l_TxRBuf.write)
+			{
+					/* Disable the UART1 Transmit interrupt */
+					UART1_ITConfig(UART1_IT_TXE, DISABLE);
+			}
+#endif
  }
 
 /**
@@ -411,6 +463,20 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
     /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
+
+#ifdef VSP_BOARD
+		 /* Write one byte to the transmit data register */
+		UART2_SendData8(l_TxRBuf.buf[l_TxRBuf.read]);
+		l_TxRBuf.read++;
+		if(l_TxRBuf.read >= BUF_SIZE)
+			l_TxRBuf.read = 0;
+		
+			if (l_TxRBuf.read == l_TxRBuf.write)
+			{
+					/* Disable the UART2 Transmit interrupt */
+					UART2_ITConfig(UART2_IT_TXE, DISABLE);
+			}
+#endif
  }
 
 /**
@@ -437,16 +503,20 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
     /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
-#if 0		
-		/* Write one byte to the transmit data register */
-    UART3_SendData8(TxBuffer2[IncrementVar_TxCounter2()]);
-
-	 if (GetVar_TxCounter2() == GetVar_NbrOfDataToTransfer2())
-    {
-        /* Disable the UART3 Transmit interrupt */
-        UART3_ITConfig(UART3_IT_TXE, DISABLE);
-    }
+#ifdef __DEBUG__
+	 /* Write one byte to the transmit data register */
+	UART3_SendData8(l_TxRBuf_Dbg.buf[l_TxRBuf_Dbg.read]);
+	l_TxRBuf_Dbg.read++;
+	if(l_TxRBuf_Dbg.read >= BUF_SIZE)
+		l_TxRBuf_Dbg.read = 0;
+	
+		if (l_TxRBuf_Dbg.read == l_TxRBuf_Dbg.write)
+		{
+				/* Disable the UART1 Transmit interrupt */
+				UART3_ITConfig(UART3_IT_TXE, DISABLE);
+		}
 #endif
+
  }
 
 /**

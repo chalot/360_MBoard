@@ -3,7 +3,7 @@ DumpRWOnFly1=0
 DumpRWOnFly2=0
 DumpRWOnFly3=0
 DumpRWOnFly4=0
-WatchVariables1=
+WatchVariables1=l_KeyDetStat!0;g_KeyState[]!0;g_KeyState[KEY_DET_END]!0;KEY_DET_END!0;g_KeyState[4]!0;KEY_DET_ACC!0;tIRFSM!0;tIRFSM.u8ReceiveTimeout!0;tIRFSM.u32CodeTime!0;tIRFSM.u8Available_Rx!0;tIRFSM.u32CodeTime!0;tIRFSM.u8ReceivedStatus!0;tIRFSM.u32CodeTime!0;
 FormatWatch1=0
 FormatViewType1=1
 FormatViewAddress1=1
@@ -36,7 +36,7 @@ DisplayFormat=1
 ShowPeriphAddress=0
 ShowRegisterAddress=1
 [DebugState_v1-Debug.AddOn.St7McuOptionsMemMap]
-McuName=STM8S208MB
+McuName=STM8S105C6
 CurrentEmuTypeAndName=STM8 simulator
 NbMcuOption=4
 McuOption0=gdi mcuoption -set Vdd 5.0V
@@ -44,18 +44,18 @@ McuOption1=gdi mcuoption -set Fcpu_kHz 16000
 McuOption2=gdi mcuoption -set INTERRUPT NESTED
 McuOption3=gdi mcuoption -set IRQ_SENSITIVITY RISING_AND_FALLING_EDGE
 NbRange=12
-Range0=mcumap -set [0x0000-0x13ff]:"RAM"
-Range1=mcumap -set [0x1400-0x17ff]:"STACK"
-Range2=mcumap -set [0x1800-0x3fff]:"RESERVED"
-Range3=mcumap -set [0x4000-0x47ff]:"EEPROM"
-Range4=mcumap -set [0x4800-0x4fff]:"RESERVED"
+Range0=mcumap -set [0x0000-0x05ff]:"RAM"
+Range1=mcumap -set [0x0600-0x07ff]:"STACK"
+Range2=mcumap -set [0x0800-0x3fff]:"RESERVED"
+Range3=mcumap -set [0x4000-0x43ff]:"EEPROM"
+Range4=mcumap -set [0x4400-0x4fff]:"RESERVED"
 Range5=mcumap -set [0x5000-0x57ff]:"PERIPHERALS"
 Range6=mcumap -set [0x5800-0x5fff]:"RESERVED"
 Range7=mcumap -set [0x6000-0x67ff]:"ROM"
 Range8=mcumap -set [0x6800-0x7eff]:"RESERVED"
 Range9=mcumap -set [0x7f00-0x7fff]:"PERIPHERALS"
 Range10=mcumap -set [0x8000-0x807f]:"VECTORS"
-Range11=mcumap -set [0x8080-0x27fff]:"ROM"
+Range11=mcumap -set [0x8080-0xffff]:"ROM"
 [DebugState_v1-Debug.AddOn.ST7LoadSaveConfiguration]
 RestoreSP_Control=1
 [DebugState_v1-Debug.AddOn.St7StackPtrControl]
@@ -65,4 +65,8 @@ SP_Ctrl_OverFlow=
 Mode=hardware
 [DebugState_v1-Debug.AddOn.Plotter]
 data=504103000000000000006C
-xml_checksum=-1
+xml_checksum=151
+[DebugState_v1-Debug.AddOn.St7McuIcdConf]
+McuName=STM8S208C6
+[DebugState_v1-Debug.AddOn.IcdBreak]
+ICDBreak0=CR:0x00000000,BK1:0x00000000,BK2:0x00000000
