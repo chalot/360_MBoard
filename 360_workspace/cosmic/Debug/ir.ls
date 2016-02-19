@@ -1,11 +1,11 @@
    1                     ; C Compiler for STM8 (COSMIC Software)
    2                     ; Parser V4.8.32 - 23 Mar 2010
    3                     ; Generator V4.3.4 - 23 Mar 2010
-  49                     ; 30 void IR_Init()
-  49                     ; 31 {
+  49                     ; 31 void IR_Init()
+  49                     ; 32 {
   51                     	switch	.text
   52  0000               _IR_Init:
-  56                     ; 32 	ZeroMem((u8*)&tIRFSM, sizeof(tIRFSMType));
+  56                     ; 33 	ZeroMem((u8*)&tIRFSM, sizeof(tIRFSMType));
   58  0000 ae0012        	ldw	x,#18
   59  0003 89            	pushw	x
   60  0004 ae0000        	ldw	x,#0
@@ -13,10 +13,10 @@
   62  0008 ae0014        	ldw	x,#L3_tIRFSM
   63  000b cd0000        	call	_ZeroMem
   65  000e 5b04          	addw	sp,#4
-  66                     ; 33 	tIRFSM.pu8Buffer_Rx = &IR_Buf[0];
+  66                     ; 34 	tIRFSM.pu8Buffer_Rx = &IR_Buf[0];
   68  0010 ae0000        	ldw	x,#L5_IR_Buf
   69  0013 bf23          	ldw	L3_tIRFSM+15,x
-  70                     ; 34 	ZeroMem(IR_Buf, _BUFFER_LENGTH_IR_Rx_);
+  70                     ; 35 	ZeroMem(IR_Buf, _BUFFER_LENGTH_IR_Rx_);
   72  0015 ae0014        	ldw	x,#20
   73  0018 89            	pushw	x
   74  0019 ae0000        	ldw	x,#0
@@ -24,748 +24,747 @@
   76  001d ae0000        	ldw	x,#L5_IR_Buf
   77  0020 cd0000        	call	_ZeroMem
   79  0023 5b04          	addw	sp,#4
-  80                     ; 36 	IR_GPIO_Init();
+  80                     ; 37 	IR_GPIO_Init();
   82  0025 ad05          	call	L7_IR_GPIO_Init
-  84                     ; 38 	TIM3_Config_10ms();
-  86  0027 ad26          	call	L11_TIM3_Config_10ms
-  88                     ; 39 	TIM2_Config_100us();
-  90  0029 ad42          	call	L31_TIM2_Config_100us
-  92                     ; 40 }
+  84                     ; 39 	TIM3_Config_10ms();
+  86  0027 ad27          	call	L11_TIM3_Config_10ms
+  88                     ; 40 	TIM4_Config_100us();
+  90  0029 ad43          	call	L31_TIM4_Config_100us
+  92                     ; 41 }
   95  002b 81            	ret
- 121                     ; 46 void IR_GPIO_Init() {
+ 121                     ; 47 void IR_GPIO_Init() {
  122                     	switch	.text
  123  002c               L7_IR_GPIO_Init:
- 127                     ; 49 	GPIO_Init(GPIO_IR_PORT, GPIO_IR_PIN, GPIO_MODE_IN_FL_IT);
+ 127                     ; 50 	GPIO_Init(GPIO_IR_PORT, GPIO_IR_PIN, GPIO_MODE_IN_FL_IT);
  129  002c 4b20          	push	#32
- 130  002e 4b08          	push	#8
- 131  0030 ae5000        	ldw	x,#20480
+ 130  002e 4b20          	push	#32
+ 131  0030 ae5014        	ldw	x,#20500
  132  0033 cd0000        	call	_GPIO_Init
  134  0036 85            	popw	x
- 135                     ; 54 	EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOA, EXTI_SENSITIVITY_FALL_ONLY);
+ 135                     ; 53 	EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOE, EXTI_SENSITIVITY_FALL_ONLY);
  137  0037 ae0002        	ldw	x,#2
- 138  003a 4f            	clr	a
- 139  003b 95            	ld	xh,a
- 140  003c cd0000        	call	_EXTI_SetExtIntSensitivity
- 142                     ; 55 	EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
- 144  003f 4f            	clr	a
- 145  0040 cd0000        	call	_EXTI_SetTLISensitivity
- 147                     ; 57 	GPIO_Init(GPIOD, GPIO_PIN_3, GPIO_MODE_OUT_PP_HIGH_FAST);
- 149  0043 4bf0          	push	#240
- 150  0045 4b08          	push	#8
- 151  0047 ae500f        	ldw	x,#20495
- 152  004a cd0000        	call	_GPIO_Init
- 154  004d 85            	popw	x
+ 138  003a a604          	ld	a,#4
+ 139  003c 95            	ld	xh,a
+ 140  003d cd0000        	call	_EXTI_SetExtIntSensitivity
+ 142                     ; 54 	EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
+ 144  0040 4f            	clr	a
+ 145  0041 cd0000        	call	_EXTI_SetTLISensitivity
+ 147                     ; 57 	GPIO_Init(GPIOE, GPIO_PIN_6, GPIO_MODE_OUT_PP_HIGH_FAST);
+ 149  0044 4bf0          	push	#240
+ 150  0046 4b40          	push	#64
+ 151  0048 ae5014        	ldw	x,#20500
+ 152  004b cd0000        	call	_GPIO_Init
+ 154  004e 85            	popw	x
  155                     ; 58 }
- 158  004e 81            	ret
+ 158  004f 81            	ret
  185                     ; 65 void TIM3_Config_10ms(void)
  185                     ; 66 {
  186                     	switch	.text
- 187  004f               L11_TIM3_Config_10ms:
+ 187  0050               L11_TIM3_Config_10ms:
  191                     ; 87   TIM3_TimeBaseInit(TIM3_PRESCALER_1024, TIM3_PERIOD);
- 193  004f ae009f        	ldw	x,#159
- 194  0052 89            	pushw	x
- 195  0053 a60a          	ld	a,#10
- 196  0055 cd0000        	call	_TIM3_TimeBaseInit
- 198  0058 85            	popw	x
+ 193  0050 ae009f        	ldw	x,#159
+ 194  0053 89            	pushw	x
+ 195  0054 a60a          	ld	a,#10
+ 196  0056 cd0000        	call	_TIM3_TimeBaseInit
+ 198  0059 85            	popw	x
  199                     ; 89   TIM3_ClearFlag(TIM3_FLAG_UPDATE);
- 201  0059 ae0001        	ldw	x,#1
- 202  005c cd0000        	call	_TIM3_ClearFlag
+ 201  005a ae0001        	ldw	x,#1
+ 202  005d cd0000        	call	_TIM3_ClearFlag
  204                     ; 91   TIM3_ITConfig(TIM3_IT_UPDATE, ENABLE);
- 206  005f ae0001        	ldw	x,#1
- 207  0062 a601          	ld	a,#1
- 208  0064 95            	ld	xh,a
- 209  0065 cd0000        	call	_TIM3_ITConfig
+ 206  0060 ae0001        	ldw	x,#1
+ 207  0063 a601          	ld	a,#1
+ 208  0065 95            	ld	xh,a
+ 209  0066 cd0000        	call	_TIM3_ITConfig
  211                     ; 94   TIM3_Cmd(DISABLE);
- 213  0068 4f            	clr	a
- 214  0069 cd0000        	call	_TIM3_Cmd
+ 213  0069 4f            	clr	a
+ 214  006a cd0000        	call	_TIM3_Cmd
  216                     ; 97 }
- 219  006c 81            	ret
- 246                     ; 104 static void TIM2_Config_100us(void)
+ 219  006d 81            	ret
+ 246                     ; 104 static void TIM4_Config_100us(void)
  246                     ; 105 {
  247                     	switch	.text
- 248  006d               L31_TIM2_Config_100us:
- 252                     ; 116   TIM2_TimeBaseInit(TIM2_PRESCALER_16, TIM2_PERIOD);
- 254  006d ae0063        	ldw	x,#99
- 255  0070 89            	pushw	x
- 256  0071 a604          	ld	a,#4
- 257  0073 cd0000        	call	_TIM2_TimeBaseInit
- 259  0076 85            	popw	x
- 260                     ; 118   TIM2_ClearFlag(TIM2_FLAG_UPDATE);
- 262  0077 ae0001        	ldw	x,#1
- 263  007a cd0000        	call	_TIM2_ClearFlag
- 265                     ; 120   TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
- 267  007d ae0001        	ldw	x,#1
- 268  0080 a601          	ld	a,#1
- 269  0082 95            	ld	xh,a
- 270  0083 cd0000        	call	_TIM2_ITConfig
- 272                     ; 123   TIM2_Cmd(ENABLE);
- 274  0086 a601          	ld	a,#1
- 275  0088 cd0000        	call	_TIM2_Cmd
- 277                     ; 124 }
- 280  008b 81            	ret
- 317                     ; 134 void IR_Process() {
- 318                     	switch	.text
- 319  008c               _IR_Process:
- 321  008c 88            	push	a
- 322       00000001      OFST:	set	1
- 325                     ; 135 	u8 u8IRData = 0;
- 327                     ; 138 	if (tIRFSM.u8Available_Rx) {
- 329  008d 3d22          	tnz	L3_tIRFSM+14
- 330  008f 2603          	jrne	L61
- 331  0091 cc01d6        	jp	L131
- 332  0094               L61:
- 333                     ; 140 		u8IRData = *(tIRFSM.pu8Buffer_Rx + tIRFSM.u8Read_Rx++);
- 335  0094 b621          	ld	a,L3_tIRFSM+13
- 336  0096 97            	ld	xl,a
- 337  0097 3c21          	inc	L3_tIRFSM+13
- 338  0099 9f            	ld	a,xl
- 339  009a 5f            	clrw	x
- 340  009b 97            	ld	xl,a
- 341  009c 92d623        	ld	a,([L3_tIRFSM+15.w],x)
- 342  009f 6b01          	ld	(OFST+0,sp),a
- 343                     ; 143 		if (tIRFSM.u8Read_Rx >= _BUFFER_LENGTH_IR_Rx_) {
- 345  00a1 b621          	ld	a,L3_tIRFSM+13
- 346  00a3 a114          	cp	a,#20
- 347  00a5 2502          	jrult	L331
- 348                     ; 144 			tIRFSM.u8Read_Rx = 0;
- 350  00a7 3f21          	clr	L3_tIRFSM+13
- 351  00a9               L331:
- 352                     ; 148 		--tIRFSM.u8Available_Rx;
- 354  00a9 3a22          	dec	L3_tIRFSM+14
- 355                     ; 151 		switch (u8IRData) {
- 357  00ab 7b01          	ld	a,(OFST+0,sp)
- 359                     ; 196 		default:
- 359                     ; 197 			break;
- 360  00ad 4d            	tnz	a
- 361  00ae 2739          	jreq	L36
- 362  00b0 a002          	sub	a,#2
- 363  00b2 2603          	jrne	L02
- 364  00b4 cc016f        	jp	L77
- 365  00b7               L02:
- 366  00b7 a003          	sub	a,#3
- 367  00b9 275c          	jreq	L76
- 368  00bb 4a            	dec	a
- 369  00bc 2742          	jreq	L56
- 370  00be a002          	sub	a,#2
- 371  00c0 2603          	jrne	L22
- 372  00c2 cc015a        	jp	L57
- 373  00c5               L22:
- 374  00c5 4a            	dec	a
- 375  00c6 2603          	jrne	L42
- 376  00c8 cc01ae        	jp	L501
- 377  00cb               L42:
- 378  00cb 4a            	dec	a
- 379  00cc 2603          	jrne	L62
- 380  00ce cc01c3        	jp	L701
- 381  00d1               L62:
- 382  00d1 a003          	sub	a,#3
- 383  00d3 2759          	jreq	L17
- 384  00d5 4a            	dec	a
- 385  00d6 276d          	jreq	L37
- 386  00d8 a00f          	sub	a,#15
- 387  00da 2603          	jrne	L03
- 388  00dc cc0199        	jp	L301
- 389  00df               L03:
- 390  00df 4a            	dec	a
- 391  00e0 2603          	jrne	L23
- 392  00e2 cc0184        	jp	L101
- 393  00e5               L23:
- 394  00e5 acd601d6      	jpf	L131
- 395  00e9               L36:
- 396                     ; 152 		case	IR_CMD_OK: 			//0x0b	确认
- 396                     ; 153 			COMM_RequestSendCommand(MENU_OK, KEY_ACTIVED);
- 398  00e9 ae0001        	ldw	x,#1
- 399  00ec a60a          	ld	a,#10
- 400  00ee 95            	ld	xh,a
- 401  00ef cd0000        	call	_COMM_RequestSendCommand
- 403                     ; 154 			printf("[IR] IR_CMD_OK\n");
- 405  00f2 35f50000      	mov	c_x,#page(L141)
- 406  00f6 ae00f5        	ldw	x,#L141
- 407  00f9 cd0000        	call	_printf
- 409                     ; 155 			break;
- 411  00fc acd601d6      	jpf	L131
- 412  0100               L56:
- 413                     ; 156 		case	IR_CMD_UP: 			//0x06	上
- 413                     ; 157 			COMM_RequestSendCommand(MENU_UP, KEY_ACTIVED);
- 415  0100 ae0001        	ldw	x,#1
- 416  0103 a608          	ld	a,#8
- 417  0105 95            	ld	xh,a
- 418  0106 cd0000        	call	_COMM_RequestSendCommand
- 420                     ; 158 			printf("[IR] IR_CMD_UP\n");
- 422  0109 35e50000      	mov	c_x,#page(L341)
- 423  010d ae00e5        	ldw	x,#L341
- 424  0110 cd0000        	call	_printf
- 426                     ; 159 			break;
- 428  0113 acd601d6      	jpf	L131
- 429  0117               L76:
- 430                     ; 160 		case	IR_CMD_DOWN: 		//0x05	下
- 430                     ; 161 			COMM_RequestSendCommand(MENU_DOWN, KEY_ACTIVED);
- 432  0117 ae0001        	ldw	x,#1
- 433  011a a609          	ld	a,#9
- 434  011c 95            	ld	xh,a
- 435  011d cd0000        	call	_COMM_RequestSendCommand
- 437                     ; 162 			printf("[IR] IR_CMD_DOWN\n");
- 439  0120 35d30000      	mov	c_x,#page(L541)
- 440  0124 ae00d3        	ldw	x,#L541
- 441  0127 cd0000        	call	_printf
- 443                     ; 163 			break;
- 445  012a acd601d6      	jpf	L131
- 446  012e               L17:
- 447                     ; 164 		case	IR_CMD_LEFT: 		//0x0d	左
- 447                     ; 165 			COMM_RequestSendCommand(MENU_LEFT, KEY_ACTIVED);
- 449  012e ae0001        	ldw	x,#1
- 450  0131 a606          	ld	a,#6
- 451  0133 95            	ld	xh,a
- 452  0134 cd0000        	call	_COMM_RequestSendCommand
- 454                     ; 166 			printf("[IR] IR_CMD_LEFT\n");
- 456  0137 35c10000      	mov	c_x,#page(L741)
- 457  013b ae00c1        	ldw	x,#L741
- 458  013e cd0000        	call	_printf
- 460                     ; 167 			break;
- 462  0141 acd601d6      	jpf	L131
- 463  0145               L37:
- 464                     ; 168 		case	IR_CMD_RIGHT: 		//0x0e	右
- 464                     ; 169 			COMM_RequestSendCommand(MENU_RIGHT, KEY_ACTIVED);
- 466  0145 ae0001        	ldw	x,#1
- 467  0148 a607          	ld	a,#7
- 468  014a 95            	ld	xh,a
- 469  014b cd0000        	call	_COMM_RequestSendCommand
- 471                     ; 170 			printf("[IR] IR_CMD_RIGHT\n");
- 473  014e 35ae0000      	mov	c_x,#page(L151)
- 474  0152 ae00ae        	ldw	x,#L151
- 475  0155 cd0000        	call	_printf
- 477                     ; 171 			break;
- 479  0158 207c          	jra	L131
- 480  015a               L57:
- 481                     ; 172 		case	IR_CMD_BACK: 		//0x08	返回
- 481                     ; 173 			COMM_RequestSendCommand(MENU_BACK, KEY_ACTIVED);			
- 483  015a ae0001        	ldw	x,#1
- 484  015d a605          	ld	a,#5
- 485  015f 95            	ld	xh,a
- 486  0160 cd0000        	call	_COMM_RequestSendCommand
- 488                     ; 174 			printf("[IR] IR_CMD_BACK\n");
- 490  0163 359c0000      	mov	c_x,#page(L351)
- 491  0167 ae009c        	ldw	x,#L351
- 492  016a cd0000        	call	_printf
- 494                     ; 175 			break;
- 496  016d 2067          	jra	L131
- 497  016f               L77:
- 498                     ; 176 		case	IR_CMD_POWER: 		//0x02	电源
- 498                     ; 177 			COMM_RequestSendCommand(MENU_POWER, KEY_ACTIVED);			
- 500  016f ae0001        	ldw	x,#1
- 501  0172 a60b          	ld	a,#11
- 502  0174 95            	ld	xh,a
- 503  0175 cd0000        	call	_COMM_RequestSendCommand
- 505                     ; 178 			printf("[IR] IR_CMD_POWER\n");
- 507  0178 35890000      	mov	c_x,#page(L551)
- 508  017c ae0089        	ldw	x,#L551
- 509  017f cd0000        	call	_printf
- 511                     ; 179 			break;
- 513  0182 2052          	jra	L131
- 514  0184               L101:
- 515                     ; 180 		case	IR_CMD_LF_VIEW: 	//0x1e	（左视）AV1
- 515                     ; 181 			COMM_RequestSendCommand(KEY_LEFT, KEY_ACTIVED);	
- 517  0184 ae0001        	ldw	x,#1
- 518  0187 a602          	ld	a,#2
- 519  0189 95            	ld	xh,a
- 520  018a cd0000        	call	_COMM_RequestSendCommand
- 522                     ; 182 			printf("[IR] IR_CMD_LF_VIEW\n");
- 524  018d 35740000      	mov	c_x,#page(L751)
- 525  0191 ae0074        	ldw	x,#L751
- 526  0194 cd0000        	call	_printf
- 528                     ; 183 			break;
- 530  0197 203d          	jra	L131
- 531  0199               L301:
- 532                     ; 184 		case	IR_CMD_RT_VIEW: 	//0x1d	（右视）AV2
- 532                     ; 185 			COMM_RequestSendCommand(KEY_RIGHT, KEY_ACTIVED);
- 534  0199 ae0001        	ldw	x,#1
- 535  019c a603          	ld	a,#3
- 536  019e 95            	ld	xh,a
- 537  019f cd0000        	call	_COMM_RequestSendCommand
- 539                     ; 186 			printf("[IR] IR_CMD_RT_VIEW\n");
- 541  01a2 355f0000      	mov	c_x,#page(L161)
- 542  01a6 ae005f        	ldw	x,#L161
- 543  01a9 cd0000        	call	_printf
- 545                     ; 187 			break;
- 547  01ac 2028          	jra	L131
- 548  01ae               L501:
- 549                     ; 188 		case	IR_CMD_FR_VIEW: //	0x09	（前视）AV3
- 549                     ; 189 			COMM_RequestSendCommand(KEY_FRONT, KEY_ACTIVED);
- 551  01ae ae0001        	ldw	x,#1
- 552  01b1 a601          	ld	a,#1
- 553  01b3 95            	ld	xh,a
- 554  01b4 cd0000        	call	_COMM_RequestSendCommand
- 556                     ; 190 			printf("[IR] IR_CMD_FR_VIEW\n");
- 558  01b7 354a0000      	mov	c_x,#page(L361)
- 559  01bb ae004a        	ldw	x,#L361
- 560  01be cd0000        	call	_printf
- 562                     ; 191 			break;
- 564  01c1 2013          	jra	L131
- 565  01c3               L701:
- 566                     ; 192 		case IR_CMD_BK_VIEW://	0x0a	（后视）AV4
- 566                     ; 193 			COMM_RequestSendCommand(KEY_REAR, KEY_ACTIVED);
- 568  01c3 ae0001        	ldw	x,#1
- 569  01c6 a604          	ld	a,#4
- 570  01c8 95            	ld	xh,a
- 571  01c9 cd0000        	call	_COMM_RequestSendCommand
- 573                     ; 194 			printf("[IR] IR_CMD_BK_VIEW\n");
- 575  01cc 35350000      	mov	c_x,#page(L561)
- 576  01d0 ae0035        	ldw	x,#L561
- 577  01d3 cd0000        	call	_printf
- 579                     ; 195 			break;
- 581  01d6               L111:
- 582                     ; 196 		default:
- 582                     ; 197 			break;
- 584  01d6               L731:
- 585  01d6               L131:
- 586                     ; 200 }
- 589  01d6 84            	pop	a
- 590  01d7 81            	ret
- 593                     	bsct
- 594  0000               L761_a:
- 595  0000 0000          	dc.w	0
- 686                     .const:	section	.text
- 687  0000               L63:
- 688  0000 00003390      	dc.l	13200
- 689  0004               L04:
- 690  0004 000035e9      	dc.l	13801
- 691  0008               L24:
- 692  0008 00000334      	dc.l	820
- 693  000c               L44:
- 694  000c 0000058d      	dc.l	1421
- 695  0010               L64:
- 696  0010 00000794      	dc.l	1940
- 697  0014               L05:
- 698  0014 000009ed      	dc.l	2541
- 699                     ; 208 void ISR_IRReceive(void) {
- 700                     	switch	.text
- 701  01d8               _ISR_IRReceive:
- 703  01d8 5205          	subw	sp,#5
- 704       00000005      OFST:	set	5
- 707                     ; 209 	u8 u8Err = 0;						//接收是否出错？
- 709  01da 0f03          	clr	(OFST-2,sp)
- 710                     ; 215 	if(a == 0) {
- 712  01dc be00          	ldw	x,L761_a
- 713  01de 2610          	jrne	L152
- 714                     ; 216 		LED_ON();
- 716  01e0 4b08          	push	#8
- 717  01e2 ae500f        	ldw	x,#20495
- 718  01e5 cd0000        	call	_GPIO_WriteLow
- 720  01e8 84            	pop	a
- 721                     ; 217 		a = 1;
- 723  01e9 ae0001        	ldw	x,#1
- 724  01ec bf00          	ldw	L761_a,x
- 726  01ee 2013          	jra	L352
- 727  01f0               L152:
- 728                     ; 218 	}else if(a == 1) {
- 730  01f0 be00          	ldw	x,L761_a
- 731  01f2 a30001        	cpw	x,#1
- 732  01f5 260c          	jrne	L352
- 733                     ; 219 		LED_OFF();
- 735  01f7 4b08          	push	#8
- 736  01f9 ae500f        	ldw	x,#20495
- 737  01fc cd0000        	call	_GPIO_WriteHigh
- 739  01ff 84            	pop	a
- 740                     ; 220 		a = 0;
- 742  0200 5f            	clrw	x
- 743  0201 bf00          	ldw	L761_a,x
- 744  0203               L352:
- 745                     ; 224 	switch (tIRFSM.u8ReceivedStatus) {
- 747  0203 b614          	ld	a,L3_tIRFSM
- 749                     ; 411 	default:
- 749                     ; 412 		break;
- 750  0205 4d            	tnz	a
- 751  0206 2710          	jreq	L171
- 752  0208 4a            	dec	a
- 753  0209 272e          	jreq	L371
- 754  020b 4a            	dec	a
- 755  020c 276f          	jreq	L571
- 756  020e 4a            	dec	a
- 757  020f 2603          	jrne	L45
- 758  0211 cc036e        	jp	L771
- 759  0214               L45:
- 760  0214 ac800380      	jpf	L162
- 761  0218               L171:
- 762                     ; 226 	case _IR_RECEIVEDSTATUS_IDLE:
- 762                     ; 227 		//转入接收启动码状态
- 762                     ; 228 		tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_START;
- 764  0218 35010014      	mov	L3_tIRFSM,#1
- 765                     ; 231 		tIRFSM.fCodeTimeEn = 1;
- 767  021c 72100015      	bset	L3_tIRFSM+1,#0
- 768                     ; 234 		tIRFSM.u32CodeTime = 0;
- 770  0220 ae0000        	ldw	x,#0
- 771  0223 bf1e          	ldw	L3_tIRFSM+10,x
- 772  0225 ae0000        	ldw	x,#0
- 773  0228 bf1c          	ldw	L3_tIRFSM+8,x
- 774                     ; 237 		tIRFSM.u8ReceiveTimeout = _IR_RECEIVE_TIMEOUT_;
- 776  022a 35320025      	mov	L3_tIRFSM+17,#50
- 777                     ; 240 		tIRFSM.u8RecievedCode = 0;
- 779  022e 3f1b          	clr	L3_tIRFSM+7
- 780                     ; 243 		TIM3_Cmd(ENABLE);
- 782  0230 a601          	ld	a,#1
- 783  0232 cd0000        	call	_TIM3_Cmd
- 785                     ; 244 		break;
- 787  0235 ac800380      	jpf	L162
- 788  0239               L371:
- 789                     ; 247 	case _IR_RECEIVEDSTATUS_START:
- 789                     ; 248 		//上次接收到的是启动码
- 789                     ; 249 		if ((tIRFSM.u32CodeTime >= _IR_CODE_TIME_START - _IR_CODE_TIME_BIAS)
- 789                     ; 250 				&& (tIRFSM.u32CodeTime <= _IR_CODE_TIME_START + _IR_CODE_TIME_BIAS)) {
- 791  0239 ae001c        	ldw	x,#L3_tIRFSM+8
- 792  023c cd0000        	call	c_ltor
- 794  023f ae0000        	ldw	x,#L63
- 795  0242 cd0000        	call	c_lcmp
- 797  0245 252e          	jrult	L362
- 799  0247 ae001c        	ldw	x,#L3_tIRFSM+8
- 800  024a cd0000        	call	c_ltor
- 802  024d ae0004        	ldw	x,#L04
- 803  0250 cd0000        	call	c_lcmp
- 805  0253 2420          	jruge	L362
- 806                     ; 252 			tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_32BITSDATA;
- 808  0255 35020014      	mov	L3_tIRFSM,#2
- 809                     ; 255 			tIRFSM.u32CodeTime = 0;
- 811  0259 ae0000        	ldw	x,#0
- 812  025c bf1e          	ldw	L3_tIRFSM+10,x
- 813  025e ae0000        	ldw	x,#0
- 814  0261 bf1c          	ldw	L3_tIRFSM+8,x
- 815                     ; 258 			tIRFSM.u8BitsLength = 32;
- 817  0263 3520001a      	mov	L3_tIRFSM+6,#32
- 818                     ; 261 			tIRFSM.u32Recieved32Bits = 0;
- 820  0267 ae0000        	ldw	x,#0
- 821  026a bf18          	ldw	L3_tIRFSM+4,x
- 822  026c ae0000        	ldw	x,#0
- 823  026f bf16          	ldw	L3_tIRFSM+2,x
- 825  0271 ac800380      	jpf	L162
- 826  0275               L362:
- 827                     ; 265 			u8Err = 1;
- 829  0275 a601          	ld	a,#1
- 830  0277 6b03          	ld	(OFST-2,sp),a
- 831  0279 ac800380      	jpf	L162
- 832  027d               L571:
- 833                     ; 272 	case _IR_RECEIVEDSTATUS_32BITSDATA:
- 833                     ; 273 		//收到“0”
- 833                     ; 274 		if ((tIRFSM.u32CodeTime >= _IR_CODE_TIME_0 - _IR_CODE_TIME_BIAS)
- 833                     ; 275 				&& (tIRFSM.u32CodeTime <= _IR_CODE_TIME_0 + _IR_CODE_TIME_BIAS)) {
- 835  027d ae001c        	ldw	x,#L3_tIRFSM+8
- 836  0280 cd0000        	call	c_ltor
- 838  0283 ae0008        	ldw	x,#L24
- 839  0286 cd0000        	call	c_lcmp
- 841  0289 2512          	jrult	L762
- 843  028b ae001c        	ldw	x,#L3_tIRFSM+8
- 844  028e cd0000        	call	c_ltor
- 846  0291 ae000c        	ldw	x,#L44
- 847  0294 cd0000        	call	c_lcmp
- 849  0297 2404          	jruge	L762
- 850                     ; 276 			u8Bit = 0;
- 852  0299 0f05          	clr	(OFST+0,sp)
- 854  029b 2026          	jra	L172
- 855  029d               L762:
- 856                     ; 279 		else if ((tIRFSM.u32CodeTime >= _IR_CODE_TIME_1 - _IR_CODE_TIME_BIAS)
- 856                     ; 280 				&& (tIRFSM.u32CodeTime <= _IR_CODE_TIME_1 + _IR_CODE_TIME_BIAS)) {
- 858  029d ae001c        	ldw	x,#L3_tIRFSM+8
- 859  02a0 cd0000        	call	c_ltor
- 861  02a3 ae0010        	ldw	x,#L64
- 862  02a6 cd0000        	call	c_lcmp
- 864  02a9 2514          	jrult	L372
- 866  02ab ae001c        	ldw	x,#L3_tIRFSM+8
- 867  02ae cd0000        	call	c_ltor
- 869  02b1 ae0014        	ldw	x,#L05
- 870  02b4 cd0000        	call	c_lcmp
- 872  02b7 2406          	jruge	L372
- 873                     ; 281 			u8Bit = 1;
- 875  02b9 a601          	ld	a,#1
- 876  02bb 6b05          	ld	(OFST+0,sp),a
- 878  02bd 2004          	jra	L172
- 879  02bf               L372:
- 880                     ; 285 			u8Err = 1;
- 882  02bf a601          	ld	a,#1
- 883  02c1 6b03          	ld	(OFST-2,sp),a
- 884  02c3               L172:
- 885                     ; 288 		if (!u8Err) {
- 887  02c3 0d03          	tnz	(OFST-2,sp)
- 888  02c5 2703          	jreq	L65
- 889  02c7 cc0380        	jp	L162
- 890  02ca               L65:
- 891                     ; 296 			if(1 == u8Bit)
- 893  02ca 7b05          	ld	a,(OFST+0,sp)
- 894  02cc a101          	cp	a,#1
- 895  02ce 2617          	jrne	L103
- 896                     ; 297 				tIRFSM.u32Recieved32Bits |= ((uint32_t)0x01 << (32-tIRFSM.u8BitsLength));
- 898  02d0 ae0001        	ldw	x,#1
- 899  02d3 bf02          	ldw	c_lreg+2,x
- 900  02d5 ae0000        	ldw	x,#0
- 901  02d8 bf00          	ldw	c_lreg,x
- 902  02da a620          	ld	a,#32
- 903  02dc b01a          	sub	a,L3_tIRFSM+6
- 904  02de cd0000        	call	c_llsh
- 906  02e1 ae0016        	ldw	x,#L3_tIRFSM+2
- 907  02e4 cd0000        	call	c_lgor
- 909  02e7               L103:
- 910                     ; 300 			tIRFSM.u32CodeTime = 0;
- 912  02e7 ae0000        	ldw	x,#0
- 913  02ea bf1e          	ldw	L3_tIRFSM+10,x
- 914  02ec ae0000        	ldw	x,#0
- 915  02ef bf1c          	ldw	L3_tIRFSM+8,x
- 916                     ; 303 			tIRFSM.u8BitsLength--;
- 918  02f1 3a1a          	dec	L3_tIRFSM+6
- 919                     ; 306 			if (!tIRFSM.u8BitsLength) {
- 921  02f3 3d1a          	tnz	L3_tIRFSM+6
- 922  02f5 26d0          	jrne	L162
- 923                     ; 308 				u8IDData = ((tIRFSM.u32Recieved32Bits >> 24) & 0x000000FF);
- 925  02f7 b616          	ld	a,L3_tIRFSM+2
- 926  02f9 6b05          	ld	(OFST+0,sp),a
- 927                     ; 309 				u8IDAntiData = ((tIRFSM.u32Recieved32Bits >> 16) & 0x000000FF);
- 929  02fb b617          	ld	a,L3_tIRFSM+3
- 930  02fd a4ff          	and	a,#255
- 931  02ff 6b04          	ld	(OFST-1,sp),a
- 932                     ; 310 				u8OperateData = ((tIRFSM.u32Recieved32Bits >> 8) & 0x000000FF);
- 934  0301 b618          	ld	a,L3_tIRFSM+4
- 935  0303 a4ff          	and	a,#255
- 936  0305 6b01          	ld	(OFST-4,sp),a
- 937                     ; 311 				u8OperateAntiData = tIRFSM.u32Recieved32Bits & 0x000000FF;
- 939  0307 b619          	ld	a,L3_tIRFSM+5
- 940  0309 a4ff          	and	a,#255
- 941  030b 6b02          	ld	(OFST-3,sp),a
- 942                     ; 313 				printf("[IR] code = %x%x%x%x", u8IDData, u8IDAntiData, u8OperateData, u8OperateAntiData);
- 944  030d 7b02          	ld	a,(OFST-3,sp)
- 945  030f 88            	push	a
- 946  0310 7b02          	ld	a,(OFST-3,sp)
- 947  0312 88            	push	a
- 948  0313 7b06          	ld	a,(OFST+1,sp)
- 949  0315 88            	push	a
- 950  0316 7b08          	ld	a,(OFST+3,sp)
- 951  0318 88            	push	a
- 952  0319 35200000      	mov	c_x,#page(L503)
- 953  031d ae0020        	ldw	x,#L503
- 954  0320 cd0000        	call	_printf
- 956  0323 5b04          	addw	sp,#4
- 957                     ; 316 				if ((0xFF != u8IDData + u8IDAntiData) /*|| (0xFF != u8OperateData + u8OperateAntiData)*/) {
- 959  0325 7b05          	ld	a,(OFST+0,sp)
- 960  0327 5f            	clrw	x
- 961  0328 1b04          	add	a,(OFST-1,sp)
- 962  032a 2401          	jrnc	L25
- 963  032c 5c            	incw	x
- 964  032d               L25:
- 965  032d 02            	rlwa	x,a
- 966  032e a300ff        	cpw	x,#255
- 967  0331 2706          	jreq	L703
- 968                     ; 317 					u8Err = 1;
- 970  0333 a601          	ld	a,#1
- 971  0335 6b03          	ld	(OFST-2,sp),a
- 973  0337 2047          	jra	L162
- 974  0339               L703:
- 975                     ; 322 					if (tIRFSM.u8Available_Rx < _BUFFER_LENGTH_IR_Rx_) {
- 977  0339 b622          	ld	a,L3_tIRFSM+14
- 978  033b a114          	cp	a,#20
- 979  033d 241b          	jruge	L313
- 980                     ; 324 						tIRFSM.u8Available_Rx++;
- 982  033f 3c22          	inc	L3_tIRFSM+14
- 983                     ; 327 						*(tIRFSM.pu8Buffer_Rx + tIRFSM.u8Write_Rx++) = u8IDAntiData;
- 985  0341 b620          	ld	a,L3_tIRFSM+12
- 986  0343 97            	ld	xl,a
- 987  0344 3c20          	inc	L3_tIRFSM+12
- 988  0346 9f            	ld	a,xl
- 989  0347 5f            	clrw	x
- 990  0348 97            	ld	xl,a
- 991  0349 7b04          	ld	a,(OFST-1,sp)
- 992  034b 92d723        	ld	([L3_tIRFSM+15.w],x),a
- 993                     ; 330 						tIRFSM.u8RecievedCode = u8IDAntiData;
- 995  034e 7b04          	ld	a,(OFST-1,sp)
- 996  0350 b71b          	ld	L3_tIRFSM+7,a
- 997                     ; 333 						if (tIRFSM.u8Write_Rx >= _BUFFER_LENGTH_IR_Rx_) {
- 999  0352 b620          	ld	a,L3_tIRFSM+12
-1000  0354 a114          	cp	a,#20
-1001  0356 2502          	jrult	L313
-1002                     ; 334 							tIRFSM.u8Write_Rx = 0;
-1004  0358 3f20          	clr	L3_tIRFSM+12
-1005  035a               L313:
-1006                     ; 339 					tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_INTERVAL;
-1008  035a 35030014      	mov	L3_tIRFSM,#3
-1009                     ; 342 					tIRFSM.fFirstContinue = 1;
-1011  035e 72120015      	bset	L3_tIRFSM+1,#1
-1012                     ; 345 					tIRFSM.u32CodeTime = 0;
-1014  0362 ae0000        	ldw	x,#0
-1015  0365 bf1e          	ldw	L3_tIRFSM+10,x
-1016  0367 ae0000        	ldw	x,#0
-1017  036a bf1c          	ldw	L3_tIRFSM+8,x
-1018  036c 2012          	jra	L162
-1019  036e               L771:
-1020                     ; 353 	case _IR_RECEIVEDSTATUS_INTERVAL:
-1020                     ; 354 			//转入接收连发码之间的间隔状态
-1020                     ; 355 			tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_INTERVAL;
-1022  036e 35030014      	mov	L3_tIRFSM,#3
-1023                     ; 358 			tIRFSM.u32CodeTime = 0;
-1025  0372 ae0000        	ldw	x,#0
-1026  0375 bf1e          	ldw	L3_tIRFSM+10,x
-1027  0377 ae0000        	ldw	x,#0
-1028  037a bf1c          	ldw	L3_tIRFSM+8,x
-1029                     ; 361 			tIRFSM.u8ReceiveTimeout = _IR_RECEIVE_TIMEOUT_;
-1031  037c 35320025      	mov	L3_tIRFSM+17,#50
-1032                     ; 363 		break;
-1034  0380               L102:
-1035                     ; 411 	default:
-1035                     ; 412 		break;
-1037  0380               L162:
-1038                     ; 416 	if (u8Err) {
-1040  0380 0d03          	tnz	(OFST-2,sp)
-1041  0382 2722          	jreq	L713
-1042                     ; 418 		tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_IDLE;
-1044  0384 3f14          	clr	L3_tIRFSM
-1045                     ; 421 		tIRFSM.fCodeTimeEn = 0;
-1047  0386 72110015      	bres	L3_tIRFSM+1,#0
-1048                     ; 424 		tIRFSM.u32CodeTime = 0;
-1050  038a ae0000        	ldw	x,#0
-1051  038d bf1e          	ldw	L3_tIRFSM+10,x
-1052  038f ae0000        	ldw	x,#0
-1053  0392 bf1c          	ldw	L3_tIRFSM+8,x
-1054                     ; 427 		tIRFSM.u32Recieved32Bits = 0;
-1056  0394 ae0000        	ldw	x,#0
-1057  0397 bf18          	ldw	L3_tIRFSM+4,x
-1058  0399 ae0000        	ldw	x,#0
-1059  039c bf16          	ldw	L3_tIRFSM+2,x
-1060                     ; 430 		tIRFSM.u8BitsLength = 0;
-1062  039e 3f1a          	clr	L3_tIRFSM+6
-1063                     ; 433 		tIRFSM.u8ReceiveTimeout = 0;
-1065  03a0 3f25          	clr	L3_tIRFSM+17
-1066                     ; 436 		TIM3_Cmd(DISABLE);
-1068  03a2 4f            	clr	a
-1069  03a3 cd0000        	call	_TIM3_Cmd
-1071  03a6               L713:
-1072                     ; 438 }
-1075  03a6 5b05          	addw	sp,#5
-1076  03a8 81            	ret
-1101                     ; 446 void Isr_IR_Timeout10ms(void) {
-1102                     	switch	.text
-1103  03a9               _Isr_IR_Timeout10ms:
-1107                     ; 449 	if (tIRFSM.u8ReceiveTimeout) {
-1109  03a9 3d25          	tnz	L3_tIRFSM+17
-1110  03ab 2710          	jreq	L133
-1111                     ; 450 		tIRFSM.u8ReceiveTimeout--;
-1113  03ad 3a25          	dec	L3_tIRFSM+17
-1114                     ; 453 		if (0 == tIRFSM.u8ReceiveTimeout) {
-1116  03af 3d25          	tnz	L3_tIRFSM+17
-1117  03b1 260a          	jrne	L133
-1118                     ; 455 			TIM3_Cmd(DISABLE);
-1120  03b3 4f            	clr	a
-1121  03b4 cd0000        	call	_TIM3_Cmd
-1123                     ; 458 			tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_IDLE;
-1125  03b7 3f14          	clr	L3_tIRFSM
-1126                     ; 461 			tIRFSM.fCodeTimeEn = 0;
-1128  03b9 72110015      	bres	L3_tIRFSM+1,#0
-1129  03bd               L133:
-1130                     ; 464 }
-1133  03bd 81            	ret
-1158                     	switch	.const
-1159  0018               L46:
-1160  0018 00004e20      	dc.l	20000
-1161  001c               L66:
-1162  001c 0001d4c0      	dc.l	120000
-1163                     ; 472 void Isr_IR_Timeout100us(void) {
-1164                     	switch	.text
-1165  03be               _Isr_IR_Timeout100us:
-1169                     ; 475 	if (tIRFSM.fCodeTimeEn) {
-1171  03be b615          	ld	a,L3_tIRFSM+1
-1172  03c0 a501          	bcp	a,#1
-1173  03c2 2740          	jreq	L543
-1174                     ; 477 		tIRFSM.u32CodeTime += 100;
-1176  03c4 ae001c        	ldw	x,#L3_tIRFSM+8
-1177  03c7 a664          	ld	a,#100
-1178  03c9 cd0000        	call	c_lgadc
-1180                     ; 480 		if (((tIRFSM.u8ReceivedStatus <= _IR_RECEIVEDSTATUS_32BITSDATA)
-1180                     ; 481 				&& (tIRFSM.u32CodeTime >= _IR_DATA_LIMITATION_TIME))
-1180                     ; 482 				|| ((tIRFSM.u8ReceivedStatus == _IR_RECEIVEDSTATUS_INTERVAL)
-1180                     ; 483 						&& (tIRFSM.u32CodeTime >= _IR_INTERVAL_LIMITATION_TIME))) {
-1182  03cc b614          	ld	a,L3_tIRFSM
-1183  03ce a103          	cp	a,#3
-1184  03d0 240e          	jruge	L353
-1186  03d2 ae001c        	ldw	x,#L3_tIRFSM+8
-1187  03d5 cd0000        	call	c_ltor
-1189  03d8 ae0018        	ldw	x,#L46
-1190  03db cd0000        	call	c_lcmp
-1192  03de 2414          	jruge	L153
-1193  03e0               L353:
-1195  03e0 b614          	ld	a,L3_tIRFSM
-1196  03e2 a103          	cp	a,#3
-1197  03e4 261e          	jrne	L543
-1199  03e6 ae001c        	ldw	x,#L3_tIRFSM+8
-1200  03e9 cd0000        	call	c_ltor
-1202  03ec ae001c        	ldw	x,#L66
-1203  03ef cd0000        	call	c_lcmp
-1205  03f2 2510          	jrult	L543
-1206  03f4               L153:
-1207                     ; 485 			tIRFSM.fCodeTimeEn = 0;
-1209  03f4 72110015      	bres	L3_tIRFSM+1,#0
-1210                     ; 488 			tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_IDLE;
-1212  03f8 3f14          	clr	L3_tIRFSM
-1213                     ; 491 			tIRFSM.u32CodeTime = 0;
-1215  03fa ae0000        	ldw	x,#0
-1216  03fd bf1e          	ldw	L3_tIRFSM+10,x
-1217  03ff ae0000        	ldw	x,#0
-1218  0402 bf1c          	ldw	L3_tIRFSM+8,x
-1219  0404               L543:
-1220                     ; 494 }
-1223  0404 81            	ret
-1368                     	xref	_printf
-1369                     	switch	.ubsct
-1370  0000               L5_IR_Buf:
-1371  0000 000000000000  	ds.b	20
-1372  0014               L3_tIRFSM:
-1373  0014 000000000000  	ds.b	18
-1374                     	xref	_COMM_RequestSendCommand
-1375                     	xref	_ZeroMem
-1376                     	xdef	_ISR_IRReceive
-1377                     	xdef	_Isr_IR_Timeout100us
-1378                     	xdef	_Isr_IR_Timeout10ms
-1379                     	xdef	_IR_Process
-1380                     	xdef	_IR_Init
-1381                     	xref	_TIM3_ClearFlag
-1382                     	xref	_TIM3_ITConfig
-1383                     	xref	_TIM3_Cmd
-1384                     	xref	_TIM3_TimeBaseInit
-1385                     	xref	_TIM2_ClearFlag
-1386                     	xref	_TIM2_ITConfig
-1387                     	xref	_TIM2_Cmd
-1388                     	xref	_TIM2_TimeBaseInit
-1389                     	xref	_GPIO_WriteLow
-1390                     	xref	_GPIO_WriteHigh
-1391                     	xref	_GPIO_Init
-1392                     	xref	_EXTI_SetTLISensitivity
-1393                     	xref	_EXTI_SetExtIntSensitivity
-1394                     	switch	.const
-1395  0020               L503:
-1396  0020 5b49525d2063  	dc.b	"[IR] code = %x%x%x"
-1397  0032 257800        	dc.b	"%x",0
-1398  0035               L561:
-1399  0035 5b49525d2049  	dc.b	"[IR] IR_CMD_BK_VIE"
-1400  0047 570a00        	dc.b	"W",10,0
-1401  004a               L361:
-1402  004a 5b49525d2049  	dc.b	"[IR] IR_CMD_FR_VIE"
-1403  005c 570a00        	dc.b	"W",10,0
-1404  005f               L161:
-1405  005f 5b49525d2049  	dc.b	"[IR] IR_CMD_RT_VIE"
-1406  0071 570a00        	dc.b	"W",10,0
-1407  0074               L751:
-1408  0074 5b49525d2049  	dc.b	"[IR] IR_CMD_LF_VIE"
-1409  0086 570a00        	dc.b	"W",10,0
-1410  0089               L551:
-1411  0089 5b49525d2049  	dc.b	"[IR] IR_CMD_POWER",10,0
-1412  009c               L351:
-1413  009c 5b49525d2049  	dc.b	"[IR] IR_CMD_BACK",10,0
-1414  00ae               L151:
-1415  00ae 5b49525d2049  	dc.b	"[IR] IR_CMD_RIGHT",10,0
-1416  00c1               L741:
-1417  00c1 5b49525d2049  	dc.b	"[IR] IR_CMD_LEFT",10,0
-1418  00d3               L541:
-1419  00d3 5b49525d2049  	dc.b	"[IR] IR_CMD_DOWN",10,0
-1420  00e5               L341:
-1421  00e5 5b49525d2049  	dc.b	"[IR] IR_CMD_UP",10,0
-1422  00f5               L141:
-1423  00f5 5b49525d2049  	dc.b	"[IR] IR_CMD_OK",10,0
-1424                     	xref.b	c_lreg
-1425                     	xref.b	c_x
-1445                     	xref	c_lgadc
-1446                     	xref	c_lgor
-1447                     	xref	c_llsh
-1448                     	xref	c_lcmp
-1449                     	xref	c_ltor
-1450                     	end
+ 248  006e               L31_TIM4_Config_100us:
+ 252                     ; 116   TIM4_TimeBaseInit(TIM4_PRESCALER_16, TIM4_PERIOD);
+ 254  006e ae0063        	ldw	x,#99
+ 255  0071 a604          	ld	a,#4
+ 256  0073 95            	ld	xh,a
+ 257  0074 cd0000        	call	_TIM4_TimeBaseInit
+ 259                     ; 118   TIM4_ClearFlag(TIM4_FLAG_UPDATE);
+ 261  0077 a601          	ld	a,#1
+ 262  0079 cd0000        	call	_TIM4_ClearFlag
+ 264                     ; 120   TIM4_ITConfig(TIM4_IT_UPDATE, ENABLE);
+ 266  007c ae0001        	ldw	x,#1
+ 267  007f a601          	ld	a,#1
+ 268  0081 95            	ld	xh,a
+ 269  0082 cd0000        	call	_TIM4_ITConfig
+ 271                     ; 123   TIM4_Cmd(ENABLE);
+ 273  0085 a601          	ld	a,#1
+ 274  0087 cd0000        	call	_TIM4_Cmd
+ 276                     ; 124 }
+ 279  008a 81            	ret
+ 316                     ; 134 void IR_Process() {
+ 317                     	switch	.text
+ 318  008b               _IR_Process:
+ 320  008b 88            	push	a
+ 321       00000001      OFST:	set	1
+ 324                     ; 135 	u8 u8IRData = 0;
+ 326                     ; 138 	if (tIRFSM.u8Available_Rx) {
+ 328  008c 3d22          	tnz	L3_tIRFSM+14
+ 329  008e 2603          	jrne	L61
+ 330  0090 cc01d5        	jp	L131
+ 331  0093               L61:
+ 332                     ; 140 		u8IRData = *(tIRFSM.pu8Buffer_Rx + tIRFSM.u8Read_Rx++);
+ 334  0093 b621          	ld	a,L3_tIRFSM+13
+ 335  0095 97            	ld	xl,a
+ 336  0096 3c21          	inc	L3_tIRFSM+13
+ 337  0098 9f            	ld	a,xl
+ 338  0099 5f            	clrw	x
+ 339  009a 97            	ld	xl,a
+ 340  009b 92d623        	ld	a,([L3_tIRFSM+15.w],x)
+ 341  009e 6b01          	ld	(OFST+0,sp),a
+ 342                     ; 143 		if (tIRFSM.u8Read_Rx >= _BUFFER_LENGTH_IR_Rx_) {
+ 344  00a0 b621          	ld	a,L3_tIRFSM+13
+ 345  00a2 a114          	cp	a,#20
+ 346  00a4 2502          	jrult	L331
+ 347                     ; 144 			tIRFSM.u8Read_Rx = 0;
+ 349  00a6 3f21          	clr	L3_tIRFSM+13
+ 350  00a8               L331:
+ 351                     ; 148 		--tIRFSM.u8Available_Rx;
+ 353  00a8 3a22          	dec	L3_tIRFSM+14
+ 354                     ; 151 		switch (u8IRData) {
+ 356  00aa 7b01          	ld	a,(OFST+0,sp)
+ 358                     ; 196 		default:
+ 358                     ; 197 			break;
+ 359  00ac 4d            	tnz	a
+ 360  00ad 2739          	jreq	L36
+ 361  00af a002          	sub	a,#2
+ 362  00b1 2603          	jrne	L02
+ 363  00b3 cc016e        	jp	L77
+ 364  00b6               L02:
+ 365  00b6 a003          	sub	a,#3
+ 366  00b8 275c          	jreq	L76
+ 367  00ba 4a            	dec	a
+ 368  00bb 2742          	jreq	L56
+ 369  00bd a002          	sub	a,#2
+ 370  00bf 2603          	jrne	L22
+ 371  00c1 cc0159        	jp	L57
+ 372  00c4               L22:
+ 373  00c4 4a            	dec	a
+ 374  00c5 2603          	jrne	L42
+ 375  00c7 cc01ad        	jp	L501
+ 376  00ca               L42:
+ 377  00ca 4a            	dec	a
+ 378  00cb 2603          	jrne	L62
+ 379  00cd cc01c2        	jp	L701
+ 380  00d0               L62:
+ 381  00d0 a003          	sub	a,#3
+ 382  00d2 2759          	jreq	L17
+ 383  00d4 4a            	dec	a
+ 384  00d5 276d          	jreq	L37
+ 385  00d7 a00f          	sub	a,#15
+ 386  00d9 2603          	jrne	L03
+ 387  00db cc0198        	jp	L301
+ 388  00de               L03:
+ 389  00de 4a            	dec	a
+ 390  00df 2603          	jrne	L23
+ 391  00e1 cc0183        	jp	L101
+ 392  00e4               L23:
+ 393  00e4 acd501d5      	jpf	L131
+ 394  00e8               L36:
+ 395                     ; 152 		case	IR_CMD_OK: 			//0x0b	确认
+ 395                     ; 153 			COMM_RequestSendCommand(MENU_OK, KEY_ACTIVED);
+ 397  00e8 ae0001        	ldw	x,#1
+ 398  00eb a60a          	ld	a,#10
+ 399  00ed 95            	ld	xh,a
+ 400  00ee cd0000        	call	_COMM_RequestSendCommand
+ 402                     ; 154 			printf("[IR] IR_CMD_OK\n");
+ 404  00f1 35f50000      	mov	c_x,#page(L141)
+ 405  00f5 ae00f5        	ldw	x,#L141
+ 406  00f8 cd0000        	call	_printf
+ 408                     ; 155 			break;
+ 410  00fb acd501d5      	jpf	L131
+ 411  00ff               L56:
+ 412                     ; 156 		case	IR_CMD_UP: 			//0x06	上
+ 412                     ; 157 			COMM_RequestSendCommand(MENU_UP, KEY_ACTIVED);
+ 414  00ff ae0001        	ldw	x,#1
+ 415  0102 a608          	ld	a,#8
+ 416  0104 95            	ld	xh,a
+ 417  0105 cd0000        	call	_COMM_RequestSendCommand
+ 419                     ; 158 			printf("[IR] IR_CMD_UP\n");
+ 421  0108 35e50000      	mov	c_x,#page(L341)
+ 422  010c ae00e5        	ldw	x,#L341
+ 423  010f cd0000        	call	_printf
+ 425                     ; 159 			break;
+ 427  0112 acd501d5      	jpf	L131
+ 428  0116               L76:
+ 429                     ; 160 		case	IR_CMD_DOWN: 		//0x05	下
+ 429                     ; 161 			COMM_RequestSendCommand(MENU_DOWN, KEY_ACTIVED);
+ 431  0116 ae0001        	ldw	x,#1
+ 432  0119 a609          	ld	a,#9
+ 433  011b 95            	ld	xh,a
+ 434  011c cd0000        	call	_COMM_RequestSendCommand
+ 436                     ; 162 			printf("[IR] IR_CMD_DOWN\n");
+ 438  011f 35d30000      	mov	c_x,#page(L541)
+ 439  0123 ae00d3        	ldw	x,#L541
+ 440  0126 cd0000        	call	_printf
+ 442                     ; 163 			break;
+ 444  0129 acd501d5      	jpf	L131
+ 445  012d               L17:
+ 446                     ; 164 		case	IR_CMD_LEFT: 		//0x0d	左
+ 446                     ; 165 			COMM_RequestSendCommand(MENU_LEFT, KEY_ACTIVED);
+ 448  012d ae0001        	ldw	x,#1
+ 449  0130 a606          	ld	a,#6
+ 450  0132 95            	ld	xh,a
+ 451  0133 cd0000        	call	_COMM_RequestSendCommand
+ 453                     ; 166 			printf("[IR] IR_CMD_LEFT\n");
+ 455  0136 35c10000      	mov	c_x,#page(L741)
+ 456  013a ae00c1        	ldw	x,#L741
+ 457  013d cd0000        	call	_printf
+ 459                     ; 167 			break;
+ 461  0140 acd501d5      	jpf	L131
+ 462  0144               L37:
+ 463                     ; 168 		case	IR_CMD_RIGHT: 		//0x0e	右
+ 463                     ; 169 			COMM_RequestSendCommand(MENU_RIGHT, KEY_ACTIVED);
+ 465  0144 ae0001        	ldw	x,#1
+ 466  0147 a607          	ld	a,#7
+ 467  0149 95            	ld	xh,a
+ 468  014a cd0000        	call	_COMM_RequestSendCommand
+ 470                     ; 170 			printf("[IR] IR_CMD_RIGHT\n");
+ 472  014d 35ae0000      	mov	c_x,#page(L151)
+ 473  0151 ae00ae        	ldw	x,#L151
+ 474  0154 cd0000        	call	_printf
+ 476                     ; 171 			break;
+ 478  0157 207c          	jra	L131
+ 479  0159               L57:
+ 480                     ; 172 		case	IR_CMD_BACK: 		//0x08	返回
+ 480                     ; 173 			COMM_RequestSendCommand(MENU_BACK, KEY_ACTIVED);			
+ 482  0159 ae0001        	ldw	x,#1
+ 483  015c a605          	ld	a,#5
+ 484  015e 95            	ld	xh,a
+ 485  015f cd0000        	call	_COMM_RequestSendCommand
+ 487                     ; 174 			printf("[IR] IR_CMD_BACK\n");
+ 489  0162 359c0000      	mov	c_x,#page(L351)
+ 490  0166 ae009c        	ldw	x,#L351
+ 491  0169 cd0000        	call	_printf
+ 493                     ; 175 			break;
+ 495  016c 2067          	jra	L131
+ 496  016e               L77:
+ 497                     ; 176 		case	IR_CMD_POWER: 		//0x02	电源
+ 497                     ; 177 			COMM_RequestSendCommand(MENU_POWER, KEY_ACTIVED);			
+ 499  016e ae0001        	ldw	x,#1
+ 500  0171 a60b          	ld	a,#11
+ 501  0173 95            	ld	xh,a
+ 502  0174 cd0000        	call	_COMM_RequestSendCommand
+ 504                     ; 178 			printf("[IR] IR_CMD_POWER\n");
+ 506  0177 35890000      	mov	c_x,#page(L551)
+ 507  017b ae0089        	ldw	x,#L551
+ 508  017e cd0000        	call	_printf
+ 510                     ; 179 			break;
+ 512  0181 2052          	jra	L131
+ 513  0183               L101:
+ 514                     ; 180 		case	IR_CMD_LF_VIEW: 	//0x1e	（左视）AV1
+ 514                     ; 181 			COMM_RequestSendCommand(KEY_LEFT, KEY_ACTIVED);	
+ 516  0183 ae0001        	ldw	x,#1
+ 517  0186 a602          	ld	a,#2
+ 518  0188 95            	ld	xh,a
+ 519  0189 cd0000        	call	_COMM_RequestSendCommand
+ 521                     ; 182 			printf("[IR] IR_CMD_LF_VIEW\n");
+ 523  018c 35740000      	mov	c_x,#page(L751)
+ 524  0190 ae0074        	ldw	x,#L751
+ 525  0193 cd0000        	call	_printf
+ 527                     ; 183 			break;
+ 529  0196 203d          	jra	L131
+ 530  0198               L301:
+ 531                     ; 184 		case	IR_CMD_RT_VIEW: 	//0x1d	（右视）AV2
+ 531                     ; 185 			COMM_RequestSendCommand(KEY_RIGHT, KEY_ACTIVED);
+ 533  0198 ae0001        	ldw	x,#1
+ 534  019b a603          	ld	a,#3
+ 535  019d 95            	ld	xh,a
+ 536  019e cd0000        	call	_COMM_RequestSendCommand
+ 538                     ; 186 			printf("[IR] IR_CMD_RT_VIEW\n");
+ 540  01a1 355f0000      	mov	c_x,#page(L161)
+ 541  01a5 ae005f        	ldw	x,#L161
+ 542  01a8 cd0000        	call	_printf
+ 544                     ; 187 			break;
+ 546  01ab 2028          	jra	L131
+ 547  01ad               L501:
+ 548                     ; 188 		case	IR_CMD_FR_VIEW: //	0x09	（前视）AV3
+ 548                     ; 189 			COMM_RequestSendCommand(KEY_FRONT, KEY_ACTIVED);
+ 550  01ad ae0001        	ldw	x,#1
+ 551  01b0 a601          	ld	a,#1
+ 552  01b2 95            	ld	xh,a
+ 553  01b3 cd0000        	call	_COMM_RequestSendCommand
+ 555                     ; 190 			printf("[IR] IR_CMD_FR_VIEW\n");
+ 557  01b6 354a0000      	mov	c_x,#page(L361)
+ 558  01ba ae004a        	ldw	x,#L361
+ 559  01bd cd0000        	call	_printf
+ 561                     ; 191 			break;
+ 563  01c0 2013          	jra	L131
+ 564  01c2               L701:
+ 565                     ; 192 		case IR_CMD_BK_VIEW://	0x0a	（后视）AV4
+ 565                     ; 193 			COMM_RequestSendCommand(KEY_REAR, KEY_ACTIVED);
+ 567  01c2 ae0001        	ldw	x,#1
+ 568  01c5 a604          	ld	a,#4
+ 569  01c7 95            	ld	xh,a
+ 570  01c8 cd0000        	call	_COMM_RequestSendCommand
+ 572                     ; 194 			printf("[IR] IR_CMD_BK_VIEW\n");
+ 574  01cb 35350000      	mov	c_x,#page(L561)
+ 575  01cf ae0035        	ldw	x,#L561
+ 576  01d2 cd0000        	call	_printf
+ 578                     ; 195 			break;
+ 580  01d5               L111:
+ 581                     ; 196 		default:
+ 581                     ; 197 			break;
+ 583  01d5               L731:
+ 584  01d5               L131:
+ 585                     ; 200 }
+ 588  01d5 84            	pop	a
+ 589  01d6 81            	ret
+ 592                     	bsct
+ 593  0000               L761_a:
+ 594  0000 0000          	dc.w	0
+ 685                     .const:	section	.text
+ 686  0000               L63:
+ 687  0000 00003390      	dc.l	13200
+ 688  0004               L04:
+ 689  0004 000035e9      	dc.l	13801
+ 690  0008               L24:
+ 691  0008 00000334      	dc.l	820
+ 692  000c               L44:
+ 693  000c 0000058d      	dc.l	1421
+ 694  0010               L64:
+ 695  0010 00000794      	dc.l	1940
+ 696  0014               L05:
+ 697  0014 000009ed      	dc.l	2541
+ 698                     ; 208 void ISR_IRReceive(void) {
+ 699                     	switch	.text
+ 700  01d7               _ISR_IRReceive:
+ 702  01d7 5205          	subw	sp,#5
+ 703       00000005      OFST:	set	5
+ 706                     ; 209 	u8 u8Err = 0;						//接收是否出错？
+ 708  01d9 0f03          	clr	(OFST-2,sp)
+ 709                     ; 215 	if(a == 0) {
+ 711  01db be00          	ldw	x,L761_a
+ 712  01dd 2610          	jrne	L152
+ 713                     ; 216 		LED_ON();
+ 715  01df 4b40          	push	#64
+ 716  01e1 ae5014        	ldw	x,#20500
+ 717  01e4 cd0000        	call	_GPIO_WriteLow
+ 719  01e7 84            	pop	a
+ 720                     ; 217 		a = 1;
+ 722  01e8 ae0001        	ldw	x,#1
+ 723  01eb bf00          	ldw	L761_a,x
+ 725  01ed 2013          	jra	L352
+ 726  01ef               L152:
+ 727                     ; 218 	}else if(a == 1) {
+ 729  01ef be00          	ldw	x,L761_a
+ 730  01f1 a30001        	cpw	x,#1
+ 731  01f4 260c          	jrne	L352
+ 732                     ; 219 		LED_OFF();
+ 734  01f6 4b40          	push	#64
+ 735  01f8 ae5014        	ldw	x,#20500
+ 736  01fb cd0000        	call	_GPIO_WriteHigh
+ 738  01fe 84            	pop	a
+ 739                     ; 220 		a = 0;
+ 741  01ff 5f            	clrw	x
+ 742  0200 bf00          	ldw	L761_a,x
+ 743  0202               L352:
+ 744                     ; 224 	switch (tIRFSM.u8ReceivedStatus) {
+ 746  0202 b614          	ld	a,L3_tIRFSM
+ 748                     ; 411 	default:
+ 748                     ; 412 		break;
+ 749  0204 4d            	tnz	a
+ 750  0205 2710          	jreq	L171
+ 751  0207 4a            	dec	a
+ 752  0208 272e          	jreq	L371
+ 753  020a 4a            	dec	a
+ 754  020b 276f          	jreq	L571
+ 755  020d 4a            	dec	a
+ 756  020e 2603          	jrne	L45
+ 757  0210 cc036d        	jp	L771
+ 758  0213               L45:
+ 759  0213 ac7f037f      	jpf	L162
+ 760  0217               L171:
+ 761                     ; 226 	case _IR_RECEIVEDSTATUS_IDLE:
+ 761                     ; 227 		//转入接收启动码状态
+ 761                     ; 228 		tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_START;
+ 763  0217 35010014      	mov	L3_tIRFSM,#1
+ 764                     ; 231 		tIRFSM.fCodeTimeEn = 1;
+ 766  021b 72100015      	bset	L3_tIRFSM+1,#0
+ 767                     ; 234 		tIRFSM.u32CodeTime = 0;
+ 769  021f ae0000        	ldw	x,#0
+ 770  0222 bf1e          	ldw	L3_tIRFSM+10,x
+ 771  0224 ae0000        	ldw	x,#0
+ 772  0227 bf1c          	ldw	L3_tIRFSM+8,x
+ 773                     ; 237 		tIRFSM.u8ReceiveTimeout = _IR_RECEIVE_TIMEOUT_;
+ 775  0229 35320025      	mov	L3_tIRFSM+17,#50
+ 776                     ; 240 		tIRFSM.u8RecievedCode = 0;
+ 778  022d 3f1b          	clr	L3_tIRFSM+7
+ 779                     ; 243 		TIM3_Cmd(ENABLE);
+ 781  022f a601          	ld	a,#1
+ 782  0231 cd0000        	call	_TIM3_Cmd
+ 784                     ; 244 		break;
+ 786  0234 ac7f037f      	jpf	L162
+ 787  0238               L371:
+ 788                     ; 247 	case _IR_RECEIVEDSTATUS_START:
+ 788                     ; 248 		//上次接收到的是启动码
+ 788                     ; 249 		if ((tIRFSM.u32CodeTime >= _IR_CODE_TIME_START - _IR_CODE_TIME_BIAS)
+ 788                     ; 250 				&& (tIRFSM.u32CodeTime <= _IR_CODE_TIME_START + _IR_CODE_TIME_BIAS)) {
+ 790  0238 ae001c        	ldw	x,#L3_tIRFSM+8
+ 791  023b cd0000        	call	c_ltor
+ 793  023e ae0000        	ldw	x,#L63
+ 794  0241 cd0000        	call	c_lcmp
+ 796  0244 252e          	jrult	L362
+ 798  0246 ae001c        	ldw	x,#L3_tIRFSM+8
+ 799  0249 cd0000        	call	c_ltor
+ 801  024c ae0004        	ldw	x,#L04
+ 802  024f cd0000        	call	c_lcmp
+ 804  0252 2420          	jruge	L362
+ 805                     ; 252 			tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_32BITSDATA;
+ 807  0254 35020014      	mov	L3_tIRFSM,#2
+ 808                     ; 255 			tIRFSM.u32CodeTime = 0;
+ 810  0258 ae0000        	ldw	x,#0
+ 811  025b bf1e          	ldw	L3_tIRFSM+10,x
+ 812  025d ae0000        	ldw	x,#0
+ 813  0260 bf1c          	ldw	L3_tIRFSM+8,x
+ 814                     ; 258 			tIRFSM.u8BitsLength = 32;
+ 816  0262 3520001a      	mov	L3_tIRFSM+6,#32
+ 817                     ; 261 			tIRFSM.u32Recieved32Bits = 0;
+ 819  0266 ae0000        	ldw	x,#0
+ 820  0269 bf18          	ldw	L3_tIRFSM+4,x
+ 821  026b ae0000        	ldw	x,#0
+ 822  026e bf16          	ldw	L3_tIRFSM+2,x
+ 824  0270 ac7f037f      	jpf	L162
+ 825  0274               L362:
+ 826                     ; 265 			u8Err = 1;
+ 828  0274 a601          	ld	a,#1
+ 829  0276 6b03          	ld	(OFST-2,sp),a
+ 830  0278 ac7f037f      	jpf	L162
+ 831  027c               L571:
+ 832                     ; 272 	case _IR_RECEIVEDSTATUS_32BITSDATA:
+ 832                     ; 273 		//收到“0”
+ 832                     ; 274 		if ((tIRFSM.u32CodeTime >= _IR_CODE_TIME_0 - _IR_CODE_TIME_BIAS)
+ 832                     ; 275 				&& (tIRFSM.u32CodeTime <= _IR_CODE_TIME_0 + _IR_CODE_TIME_BIAS)) {
+ 834  027c ae001c        	ldw	x,#L3_tIRFSM+8
+ 835  027f cd0000        	call	c_ltor
+ 837  0282 ae0008        	ldw	x,#L24
+ 838  0285 cd0000        	call	c_lcmp
+ 840  0288 2512          	jrult	L762
+ 842  028a ae001c        	ldw	x,#L3_tIRFSM+8
+ 843  028d cd0000        	call	c_ltor
+ 845  0290 ae000c        	ldw	x,#L44
+ 846  0293 cd0000        	call	c_lcmp
+ 848  0296 2404          	jruge	L762
+ 849                     ; 276 			u8Bit = 0;
+ 851  0298 0f05          	clr	(OFST+0,sp)
+ 853  029a 2026          	jra	L172
+ 854  029c               L762:
+ 855                     ; 279 		else if ((tIRFSM.u32CodeTime >= _IR_CODE_TIME_1 - _IR_CODE_TIME_BIAS)
+ 855                     ; 280 				&& (tIRFSM.u32CodeTime <= _IR_CODE_TIME_1 + _IR_CODE_TIME_BIAS)) {
+ 857  029c ae001c        	ldw	x,#L3_tIRFSM+8
+ 858  029f cd0000        	call	c_ltor
+ 860  02a2 ae0010        	ldw	x,#L64
+ 861  02a5 cd0000        	call	c_lcmp
+ 863  02a8 2514          	jrult	L372
+ 865  02aa ae001c        	ldw	x,#L3_tIRFSM+8
+ 866  02ad cd0000        	call	c_ltor
+ 868  02b0 ae0014        	ldw	x,#L05
+ 869  02b3 cd0000        	call	c_lcmp
+ 871  02b6 2406          	jruge	L372
+ 872                     ; 281 			u8Bit = 1;
+ 874  02b8 a601          	ld	a,#1
+ 875  02ba 6b05          	ld	(OFST+0,sp),a
+ 877  02bc 2004          	jra	L172
+ 878  02be               L372:
+ 879                     ; 285 			u8Err = 1;
+ 881  02be a601          	ld	a,#1
+ 882  02c0 6b03          	ld	(OFST-2,sp),a
+ 883  02c2               L172:
+ 884                     ; 288 		if (!u8Err) {
+ 886  02c2 0d03          	tnz	(OFST-2,sp)
+ 887  02c4 2703          	jreq	L65
+ 888  02c6 cc037f        	jp	L162
+ 889  02c9               L65:
+ 890                     ; 296 			if(1 == u8Bit)
+ 892  02c9 7b05          	ld	a,(OFST+0,sp)
+ 893  02cb a101          	cp	a,#1
+ 894  02cd 2617          	jrne	L103
+ 895                     ; 297 				tIRFSM.u32Recieved32Bits |= ((uint32_t)0x01 << (32-tIRFSM.u8BitsLength));
+ 897  02cf ae0001        	ldw	x,#1
+ 898  02d2 bf02          	ldw	c_lreg+2,x
+ 899  02d4 ae0000        	ldw	x,#0
+ 900  02d7 bf00          	ldw	c_lreg,x
+ 901  02d9 a620          	ld	a,#32
+ 902  02db b01a          	sub	a,L3_tIRFSM+6
+ 903  02dd cd0000        	call	c_llsh
+ 905  02e0 ae0016        	ldw	x,#L3_tIRFSM+2
+ 906  02e3 cd0000        	call	c_lgor
+ 908  02e6               L103:
+ 909                     ; 300 			tIRFSM.u32CodeTime = 0;
+ 911  02e6 ae0000        	ldw	x,#0
+ 912  02e9 bf1e          	ldw	L3_tIRFSM+10,x
+ 913  02eb ae0000        	ldw	x,#0
+ 914  02ee bf1c          	ldw	L3_tIRFSM+8,x
+ 915                     ; 303 			tIRFSM.u8BitsLength--;
+ 917  02f0 3a1a          	dec	L3_tIRFSM+6
+ 918                     ; 306 			if (!tIRFSM.u8BitsLength) {
+ 920  02f2 3d1a          	tnz	L3_tIRFSM+6
+ 921  02f4 26d0          	jrne	L162
+ 922                     ; 308 				u8IDData = ((tIRFSM.u32Recieved32Bits >> 24) & 0x000000FF);
+ 924  02f6 b616          	ld	a,L3_tIRFSM+2
+ 925  02f8 6b05          	ld	(OFST+0,sp),a
+ 926                     ; 309 				u8IDAntiData = ((tIRFSM.u32Recieved32Bits >> 16) & 0x000000FF);
+ 928  02fa b617          	ld	a,L3_tIRFSM+3
+ 929  02fc a4ff          	and	a,#255
+ 930  02fe 6b04          	ld	(OFST-1,sp),a
+ 931                     ; 310 				u8OperateData = ((tIRFSM.u32Recieved32Bits >> 8) & 0x000000FF);
+ 933  0300 b618          	ld	a,L3_tIRFSM+4
+ 934  0302 a4ff          	and	a,#255
+ 935  0304 6b01          	ld	(OFST-4,sp),a
+ 936                     ; 311 				u8OperateAntiData = tIRFSM.u32Recieved32Bits & 0x000000FF;
+ 938  0306 b619          	ld	a,L3_tIRFSM+5
+ 939  0308 a4ff          	and	a,#255
+ 940  030a 6b02          	ld	(OFST-3,sp),a
+ 941                     ; 313 				printf("[IR] code = %x%x%x%x", u8IDData, u8IDAntiData, u8OperateData, u8OperateAntiData);
+ 943  030c 7b02          	ld	a,(OFST-3,sp)
+ 944  030e 88            	push	a
+ 945  030f 7b02          	ld	a,(OFST-3,sp)
+ 946  0311 88            	push	a
+ 947  0312 7b06          	ld	a,(OFST+1,sp)
+ 948  0314 88            	push	a
+ 949  0315 7b08          	ld	a,(OFST+3,sp)
+ 950  0317 88            	push	a
+ 951  0318 35200000      	mov	c_x,#page(L503)
+ 952  031c ae0020        	ldw	x,#L503
+ 953  031f cd0000        	call	_printf
+ 955  0322 5b04          	addw	sp,#4
+ 956                     ; 316 				if ((0xFF != u8IDData + u8IDAntiData) /*|| (0xFF != u8OperateData + u8OperateAntiData)*/) {
+ 958  0324 7b05          	ld	a,(OFST+0,sp)
+ 959  0326 5f            	clrw	x
+ 960  0327 1b04          	add	a,(OFST-1,sp)
+ 961  0329 2401          	jrnc	L25
+ 962  032b 5c            	incw	x
+ 963  032c               L25:
+ 964  032c 02            	rlwa	x,a
+ 965  032d a300ff        	cpw	x,#255
+ 966  0330 2706          	jreq	L703
+ 967                     ; 317 					u8Err = 1;
+ 969  0332 a601          	ld	a,#1
+ 970  0334 6b03          	ld	(OFST-2,sp),a
+ 972  0336 2047          	jra	L162
+ 973  0338               L703:
+ 974                     ; 322 					if (tIRFSM.u8Available_Rx < _BUFFER_LENGTH_IR_Rx_) {
+ 976  0338 b622          	ld	a,L3_tIRFSM+14
+ 977  033a a114          	cp	a,#20
+ 978  033c 241b          	jruge	L313
+ 979                     ; 324 						tIRFSM.u8Available_Rx++;
+ 981  033e 3c22          	inc	L3_tIRFSM+14
+ 982                     ; 327 						*(tIRFSM.pu8Buffer_Rx + tIRFSM.u8Write_Rx++) = u8IDAntiData;
+ 984  0340 b620          	ld	a,L3_tIRFSM+12
+ 985  0342 97            	ld	xl,a
+ 986  0343 3c20          	inc	L3_tIRFSM+12
+ 987  0345 9f            	ld	a,xl
+ 988  0346 5f            	clrw	x
+ 989  0347 97            	ld	xl,a
+ 990  0348 7b04          	ld	a,(OFST-1,sp)
+ 991  034a 92d723        	ld	([L3_tIRFSM+15.w],x),a
+ 992                     ; 330 						tIRFSM.u8RecievedCode = u8IDAntiData;
+ 994  034d 7b04          	ld	a,(OFST-1,sp)
+ 995  034f b71b          	ld	L3_tIRFSM+7,a
+ 996                     ; 333 						if (tIRFSM.u8Write_Rx >= _BUFFER_LENGTH_IR_Rx_) {
+ 998  0351 b620          	ld	a,L3_tIRFSM+12
+ 999  0353 a114          	cp	a,#20
+1000  0355 2502          	jrult	L313
+1001                     ; 334 							tIRFSM.u8Write_Rx = 0;
+1003  0357 3f20          	clr	L3_tIRFSM+12
+1004  0359               L313:
+1005                     ; 339 					tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_INTERVAL;
+1007  0359 35030014      	mov	L3_tIRFSM,#3
+1008                     ; 342 					tIRFSM.fFirstContinue = 1;
+1010  035d 72120015      	bset	L3_tIRFSM+1,#1
+1011                     ; 345 					tIRFSM.u32CodeTime = 0;
+1013  0361 ae0000        	ldw	x,#0
+1014  0364 bf1e          	ldw	L3_tIRFSM+10,x
+1015  0366 ae0000        	ldw	x,#0
+1016  0369 bf1c          	ldw	L3_tIRFSM+8,x
+1017  036b 2012          	jra	L162
+1018  036d               L771:
+1019                     ; 353 	case _IR_RECEIVEDSTATUS_INTERVAL:
+1019                     ; 354 			//转入接收连发码之间的间隔状态
+1019                     ; 355 			tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_INTERVAL;
+1021  036d 35030014      	mov	L3_tIRFSM,#3
+1022                     ; 358 			tIRFSM.u32CodeTime = 0;
+1024  0371 ae0000        	ldw	x,#0
+1025  0374 bf1e          	ldw	L3_tIRFSM+10,x
+1026  0376 ae0000        	ldw	x,#0
+1027  0379 bf1c          	ldw	L3_tIRFSM+8,x
+1028                     ; 361 			tIRFSM.u8ReceiveTimeout = _IR_RECEIVE_TIMEOUT_;
+1030  037b 35320025      	mov	L3_tIRFSM+17,#50
+1031                     ; 363 		break;
+1033  037f               L102:
+1034                     ; 411 	default:
+1034                     ; 412 		break;
+1036  037f               L162:
+1037                     ; 416 	if (u8Err) {
+1039  037f 0d03          	tnz	(OFST-2,sp)
+1040  0381 2722          	jreq	L713
+1041                     ; 418 		tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_IDLE;
+1043  0383 3f14          	clr	L3_tIRFSM
+1044                     ; 421 		tIRFSM.fCodeTimeEn = 0;
+1046  0385 72110015      	bres	L3_tIRFSM+1,#0
+1047                     ; 424 		tIRFSM.u32CodeTime = 0;
+1049  0389 ae0000        	ldw	x,#0
+1050  038c bf1e          	ldw	L3_tIRFSM+10,x
+1051  038e ae0000        	ldw	x,#0
+1052  0391 bf1c          	ldw	L3_tIRFSM+8,x
+1053                     ; 427 		tIRFSM.u32Recieved32Bits = 0;
+1055  0393 ae0000        	ldw	x,#0
+1056  0396 bf18          	ldw	L3_tIRFSM+4,x
+1057  0398 ae0000        	ldw	x,#0
+1058  039b bf16          	ldw	L3_tIRFSM+2,x
+1059                     ; 430 		tIRFSM.u8BitsLength = 0;
+1061  039d 3f1a          	clr	L3_tIRFSM+6
+1062                     ; 433 		tIRFSM.u8ReceiveTimeout = 0;
+1064  039f 3f25          	clr	L3_tIRFSM+17
+1065                     ; 436 		TIM3_Cmd(DISABLE);
+1067  03a1 4f            	clr	a
+1068  03a2 cd0000        	call	_TIM3_Cmd
+1070  03a5               L713:
+1071                     ; 438 }
+1074  03a5 5b05          	addw	sp,#5
+1075  03a7 81            	ret
+1100                     ; 446 void Isr_IR_Timeout10ms(void) {
+1101                     	switch	.text
+1102  03a8               _Isr_IR_Timeout10ms:
+1106                     ; 449 	if (tIRFSM.u8ReceiveTimeout) {
+1108  03a8 3d25          	tnz	L3_tIRFSM+17
+1109  03aa 2710          	jreq	L133
+1110                     ; 450 		tIRFSM.u8ReceiveTimeout--;
+1112  03ac 3a25          	dec	L3_tIRFSM+17
+1113                     ; 453 		if (0 == tIRFSM.u8ReceiveTimeout) {
+1115  03ae 3d25          	tnz	L3_tIRFSM+17
+1116  03b0 260a          	jrne	L133
+1117                     ; 455 			TIM3_Cmd(DISABLE);
+1119  03b2 4f            	clr	a
+1120  03b3 cd0000        	call	_TIM3_Cmd
+1122                     ; 458 			tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_IDLE;
+1124  03b6 3f14          	clr	L3_tIRFSM
+1125                     ; 461 			tIRFSM.fCodeTimeEn = 0;
+1127  03b8 72110015      	bres	L3_tIRFSM+1,#0
+1128  03bc               L133:
+1129                     ; 464 }
+1132  03bc 81            	ret
+1157                     	switch	.const
+1158  0018               L46:
+1159  0018 00004e20      	dc.l	20000
+1160  001c               L66:
+1161  001c 0001d4c0      	dc.l	120000
+1162                     ; 472 void Isr_IR_Timeout100us(void) {
+1163                     	switch	.text
+1164  03bd               _Isr_IR_Timeout100us:
+1168                     ; 475 	if (tIRFSM.fCodeTimeEn) {
+1170  03bd b615          	ld	a,L3_tIRFSM+1
+1171  03bf a501          	bcp	a,#1
+1172  03c1 2740          	jreq	L543
+1173                     ; 477 		tIRFSM.u32CodeTime += 100;
+1175  03c3 ae001c        	ldw	x,#L3_tIRFSM+8
+1176  03c6 a664          	ld	a,#100
+1177  03c8 cd0000        	call	c_lgadc
+1179                     ; 480 		if (((tIRFSM.u8ReceivedStatus <= _IR_RECEIVEDSTATUS_32BITSDATA)
+1179                     ; 481 				&& (tIRFSM.u32CodeTime >= _IR_DATA_LIMITATION_TIME))
+1179                     ; 482 				|| ((tIRFSM.u8ReceivedStatus == _IR_RECEIVEDSTATUS_INTERVAL)
+1179                     ; 483 						&& (tIRFSM.u32CodeTime >= _IR_INTERVAL_LIMITATION_TIME))) {
+1181  03cb b614          	ld	a,L3_tIRFSM
+1182  03cd a103          	cp	a,#3
+1183  03cf 240e          	jruge	L353
+1185  03d1 ae001c        	ldw	x,#L3_tIRFSM+8
+1186  03d4 cd0000        	call	c_ltor
+1188  03d7 ae0018        	ldw	x,#L46
+1189  03da cd0000        	call	c_lcmp
+1191  03dd 2414          	jruge	L153
+1192  03df               L353:
+1194  03df b614          	ld	a,L3_tIRFSM
+1195  03e1 a103          	cp	a,#3
+1196  03e3 261e          	jrne	L543
+1198  03e5 ae001c        	ldw	x,#L3_tIRFSM+8
+1199  03e8 cd0000        	call	c_ltor
+1201  03eb ae001c        	ldw	x,#L66
+1202  03ee cd0000        	call	c_lcmp
+1204  03f1 2510          	jrult	L543
+1205  03f3               L153:
+1206                     ; 485 			tIRFSM.fCodeTimeEn = 0;
+1208  03f3 72110015      	bres	L3_tIRFSM+1,#0
+1209                     ; 488 			tIRFSM.u8ReceivedStatus = _IR_RECEIVEDSTATUS_IDLE;
+1211  03f7 3f14          	clr	L3_tIRFSM
+1212                     ; 491 			tIRFSM.u32CodeTime = 0;
+1214  03f9 ae0000        	ldw	x,#0
+1215  03fc bf1e          	ldw	L3_tIRFSM+10,x
+1216  03fe ae0000        	ldw	x,#0
+1217  0401 bf1c          	ldw	L3_tIRFSM+8,x
+1218  0403               L543:
+1219                     ; 494 }
+1222  0403 81            	ret
+1367                     	xref	_printf
+1368                     	switch	.ubsct
+1369  0000               L5_IR_Buf:
+1370  0000 000000000000  	ds.b	20
+1371  0014               L3_tIRFSM:
+1372  0014 000000000000  	ds.b	18
+1373                     	xref	_COMM_RequestSendCommand
+1374                     	xref	_ZeroMem
+1375                     	xdef	_ISR_IRReceive
+1376                     	xdef	_Isr_IR_Timeout100us
+1377                     	xdef	_Isr_IR_Timeout10ms
+1378                     	xdef	_IR_Process
+1379                     	xdef	_IR_Init
+1380                     	xref	_TIM4_ClearFlag
+1381                     	xref	_TIM4_ITConfig
+1382                     	xref	_TIM4_Cmd
+1383                     	xref	_TIM4_TimeBaseInit
+1384                     	xref	_TIM3_ClearFlag
+1385                     	xref	_TIM3_ITConfig
+1386                     	xref	_TIM3_Cmd
+1387                     	xref	_TIM3_TimeBaseInit
+1388                     	xref	_GPIO_WriteLow
+1389                     	xref	_GPIO_WriteHigh
+1390                     	xref	_GPIO_Init
+1391                     	xref	_EXTI_SetTLISensitivity
+1392                     	xref	_EXTI_SetExtIntSensitivity
+1393                     	switch	.const
+1394  0020               L503:
+1395  0020 5b49525d2063  	dc.b	"[IR] code = %x%x%x"
+1396  0032 257800        	dc.b	"%x",0
+1397  0035               L561:
+1398  0035 5b49525d2049  	dc.b	"[IR] IR_CMD_BK_VIE"
+1399  0047 570a00        	dc.b	"W",10,0
+1400  004a               L361:
+1401  004a 5b49525d2049  	dc.b	"[IR] IR_CMD_FR_VIE"
+1402  005c 570a00        	dc.b	"W",10,0
+1403  005f               L161:
+1404  005f 5b49525d2049  	dc.b	"[IR] IR_CMD_RT_VIE"
+1405  0071 570a00        	dc.b	"W",10,0
+1406  0074               L751:
+1407  0074 5b49525d2049  	dc.b	"[IR] IR_CMD_LF_VIE"
+1408  0086 570a00        	dc.b	"W",10,0
+1409  0089               L551:
+1410  0089 5b49525d2049  	dc.b	"[IR] IR_CMD_POWER",10,0
+1411  009c               L351:
+1412  009c 5b49525d2049  	dc.b	"[IR] IR_CMD_BACK",10,0
+1413  00ae               L151:
+1414  00ae 5b49525d2049  	dc.b	"[IR] IR_CMD_RIGHT",10,0
+1415  00c1               L741:
+1416  00c1 5b49525d2049  	dc.b	"[IR] IR_CMD_LEFT",10,0
+1417  00d3               L541:
+1418  00d3 5b49525d2049  	dc.b	"[IR] IR_CMD_DOWN",10,0
+1419  00e5               L341:
+1420  00e5 5b49525d2049  	dc.b	"[IR] IR_CMD_UP",10,0
+1421  00f5               L141:
+1422  00f5 5b49525d2049  	dc.b	"[IR] IR_CMD_OK",10,0
+1423                     	xref.b	c_lreg
+1424                     	xref.b	c_x
+1444                     	xref	c_lgadc
+1445                     	xref	c_lgor
+1446                     	xref	c_llsh
+1447                     	xref	c_lcmp
+1448                     	xref	c_ltor
+1449                     	end

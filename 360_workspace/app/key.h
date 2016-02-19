@@ -10,7 +10,8 @@
 /*按键状态*/
 typedef enum {
 	KEY_NORMAL = 0,   /*正常*/
-	KEY_ACTIVED	  /*触发，如方向切换时*/
+	KEY_ACTIVED,	  /*触发，如方向切换时*/
+	KEY_UNKNOWN
 } eKEYSTATE;
 
 /*按键检测状态*/
@@ -38,10 +39,13 @@ void ISR_Key(void);
 typedef enum {	
 	KEY_DET_ACC = 0, 
 //	KEY_DET_FRONT,
+	KEY_DET_REAR,
+	KEY_DET_END,	
+	
 	KEY_DET_LEFT,
 	KEY_DET_RIGHT,
-	KEY_DET_REAR,
-	KEY_DET_END
+	KEY_DET_IDLE
+
 } _eKEYDETTYPE;
 
 

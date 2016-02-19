@@ -42,70 +42,36 @@ int COMM_FormFrame(eKEYTYPE eKey, eKEYSTATE eState, tMSG_CMD *ptCmd)
 	assert_param(ptCmd != (void*)0);
 	
 	ptCmd->head = CMD_HEAD; /*消息头，0x55*/
+	ptCmd->cmd = eKey;
 
+		/*处理外部检测线触发和回复两种状态*/
 	switch(eKey) 
 	{
-		case KEY_ACC:
-			break;
-		
-		case KEY_FRONT:
-			if(eState == KEY_ACTIVED)		
-				ptCmd->cmd = MSG_FRONT;
-			else		
-				ptCmd->cmd = MSG_FRONT;
-			break;
-			
 		case KEY_LEFT:
 			if(eState == KEY_ACTIVED)		
-				ptCmd->cmd = MSG_LEFT;
+				ptCmd->cmd = KEY_LEFT;
 			else		
-				ptCmd->cmd = MSG_FRONT;
+				ptCmd->cmd = KEY_FRONT;
 			break;
 
 		case KEY_RIGHT:
 			if(eState == KEY_ACTIVED)		
-				ptCmd->cmd = MSG_RIGHT;
+				ptCmd->cmd = KEY_RIGHT;
 			else		
-				ptCmd->cmd = MSG_FRONT;
+				ptCmd->cmd = KEY_FRONT;
 			break;
 
 		case KEY_REAR:
 			if(eState == KEY_ACTIVED)		
-				ptCmd->cmd = MSG_REAR;
+				ptCmd->cmd = KEY_REAR;
 			else		
-				ptCmd->cmd = MSG_FRONT;
+				ptCmd->cmd = KEY_FRONT;
 			break;
 			
-		case MENU_BACK:		/*遥控器消息：返回*/
-			ptCmd->cmd = MSG_MENU_BACK;
-			break;
-			
-		case MENU_LEFT:	/*遥控器消息：左*/
-			ptCmd->cmd = MSG_MENU_LEFT;
-			break;
-			
-		case MENU_RIGHT:	/*遥控器消息：右*/
-			ptCmd->cmd = MSG_MENU_RIGHT;
-			break;
-
-		case MENU_UP:	/*遥控器消息：上*/
-			ptCmd->cmd = MSG_MENU_UP;
-			break;
-
-		case MENU_DOWN:	/*遥控器消息：下*/			
-			ptCmd->cmd = MSG_MENU_DOWN;
-			break;
-		case MENU_OK:	/*遥控器消息：确定*/
-			ptCmd->cmd = MSG_MENU_OK;
-			break;
-		case MENU_POWER:
-			ptCmd->cmd = MSG_MENU_POWER;
-			break;
-
 		default:
-			return -1;
 			break;
 	}
+
 
 	ptCmd->param[0] = 0;
 	ptCmd->param[1] = 0;
@@ -135,8 +101,12 @@ void COMM_RequestSendCommand(eKEYTYPE eKey, eKEYSTATE eState)
 
 #ifdef VSP_BOARD 	
 	UART2_ITConfig(UART2_IT_TXE, DISABLE);
-#else
+#endif
+#ifdef _A8_COMM_UART1_
 		UART1_ITConfig(UART1_IT_TXE, DISABLE);
+#endif
+#ifdef _A8_COMM_UART3_
+		UART3_ITConfig(UART3_IT_TXE, DISABLE);
 #endif
 		while(i < sizeof(tMSG_CMD))
 		{
@@ -148,8 +118,12 @@ void COMM_RequestSendCommand(eKEYTYPE eKey, eKEYSTATE eState)
 		}
 #ifdef VSP_BOARD 	
 		UART2_ITConfig(UART2_IT_TXE, ENABLE);
-#else
+#endif
+#ifdef _A8_COMM_UART1_
 		UART1_ITConfig(UART1_IT_TXE, ENABLE);
+#endif
+#ifdef _A8_COMM_UART3_
+		UART3_ITConfig(UART3_IT_TXE, ENABLE);
 #endif
 	}
 }
@@ -172,7 +146,27 @@ void COMM_Lowlevel_Config()
 
 	/* Enable UART1 Transmit interrupt*/
 	UART2_ITConfig(UART2_IT_TXE | UART2_IT_RXNE, ENABLE);
-#else
+#endif
+
+#ifdef _A8_COMM_UART3_
+    UART3_DeInit();
+    /* UART1 and UART3 configuration -------------------------------------------------*/
+    /* UART1 and UART3 configured as follow:
+          - BaudRate = 115200 baud  
+          - Word Length = 8 Bits
+          - One Stop Bit
+          - No parity
+          - Receive and transmit enabled
+          - UART1 Clock disabled
+     */
+	UART3_Init((uint32_t)115200, UART3_WORDLENGTH_8D, UART3_STOPBITS_1, UART3_PARITY_NO,
+		UART3_MODE_TX_ENABLE);
+    
+	/* Enable UART1 Transmit interrupt*/
+	UART3_ITConfig(UART3_IT_TXE, ENABLE);
+#endif
+
+#ifdef _A8_COMM_UART1_
   /* Deinitializes the UART1 and UART3 peripheral */
     UART1_DeInit();
     /* UART1 and UART3 configuration -------------------------------------------------*/
@@ -255,7 +249,7 @@ void main()
 		COMM_RequestSendCommand(KEY_LEFT, KEY_ACTIVED);
 
 
-		printf("1234567890", 10);
+	//	printf("1234567890", 10);
 
 		for(; i > 0; i--)
 		{

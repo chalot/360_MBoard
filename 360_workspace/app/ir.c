@@ -4,12 +4,13 @@
 #include "utility.h"
 #include "comm.h"
 #include "printf.h"
+#include "config.h"
 
-#define LED_ON()  GPIO_WriteLow(GPIOD,GPIO_PIN_3)
-#define LED_OFF() GPIO_WriteHigh(GPIOD,GPIO_PIN_3)
+#define LED_ON()  GPIO_WriteLow(GPIOE,GPIO_PIN_6)
+#define LED_OFF() GPIO_WriteHigh(GPIOE,GPIO_PIN_6)
 
 #define TIM3_PERIOD     159  	/*10ms定时周期*/
-#define TIM2_PERIOD 	99  	/*100us定时周期*/
+#define TIM4_PERIOD 		99  	/*100us定时周期*/
 
 static tIRFSMType tIRFSM;		//红外模拟输出状态机
 
@@ -18,7 +19,7 @@ static u8 IR_Buf[_BUFFER_LENGTH_IR_Rx_];
 
 static void IR_GPIO_Init(void);
 static void TIM3_Config_10ms(void);
-static void	TIM2_Config_100us(void);
+static void	TIM4_Config_100us(void);
 
 extern char putchar(char);
 extern int printf(const char FAR *format, ...);
@@ -36,7 +37,7 @@ void IR_Init()
 	IR_GPIO_Init();
 
 	TIM3_Config_10ms();
-	TIM2_Config_100us();
+	TIM4_Config_100us();
 }
 
 /**
@@ -47,14 +48,13 @@ void IR_GPIO_Init() {
 
 	/* 初始化遥控器接收线，输入悬浮 */
 	GPIO_Init(GPIO_IR_PORT, GPIO_IR_PIN, GPIO_MODE_IN_FL_IT);
-//	GPIO_ExternalPullUpConfig(GPIOA, GPIO_PIN_3, ENABLE);
-
 
 	/* 下降沿触发 */
-	EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOA, EXTI_SENSITIVITY_FALL_ONLY);
+	EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOE, EXTI_SENSITIVITY_FALL_ONLY);
 	EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
 
-	GPIO_Init(GPIOD, GPIO_PIN_3, GPIO_MODE_OUT_PP_HIGH_FAST);
+	/* LED指示灯 */
+	GPIO_Init(GPIOE, GPIO_PIN_6, GPIO_MODE_OUT_PP_HIGH_FAST);
 }
 	
 /**
@@ -101,7 +101,7 @@ void TIM3_Config_10ms(void)
   * @param  None
   * @retval None
   */
-static void TIM2_Config_100us(void)
+static void TIM4_Config_100us(void)
 {
 
 /*
@@ -113,14 +113,14 @@ so TIM2_PERIOD = (0.0001 * 1000000 - 1) = 99
 */
 
   /* Time base configuration */
-  TIM2_TimeBaseInit(TIM2_PRESCALER_16, TIM2_PERIOD);
+  TIM4_TimeBaseInit(TIM4_PRESCALER_16, TIM4_PERIOD);
   /* Clear TIM6 update flag */
-  TIM2_ClearFlag(TIM2_FLAG_UPDATE);
+  TIM4_ClearFlag(TIM4_FLAG_UPDATE);
   /* Enable update interrupt */
-  TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
+  TIM4_ITConfig(TIM4_IT_UPDATE, ENABLE);
 
   /* Enable TIM6 */
-  TIM2_Cmd(ENABLE);
+  TIM4_Cmd(ENABLE);
 }
 
 

@@ -7,10 +7,15 @@
 #include "key.h"
 #include "utility.h"
 #include "comm.h"
+#include "config.h"
+
 
 /*按键全局状态*/
 eKEYSTATE g_KeyState[KEY_DET_END];
 
+__IO	u8  g_KeyTrigFlag;
+__IO	u8  g_KeyStat;
+__IO	u8  g_KeyId;
 
 /*按键检测状态*/
 static tKEYDET l_KeyDetStat[KEY_DET_END];
@@ -25,12 +30,21 @@ static _eKEYDETTYPE l_KeyCurDet = KEY_DET_ACC;
 
 
 static eKEYSTATE KEY_GetCurrentState(eKEYTYPE eType);
-static void KEY_Lowlevel_Init(void);
+static void KEY_IO_Init(void);
+static void KEY_TIMER_Config(void);
+
 
 
 void KEY_Process()
 {
 	eKEYTYPE i = 0;
+
+	/*发送左右转向触发信号*/
+	if(g_KeyTrigFlag == TRIG_VALID) {
+			COMM_RequestSendCommand(g_KeyId, g_KeyStat);
+			/*清除触发信号*/
+			g_KeyTrigFlag = TRIG_INVALID;
+	}
 
 	/*没有变化*/
 	if(g_KeyState[l_KeyCurDet] == KEY_GetCurrentState(l_KeyCurDet))
@@ -88,22 +102,33 @@ void KEY_Process()
 		}
 	}
 	
+
 }
 
-
-void KEY_Lowlevel_Init()
+/*管脚初始化*/
+void KEY_IO_Init()
 {
-	GPIO_Init(GPIO_ACC_PORT, (GPIO_Pin_TypeDef)GPIO_ACC_PIN, GPIO_MODE_IN_FL_NO_IT);
-	GPIO_Init(GPIO_LEFT_PORT, (GPIO_Pin_TypeDef)GPIO_LEFT_PIN, GPIO_MODE_IN_FL_NO_IT);
-	GPIO_Init(GPIO_RIGHT_PORT, (GPIO_Pin_TypeDef)GPIO_RIGHT_PIN, GPIO_MODE_IN_FL_NO_IT);
-	GPIO_Init(GPIO_REAR_PORT, (GPIO_Pin_TypeDef)GPIO_REAR_PIN, GPIO_MODE_IN_FL_NO_IT);
+	GPIO_Init(GPIO_ACC_PORT, (GPIO_Pin_TypeDef)GPIO_ACC_PIN, GPIO_MODE_IN_PU_NO_IT);
 
-	  /* Initialize the Interrupt sensitivity */
-  //EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOB, EXTI_SENSITIVITY_RISE_FALL);
+/*转向电平输入是脉冲，不是高低电平*/
+#ifdef _LEFT_PULSE_
+	GPIO_Init(GPIO_LEFT_PORT, (GPIO_Pin_TypeDef)GPIO_LEFT_PIN, GPIO_MODE_IN_FL_IT);
+#else
+	GPIO_Init(GPIO_LEFT_PORT, (GPIO_Pin_TypeDef)GPIO_LEFT_PIN, GPIO_MODE_IN_PU_NO_IT);	
+#endif
 
-	  /*禁止用TLI，可以吗
-	  TLI只能要么为下降沿要么为上升沿，而我希望同时支持，貌似TLI不允许*/
-//	EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);	 
+#ifdef _RIGHT_PULSE_
+	GPIO_Init(GPIO_RIGHT_PORT, (GPIO_Pin_TypeDef)GPIO_RIGHT_PIN, GPIO_MODE_IN_FL_IT);
+#else
+	GPIO_Init(GPIO_RIGHT_PORT, (GPIO_Pin_TypeDef)GPIO_RIGHT_PIN, GPIO_MODE_IN_PU_NO_IT);
+#endif
+
+	GPIO_Init(GPIO_REAR_PORT, (GPIO_Pin_TypeDef)GPIO_REAR_PIN, GPIO_MODE_IN_PU_NO_IT);
+
+	/* 下降沿触发 */
+	EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOB, EXTI_SENSITIVITY_FALL_ONLY);
+	EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
+	
 }
 
 void KEY_Init()
@@ -111,7 +136,10 @@ void KEY_Init()
 	u8 i = 0;
 
 	/*GPIO初始化*/
-	KEY_Lowlevel_Init();
+	KEY_IO_Init();
+			
+	/* 定时器初始化 */
+	KEY_TIMER_Config();
 
 	/*初始化按键检测状态*/
 	while(i < KEY_DET_END) 
@@ -125,9 +153,14 @@ void KEY_Init()
 
 	/*初始化全局按键状态*/
 	g_KeyState[KEY_DET_ACC] = KEY_GetCurrentState(KEY_DET_ACC);
-	g_KeyState[KEY_DET_LEFT] = KEY_GetCurrentState(KEY_DET_LEFT);
-	g_KeyState[KEY_DET_RIGHT] = KEY_GetCurrentState(KEY_DET_RIGHT);
+//	g_KeyState[KEY_DET_LEFT] = KEY_GetCurrentState(KEY_DET_LEFT);
+//	g_KeyState[KEY_DET_RIGHT] = KEY_GetCurrentState(KEY_DET_RIGHT);
 	g_KeyState[KEY_DET_REAR] = KEY_GetCurrentState(KEY_DET_REAR);
+
+	/*初始化转向检测状态:无效*/
+	g_KeyTrigFlag = TRIG_INVALID;
+	g_KeyStat = KEY_UNKNOWN;
+	g_KeyId = KEY_END;
 }
 
 eKEYSTATE KEY_GetCurrentState(eKEYTYPE eType)
@@ -155,4 +188,32 @@ eKEYSTATE KEY_GetCurrentState(eKEYTYPE eType)
 	}
 
 	return eStat;
+}
+
+#define TIM2_PERIOD		249	/*定时周期500ms*/
+
+/**
+  * @brief  Configure TIM4 to generate an update interrupt each 1ms 
+  * @param  None
+  * @retval None
+  */
+void KEY_TIMER_Config(void)
+{
+	/*
+	16 MHz / 32768 = 500 Hz
+  max time base is 500 ms if TIM2_PERIOD = 255 --> (255 + 1) / 500 = 512 ms
+  min time base is 4 ms if TIM2_PERIOD = 1	 --> (	1 + 1) / 500 = 4 ms 
+  
+  so TIM2_PERIOD = (0.5 * 500 - 1) = 249 
+  */
+
+  /* Time base configuration */
+  TIM2_TimeBaseInit(TIM2_PRESCALER_32768, TIM2_PERIOD);
+  /* Clear TIM4 update flag */
+  TIM2_ClearFlag(TIM2_FLAG_UPDATE);
+  /* Enable update interrupt */
+  TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
+
+  /* Enable TIM4 */
+  TIM2_Cmd(DISABLE);
 }

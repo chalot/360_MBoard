@@ -1,3 +1,4 @@
+
 /* MAIN.C file
  * 
  * Copyright (c) 2002-2005 STMicroelectronics
@@ -10,6 +11,7 @@
 #include "beep.h"
 #include "comm.h"
 #include "ir.h"
+#include "config.h"
 
 #define PUTCHAR_PROTOTYPE char putchar (char c)
 
@@ -23,8 +25,14 @@ __IO uint32_t LsiFreq = 0;
 void IWDG_Config(void);
 uint32_t LSIMeasurment(void);
 
+/*电源控制*/
+#define VDD3V3_ON()  GPIO_WriteHigh(GPIOD,GPIO_PIN_3)
+#define VDD3V3_OFF() GPIO_WriteLow(GPIOD,GPIO_PIN_3)
 
-#if 0
+#define VDD12_ON()  GPIO_WriteHigh(GPIOC,GPIO_PIN_1)
+#define VDD12_OFF() GPIO_WriteLow(GPIOC,GPIO_PIN_1)
+
+#if 1
 
 /*主程序*/
 void main()
@@ -38,15 +46,23 @@ void main()
 	  /* Clear IWDGF Flag */
 	  RST_ClearFlag(RST_FLAG_IWDGF);
 	}
+
+	/*初始化电源控制*/
+	GPIO_DeInit(GPIOD);	
+	GPIO_Init(GPIOD,GPIO_PIN_3,GPIO_MODE_OUT_PP_LOW_FAST);
+	GPIO_DeInit(GPIOC);	
+	GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_FAST);	
 	
 	/* get measured LSI frequency */
-//	LsiFreq = LSIMeasurment();	
+//	LsiFreq = LSIMeasurment();
 	
 	/* IWDG Configuration */
 //	IWDG_Config();
 
+#ifdef __DEBUG__
 	/*底板MCU调试串口配置*/
 	DBG_Config();
+#endif
 
 	/*按键初始化*/
 	KEY_Init();
@@ -59,6 +75,10 @@ void main()
 	
 	/*打开全局中断*/
 	enableInterrupts();    
+	
+	/*上电,3.3V/12V*/
+	VDD3V3_ON();
+	VDD12_ON();
 
 	while (1)
 	{
@@ -67,9 +87,6 @@ void main()
 
 		/*红外遥控器处理*/
 		IR_Process();
-
-		/*串口通信处理*/
-		COMM_Process();
 
 		/*喂狗*/
 //		IWDG_ReloadCounter();  
@@ -93,13 +110,14 @@ void CLK_Config(void)
 	CLK_HSICmd(ENABLE);
 
 	
-	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER1, ENABLE);			
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER1, ENABLE);	
 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER2, ENABLE);	
 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER3, ENABLE);	
 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER4, ENABLE);	
 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART1, ENABLE);
-//	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART3, ENABLE);
-	
+	#ifdef __DEBUG__
+	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART3, ENABLE);
+	#endif
 }
 
 
@@ -114,7 +132,9 @@ void DBG_Config()
 	UART3_DeInit();
 
 	UART3_Init((uint32_t)115200, UART3_WORDLENGTH_8D, UART3_STOPBITS_1, UART3_PARITY_NO,
-			UART3_MODE_TXRX_ENABLE);
+			UART3_MODE_TX_DISABLE | UART3_MODE_RX_DISABLE);
+			
+	UART3_ITConfig(UART3_IT_TXE, DISABLE);
 }
 
 /**
@@ -124,12 +144,14 @@ void DBG_Config()
   */
 PUTCHAR_PROTOTYPE
 {
+#ifdef __DEBUG__
   /* Write a character to the UART1 */
   UART3_SendData8(c);
   /* Loop until the end of transmission */
   while (UART3_GetFlagStatus(UART3_FLAG_TXE) == RESET);
 
   return (c);
+#endif
 }
 
 
@@ -275,24 +297,23 @@ void assert_failed(uint8_t* file, uint32_t line)
 /*测试调试串口输出*/
 #if 0
 #include "utility.h"
-
 /*主程序*/
 void main()
 {
 	CLK_Config();
 	
 	/*通信串口初始化*/
+#ifdef __DEBUG__
 	DBG_Config();
+#endif
 
 	/*打开全局中断*/
 	enableInterrupts();    
-
 	while (1)
 	{
 		u16 i = 1000;
 		
 		printf("Hello, world! my name is %s\n", "gaozhengdong");
-
 		for(; i > 0; i--)
 		{
 			Delay_1ms();
@@ -302,11 +323,8 @@ void main()
 }
 #endif
 
-
-
-
 /*测试IR*/
-#if 1
+#if 0
 
 /*主程序*/
 void main()
@@ -340,6 +358,4 @@ void main()
 		
 }
 #endif
-
-
 
