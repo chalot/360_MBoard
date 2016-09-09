@@ -3,6 +3,7 @@ stm8_interrupt_vector.c
 stm8s_conf.h
 stm8s_it.c
 stm8s_it.h
+..\app\can.h
 ..\app\config.h
 ..\app\beep.h
 ..\app\comm.h
@@ -10,6 +11,7 @@ stm8s_it.h
 ..\app\key.h
 ..\app\periph.h
 ..\app\utility.h
+..\app\can.c
 ..\app\beep.c
 ..\app\comm.c
 ..\app\ir.c
@@ -40,6 +42,7 @@ stm8s_it.h
 ..\lib\inc\stm8s_uart2.h
 ..\lib\inc\stm8s_uart3.h
 ..\lib\inc\stm8s_wwdg.h
+..\lib\src\stm8s_can.c
 ..\lib\src\stm8s_awu.c
 ..\lib\src\stm8s_beep.c
 ..\lib\src\stm8s_clk.c
@@ -60,5 +63,5 @@ stm8s_it.h
 ..\lib\src\stm8s_wwdg.c
 ..\app\printf.h
 ..\lib\inc\stm8s_can.h
-c:\cosmic\cxstm8_32k\hstm8\mods0.h
+c:\cosmic\cxstm8_32k\hstm8\modsl0.h
 c:\cosmic\cxstm8_32k\hstm8\stdio.h

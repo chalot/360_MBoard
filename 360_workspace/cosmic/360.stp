@@ -83,10 +83,10 @@ String.100.0=STM8S208C6
 
 [Root.Config.0.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i..\app -i.. -i..\lib\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +modsl0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i..\app -i.. -i..\lib\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2015,7,3,11,11,22
+String.6.0=2016,8,31,15,20,34
 
 [Root.Config.0.Settings.4]
 String.2.0=Assembling $(InputFile)...
@@ -244,10 +244,10 @@ Int.1=0
 
 [Root.Cosmic.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i..\app -i.. -i..\lib\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +modsl0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i..\app -i.. -i..\lib\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2015,7,3,11,11,22
+String.6.0=2016,8,31,15,20,34
 
 [Root.Cosmic.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -342,10 +342,10 @@ Int.1=0
 
 [Root.app.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i..\app -i.. -i..\lib\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +modsl0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i..\app -i.. -i..\lib\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2015,7,3,11,11,22
+String.6.0=2016,8,31,15,20,34
 
 [Root.app.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -391,8 +391,13 @@ String.6.0=2015,6,3,16,32,49
 [Root.app.app\inc]
 ElemType=Folder
 PathName=app\inc
-Child=Root.app.app\inc...\app\config.h
+Child=Root.app.app\inc...\app\can.h
 Next=Root.app.app\src
+
+[Root.app.app\inc...\app\can.h]
+ElemType=File
+PathName=..\app\can.h
+Next=Root.app.app\inc...\app\config.h
 
 [Root.app.app\inc...\app\config.h]
 ElemType=File
@@ -431,7 +436,12 @@ PathName=..\app\utility.h
 [Root.app.app\src]
 ElemType=Folder
 PathName=app\src
-Child=Root.app.app\src...\app\beep.c
+Child=Root.app.app\src...\app\can.c
+
+[Root.app.app\src...\app\can.c]
+ElemType=File
+PathName=..\app\can.c
+Next=Root.app.app\src...\app\beep.c
 
 [Root.app.app\src...\app\beep.c]
 ElemType=File
@@ -489,10 +499,10 @@ Int.1=0
 
 [Root.std_periph_lib.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i..\app -i.. -i..\lib\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +modsl0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i..\app -i.. -i..\lib\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2015,7,3,11,11,22
+String.6.0=2016,8,31,15,20,34
 
 [Root.std_periph_lib.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -663,7 +673,12 @@ PathName=..\lib\inc\stm8s_wwdg.h
 [Root.std_periph_lib.std_periph_lib\src]
 ElemType=Folder
 PathName=std_periph_lib\src
-Child=Root.std_periph_lib.std_periph_lib\src...\lib\src\stm8s_awu.c
+Child=Root.std_periph_lib.std_periph_lib\src...\lib\src\stm8s_can.c
+
+[Root.std_periph_lib.std_periph_lib\src...\lib\src\stm8s_can.c]
+ElemType=File
+PathName=..\lib\src\stm8s_can.c
+Next=Root.std_periph_lib.std_periph_lib\src...\lib\src\stm8s_awu.c
 
 [Root.std_periph_lib.std_periph_lib\src...\lib\src\stm8s_awu.c]
 ElemType=File

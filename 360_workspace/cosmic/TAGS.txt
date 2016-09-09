@@ -4,7 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-ACK_HEAD	..\app\comm.h	30;"	macro
+ACK_HEAD	..\app\comm.h	32;"	macro
 ADC1	..\lib\inc\stm8s.h	2492;"	macro
 ADC1_ALIGN_LEFT	..\lib\inc\stm8s_adc1.h	64;"	enumerator	enum:__anon24
 ADC1_ALIGN_RIGHT	..\lib\inc\stm8s_adc1.h	65;"	enumerator	enum:__anon24
@@ -312,7 +312,7 @@ BRR2	..\lib\inc\stm8s.h	1962;"	member	struct:UART3_struct
 BTR1	..\lib\inc\stm8s.h	2179;"	member	struct:__anon13::__anon14::__anon20
 BTR2	..\lib\inc\stm8s.h	2180;"	member	struct:__anon13::__anon14::__anon20
 BUFSIZ	c:\cosmic\cxstm8_32k\hstm8\stdio.h	26;"	macro
-BUF_SIZE	..\app\comm.h	56;"	macro
+BUF_SIZE	..\app\comm.h	61;"	macro
 BYTE_0	..\lib\inc\stm8s.h	2685;"	macro
 BYTE_1	..\lib\inc\stm8s.h	2686;"	macro
 BYTE_2	..\lib\inc\stm8s.h	2687;"	macro
@@ -325,6 +325,9 @@ BitVal	..\lib\inc\stm8s.h	2708;"	macro
 Buffercmp	..\app\utility.c	12;"	function	signature:(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength)
 Buffercmp	..\app\utility.h	9;"	prototype	signature:(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength)
 CAN	..\lib\inc\stm8s.h	2505;"	macro
+CAN_ACKNOWLEDGE_TIMEOUT	..\lib\src\stm8s_can.c	33;"	macro	file:
+CAN_AddMsg	..\app\can.c	225;"	function	signature:(tCAN_MSG *ptCAN_MSG)
+CAN_AddMsg	..\app\can.h	48;"	prototype	signature:(tCAN_MSG *ptCAN_MSG)
 CAN_BTR1_RESET_VALUE	..\lib\inc\stm8s.h	2390;"	macro
 CAN_BTR2_RESET_VALUE	..\lib\inc\stm8s.h	2391;"	macro
 CAN_BaseAddress	..\lib\inc\stm8s.h	2477;"	macro
@@ -355,8 +358,12 @@ CAN_BitSeg2_7TimeQuantum	..\lib\inc\stm8s_can.h	150;"	enumerator	enum:__anon225
 CAN_BitSeg2_8TimeQuantum	..\lib\inc\stm8s_can.h	151;"	enumerator	enum:__anon225
 CAN_BitSeg2_TypeDef	..\lib\inc\stm8s_can.h	152;"	typedef	typeref:enum:__anon225
 CAN_CancelTransmit	..\lib\inc\stm8s_can.h	488;"	prototype	signature:(CAN_TransmitMailBox_TypeDef CAN_TransmitMailbox)
+CAN_CancelTransmit	..\lib\src\stm8s_can.c	718;"	function	signature:(CAN_TransmitMailBox_TypeDef CAN_TransmitMailbox)
 CAN_ClearFlag	..\lib\inc\stm8s_can.h	506;"	prototype	signature:(CAN_FLAG_TypeDef CAN_Flag)
+CAN_ClearFlag	..\lib\src\stm8s_can.c	1073;"	function	signature:(CAN_FLAG_TypeDef CAN_Flag)
 CAN_ClearITPendingBit	..\lib\inc\stm8s_can.h	508;"	prototype	signature:(CAN_IT_TypeDef CAN_IT)
+CAN_ClearITPendingBit	..\lib\src\stm8s_can.c	1344;"	function	signature:(CAN_IT_TypeDef CAN_IT)
+CAN_ClearMsg	..\app\can.c	180;"	function	file:	signature:(tCAN_MSG *ptCAN_Msg)
 CAN_DGR_LBKM	..\lib\inc\stm8s.h	2266;"	macro
 CAN_DGR_RESET_VALUE	..\lib\inc\stm8s.h	2383;"	macro
 CAN_DGR_RX	..\lib\inc\stm8s.h	2269;"	macro
@@ -365,6 +372,7 @@ CAN_DGR_SLIM	..\lib\inc\stm8s.h	2267;"	macro
 CAN_DGR_TXM2E	..\lib\inc\stm8s.h	2270;"	macro
 CAN_DLC_MAX	..\lib\inc\stm8s_can.h	32;"	macro
 CAN_DeInit	..\lib\inc\stm8s_can.h	459;"	prototype	signature:(void)
+CAN_DeInit	..\lib\src\stm8s_can.c	56;"	function	signature:(void)
 CAN_EIER_BOFIE	..\lib\inc\stm8s.h	2307;"	macro
 CAN_EIER_EPVIE	..\lib\inc\stm8s.h	2306;"	macro
 CAN_EIER_ERRIE	..\lib\inc\stm8s.h	2309;"	macro
@@ -409,6 +417,7 @@ CAN_FCR3_FSC50	..\lib\inc\stm8s.h	2364;"	macro
 CAN_FCR3_FSC51	..\lib\inc\stm8s.h	2365;"	macro
 CAN_FCR_RESET_VALUE	..\lib\inc\stm8s.h	2394;"	macro
 CAN_FIFORelease	..\lib\inc\stm8s_can.h	489;"	prototype	signature:(void)
+CAN_FIFORelease	..\lib\src\stm8s_can.c	736;"	function	signature:(void)
 CAN_FLAG_BOF	..\lib\inc\stm8s_can.h	271;"	enumerator	enum:__anon236
 CAN_FLAG_EPV	..\lib\inc\stm8s_can.h	270;"	enumerator	enum:__anon236
 CAN_FLAG_EWG	..\lib\inc\stm8s_can.h	269;"	enumerator	enum:__anon236
@@ -436,6 +445,7 @@ CAN_FMR2_FML4	..\lib\inc\stm8s.h	2341;"	macro
 CAN_FMR2_FML5	..\lib\inc\stm8s.h	2343;"	macro
 CAN_FMR2_RESET_VALUE	..\lib\inc\stm8s.h	2393;"	macro
 CAN_FilterInit	..\lib\inc\stm8s_can.h	467;"	prototype	signature:(CAN_FilterNumber_TypeDef CAN_FilterNumber, FunctionalState CAN_FilterActivation, CAN_FilterMode_TypeDef CAN_FilterMode, CAN_FilterScale_TypeDef CAN_FilterScale, uint8_t CAN_FilterID1, uint8_t CAN_FilterID2, uint8_t CAN_FilterID3, uint8_t CAN_FilterID4, uint8_t CAN_FilterIDMask1, uint8_t CAN_FilterIDMask2, uint8_t CAN_FilterIDMask3, uint8_t CAN_FilterIDMask4)
+CAN_FilterInit	..\lib\src\stm8s_can.c	188;"	function	signature:(CAN_FilterNumber_TypeDef CAN_FilterNumber, FunctionalState CAN_FilterActivation, CAN_FilterMode_TypeDef CAN_FilterMode, CAN_FilterScale_TypeDef CAN_FilterScale, uint8_t CAN_FilterID1, uint8_t CAN_FilterID2, uint8_t CAN_FilterID3, uint8_t CAN_FilterID4, uint8_t CAN_FilterIDMask1, uint8_t CAN_FilterIDMask2, uint8_t CAN_FilterIDMask3, uint8_t CAN_FilterIDMask4)
 CAN_FilterMode_IdList	..\lib\inc\stm8s_can.h	174;"	enumerator	enum:__anon227
 CAN_FilterMode_IdList_IdMask	..\lib\inc\stm8s_can.h	173;"	enumerator	enum:__anon227
 CAN_FilterMode_IdMask	..\lib\inc\stm8s_can.h	171;"	enumerator	enum:__anon227
@@ -454,16 +464,34 @@ CAN_FilterScale_32Bit	..\lib\inc\stm8s_can.h	184;"	enumerator	enum:__anon228
 CAN_FilterScale_8Bit	..\lib\inc\stm8s_can.h	181;"	enumerator	enum:__anon228
 CAN_FilterScale_TypeDef	..\lib\inc\stm8s_can.h	185;"	typedef	typeref:enum:__anon228
 CAN_GetFlagStatus	..\lib\inc\stm8s_can.h	505;"	prototype	signature:(CAN_FLAG_TypeDef CAN_Flag)
+CAN_GetFlagStatus	..\lib\src\stm8s_can.c	1115;"	function	signature:(CAN_FLAG_TypeDef CAN_Flag)
 CAN_GetITStatus	..\lib\inc\stm8s_can.h	507;"	prototype	signature:(CAN_IT_TypeDef CAN_IT)
+CAN_GetITStatus	..\lib\src\stm8s_can.c	1199;"	function	signature:(CAN_IT_TypeDef CAN_IT)
 CAN_GetLastErrorCode	..\lib\inc\stm8s_can.h	502;"	prototype	signature:(void)
+CAN_GetLastErrorCode	..\lib\src\stm8s_can.c	1047;"	function	signature:(void)
 CAN_GetMessageTimeStamp	..\lib\inc\stm8s_can.h	498;"	prototype	signature:(void)
+CAN_GetMessageTimeStamp	..\lib\src\stm8s_can.c	896;"	function	signature:(void)
+CAN_GetMsg	..\app\can.c	278;"	function	signature:(tCAN_MSG *ptCAN_MSG)
+CAN_GetMsg	..\app\can.h	49;"	prototype	signature:(tCAN_MSG *ptCAN_MSG)
 CAN_GetReceivedDLC	..\lib\inc\stm8s_can.h	495;"	prototype	signature:(void)
+CAN_GetReceivedDLC	..\lib\src\stm8s_can.c	858;"	function	signature:(void)
 CAN_GetReceivedData	..\lib\inc\stm8s_can.h	496;"	prototype	signature:(uint8_t CAN_DataIndex)
+CAN_GetReceivedData	..\lib\src\stm8s_can.c	872;"	function	signature:(uint8_t CAN_DataIndex)
 CAN_GetReceivedFMI	..\lib\inc\stm8s_can.h	497;"	prototype	signature:(void)
+CAN_GetReceivedFMI	..\lib\src\stm8s_can.c	886;"	function	signature:(void)
 CAN_GetReceivedIDE	..\lib\inc\stm8s_can.h	493;"	prototype	signature:(void)
+CAN_GetReceivedIDE	..\lib\src\stm8s_can.c	832;"	function	signature:(void)
 CAN_GetReceivedId	..\lib\inc\stm8s_can.h	492;"	prototype	signature:(void)
+CAN_GetReceivedId	..\lib\src\stm8s_can.c	819;"	function	signature:(void)
 CAN_GetReceivedRTR	..\lib\inc\stm8s_can.h	494;"	prototype	signature:(void)
+CAN_GetReceivedRTR	..\lib\src\stm8s_can.c	845;"	function	signature:(void)
 CAN_GetSelectedPage	..\lib\inc\stm8s_can.h	503;"	prototype	signature:(void)
+CAN_GetSelectedPage	..\lib\src\stm8s_can.c	1405;"	function	signature:(void)
+CAN_H	..\app\can.h	2;"	macro
+CAN_HandleMsg	..\app\can.c	43;"	prototype	file:	signature:(tCAN_MSG *ptMsg)
+CAN_HandleMsg	..\app\can.c	90;"	function	signature:(tCAN_MSG *ptMsg)
+CAN_IDLIST_IDMASK_MASK	..\lib\src\stm8s_can.c	30;"	macro	file:
+CAN_IDMASK_IDLIST_MASK	..\lib\src\stm8s_can.c	31;"	macro	file:
 CAN_IER_FFIE	..\lib\inc\stm8s.h	2260;"	macro
 CAN_IER_FMPIE	..\lib\inc\stm8s.h	2259;"	macro
 CAN_IER_FOVIE	..\lib\inc\stm8s.h	2261;"	macro
@@ -471,6 +499,7 @@ CAN_IER_RESET_VALUE	..\lib\inc\stm8s.h	2382;"	macro
 CAN_IER_TMEIE	..\lib\inc\stm8s.h	2258;"	macro
 CAN_IER_WKUIE	..\lib\inc\stm8s.h	2262;"	macro
 CAN_ITConfig	..\lib\inc\stm8s_can.h	479;"	prototype	signature:(CAN_IT_TypeDef CAN_IT, FunctionalState NewState)
+CAN_ITConfig	..\lib\src\stm8s_can.c	481;"	function	signature:(CAN_IT_TypeDef CAN_IT, FunctionalState NewState)
 CAN_IT_BOF	..\lib\inc\stm8s_can.h	291;"	enumerator	enum:__anon237
 CAN_IT_CONFIG_MASK	..\lib\inc\stm8s_can.h	429;"	macro
 CAN_IT_EPV	..\lib\inc\stm8s_can.h	290;"	enumerator	enum:__anon237
@@ -487,9 +516,20 @@ CAN_Id_Extended	..\lib\inc\stm8s_can.h	212;"	enumerator	enum:__anon231
 CAN_Id_Standard	..\lib\inc\stm8s_can.h	211;"	enumerator	enum:__anon231
 CAN_Id_TypeDef	..\lib\inc\stm8s_can.h	213;"	typedef	typeref:enum:__anon231
 CAN_Init	..\lib\inc\stm8s_can.h	460;"	prototype	signature:(CAN_MasterCtrl_TypeDef CAN_MasterCtrl, CAN_Mode_TypeDef CAN_Mode, CAN_SynJumpWidth_TypeDef CAN_SynJumpWidth, CAN_BitSeg1_TypeDef CAN_BitSeg1, CAN_BitSeg2_TypeDef CAN_BitSeg2, uint8_t CAN_Prescaler)
+CAN_Init	..\lib\src\stm8s_can.c	100;"	function	signature:(CAN_MasterCtrl_TypeDef CAN_MasterCtrl, CAN_Mode_TypeDef CAN_Mode, CAN_SynJumpWidth_TypeDef CAN_SynJumpWidth, CAN_BitSeg1_TypeDef CAN_BitSeg1, CAN_BitSeg2_TypeDef CAN_BitSeg2, uint8_t CAN_Prescaler)
+CAN_InitMsgQueue	..\app\can.c	205;"	function	signature:(void)
+CAN_InitMsgQueue	..\app\can.c	39;"	prototype	file:	signature:(void)
 CAN_InitStatus_Failed	..\lib\inc\stm8s_can.h	61;"	enumerator	enum:__anon218
 CAN_InitStatus_Success	..\lib\inc\stm8s_can.h	62;"	enumerator	enum:__anon218
 CAN_InitStatus_TypeDef	..\lib\inc\stm8s_can.h	63;"	typedef	typeref:enum:__anon218
+CAN_Initialize	..\app\can.c	75;"	function	signature:(void)
+CAN_Initialize	..\app\can.h	47;"	prototype	signature:(void)
+CAN_IsMsgQEmpty	..\app\can.c	331;"	function	signature:(void)
+CAN_IsMsgQEmpty	..\app\can.c	41;"	prototype	file:	signature:(void)
+CAN_IsMsgQFull	..\app\can.c	346;"	function	signature:(void)
+CAN_IsMsgQFull	..\app\can.c	42;"	prototype	file:	signature:(void)
+CAN_LowConfig	..\app\can.c	371;"	function	signature:(void)
+CAN_LowConfig	..\app\can.c	40;"	prototype	file:	signature:(void)
 CAN_MCR_ABOM	..\lib\inc\stm8s.h	2224;"	macro
 CAN_MCR_AWUM	..\lib\inc\stm8s.h	2223;"	macro
 CAN_MCR_INRQ	..\lib\inc\stm8s.h	2218;"	macro
@@ -512,6 +552,10 @@ CAN_MDLC_RESET_VALUE	..\lib\inc\stm8s.h	2397;"	macro
 CAN_MFMI_RESET_VALUE	..\lib\inc\stm8s.h	2396;"	macro
 CAN_MIDR1_IDE	..\lib\inc\stm8s.h	2290;"	macro
 CAN_MIDR1_RTR	..\lib\inc\stm8s.h	2289;"	macro
+CAN_MODE_MASK	..\lib\src\stm8s_can.c	32;"	macro	file:
+CAN_MSGQUEUETag	..\app\can.c	25;"	struct	file:
+CAN_MSGTag	..\app\can.h	37;"	struct
+CAN_MSG_QUEUE_LEN	..\app\can.h	29;"	macro
 CAN_MSR_ERRI	..\lib\inc\stm8s.h	2230;"	macro
 CAN_MSR_INAK	..\lib\inc\stm8s.h	2228;"	macro
 CAN_MSR_RESET_VALUE	..\lib\inc\stm8s.h	2378;"	macro
@@ -529,6 +573,7 @@ CAN_MasterCtrl_TimeTriggerCOMMode	..\lib\inc\stm8s_can.h	90;"	enumerator	enum:__
 CAN_MasterCtrl_TxFifoPriority	..\lib\inc\stm8s_can.h	95;"	enumerator	enum:__anon221
 CAN_MasterCtrl_TypeDef	..\lib\inc\stm8s_can.h	96;"	typedef	typeref:enum:__anon221
 CAN_MessagePending	..\lib\inc\stm8s_can.h	490;"	prototype	signature:(void)
+CAN_MessagePending	..\lib\src\stm8s_can.c	746;"	function	signature:(void)
 CAN_ModeStatus_Failed	..\lib\inc\stm8s_can.h	79;"	enumerator	enum:__anon220
 CAN_ModeStatus_Success	..\lib\inc\stm8s_can.h	80;"	enumerator	enum:__anon220
 CAN_ModeStatus_TypeDef	..\lib\inc\stm8s_can.h	81;"	typedef	typeref:enum:__anon220
@@ -543,6 +588,7 @@ CAN_NbrPendingMessage_2	..\lib\inc\stm8s_can.h	203;"	enumerator	enum:__anon230
 CAN_NbrPendingMessage_3	..\lib\inc\stm8s_can.h	204;"	enumerator	enum:__anon230
 CAN_NbrPendingMessage_TypeDef	..\lib\inc\stm8s_can.h	205;"	typedef	typeref:enum:__anon230
 CAN_OperatingModeRequest	..\lib\inc\stm8s_can.h	501;"	prototype	signature:(CAN_OperatingMode_TypeDef CAN_OperatingMode)
+CAN_OperatingModeRequest	..\lib\src\stm8s_can.c	969;"	function	signature:(CAN_OperatingMode_TypeDef CAN_OperatingMode)
 CAN_OperatingMode_Initialization	..\lib\inc\stm8s_can.h	70;"	enumerator	enum:__anon219
 CAN_OperatingMode_Normal	..\lib\inc\stm8s_can.h	71;"	enumerator	enum:__anon219
 CAN_OperatingMode_Sleep	..\lib\inc\stm8s_can.h	72;"	enumerator	enum:__anon219
@@ -560,6 +606,8 @@ CAN_Page_TxMailBox0	..\lib\inc\stm8s_can.h	45;"	enumerator	enum:__anon217
 CAN_Page_TxMailBox1	..\lib\inc\stm8s_can.h	46;"	enumerator	enum:__anon217
 CAN_Page_TxMailBox2	..\lib\inc\stm8s_can.h	47;"	enumerator	enum:__anon217
 CAN_Page_TypeDef	..\lib\inc\stm8s_can.h	53;"	typedef	typeref:enum:__anon217
+CAN_Process	..\app\can.c	51;"	function	signature:(void)
+CAN_Process	..\app\can.h	46;"	prototype	signature:(void)
 CAN_RECR_REC0	..\lib\inc\stm8s.h	2322;"	macro
 CAN_RECR_REC1	..\lib\inc\stm8s.h	2323;"	macro
 CAN_RECR_REC2	..\lib\inc\stm8s.h	2324;"	macro
@@ -577,15 +625,21 @@ CAN_RFR_RFOM	..\lib\inc\stm8s.h	2255;"	macro
 CAN_RTR_Data	..\lib\inc\stm8s_can.h	219;"	enumerator	enum:__anon232
 CAN_RTR_Remote	..\lib\inc\stm8s_can.h	220;"	enumerator	enum:__anon232
 CAN_RTR_TypeDef	..\lib\inc\stm8s_can.h	221;"	typedef	typeref:enum:__anon232
+CAN_RX_DISABLE	..\app\can.c	19;"	macro	file:
+CAN_RX_ENABLE	..\app\can.c	14;"	macro	file:
 CAN_RX_IRQHandler	stm8s_it.h	54;"	prototype	signature:(void)
 CAN_Receive	..\lib\inc\stm8s_can.h	491;"	prototype	signature:(void)
+CAN_Receive	..\lib\src\stm8s_can.c	761;"	function	signature:(void)
 CAN_ST7CompatibilityCmd	..\lib\inc\stm8s_can.h	480;"	prototype	signature:(CAN_ST7Compatibility_TypeDef CAN_ST7Compatibility)
+CAN_ST7CompatibilityCmd	..\lib\src\stm8s_can.c	519;"	function	signature:(CAN_ST7Compatibility_TypeDef CAN_ST7Compatibility)
 CAN_ST7Compatibility_Disable	..\lib\inc\stm8s_can.h	300;"	enumerator	enum:__anon238
 CAN_ST7Compatibility_Enable	..\lib\inc\stm8s_can.h	299;"	enumerator	enum:__anon238
 CAN_ST7Compatibility_TypeDef	..\lib\inc\stm8s_can.h	301;"	typedef	typeref:enum:__anon238
 CAN_STDID_SIZE	..\lib\inc\stm8s_can.h	30;"	macro
 CAN_SelectPage	..\lib\inc\stm8s_can.h	504;"	prototype	signature:(CAN_Page_TypeDef CAN_Page)
+CAN_SelectPage	..\lib\src\stm8s_can.c	1415;"	function	signature:(CAN_Page_TypeDef CAN_Page)
 CAN_Sleep	..\lib\inc\stm8s_can.h	499;"	prototype	signature:(void)
+CAN_Sleep	..\lib\src\stm8s_can.c	918;"	function	signature:(void)
 CAN_Sleep_Failed	..\lib\inc\stm8s_can.h	241;"	enumerator	enum:__anon234
 CAN_Sleep_Ok	..\lib\inc\stm8s_can.h	242;"	enumerator	enum:__anon234
 CAN_Sleep_TypeDef	..\lib\inc\stm8s_can.h	243;"	typedef	typeref:enum:__anon234
@@ -620,13 +674,22 @@ CAN_TSR_TXOK0	..\lib\inc\stm8s.h	2240;"	macro
 CAN_TSR_TXOK1	..\lib\inc\stm8s.h	2241;"	macro
 CAN_TSR_TXOK2	..\lib\inc\stm8s.h	2242;"	macro
 CAN_TTComModeCmd	..\lib\inc\stm8s_can.h	486;"	prototype	signature:(FunctionalState NewState)
+CAN_TTComModeCmd	..\lib\src\stm8s_can.c	535;"	function	signature:(FunctionalState NewState)
 CAN_TX_IRQHandler	stm8s_it.h	55;"	prototype	signature:(void)
+CAN_TestRecieve	..\app\can.c	531;"	function	signature:(void)
+CAN_TestRecieve	..\app\can.h	51;"	prototype	signature:(void)
+CAN_TestSend	..\app\can.c	488;"	function	signature:(void)
+CAN_TestSend	..\app\can.h	50;"	prototype	signature:(void)
+CAN_Test_Echo	..\app\can.c	446;"	function	signature:(tCAN_MSG *ptMsg)
+CAN_Test_Echo	..\app\can.c	45;"	prototype	file:	signature:(tCAN_MSG *ptMsg)
 CAN_Transmit	..\lib\inc\stm8s_can.h	481;"	prototype	signature:( uint32_t CAN_Id, CAN_Id_TypeDef CAN_IDE, CAN_RTR_TypeDef CAN_RTR, uint8_t CAN_DLC, uint8_t *CAN_Data)
+CAN_Transmit	..\lib\src\stm8s_can.c	581;"	function	signature:(uint32_t CAN_Id, CAN_Id_TypeDef CAN_IDE, CAN_RTR_TypeDef CAN_RTR, uint8_t CAN_DLC, uint8_t *CAN_Data)
 CAN_TransmitMailBox_0	..\lib\inc\stm8s_can.h	192;"	enumerator	enum:__anon229
 CAN_TransmitMailBox_1	..\lib\inc\stm8s_can.h	193;"	enumerator	enum:__anon229
 CAN_TransmitMailBox_2	..\lib\inc\stm8s_can.h	194;"	enumerator	enum:__anon229
 CAN_TransmitMailBox_TypeDef	..\lib\inc\stm8s_can.h	195;"	typedef	typeref:enum:__anon229
 CAN_TransmitStatus	..\lib\inc\stm8s_can.h	487;"	prototype	signature:(CAN_TransmitMailBox_TypeDef CAN_TransmitMailbox)
+CAN_TransmitStatus	..\lib\src\stm8s_can.c	666;"	function	signature:(CAN_TransmitMailBox_TypeDef CAN_TransmitMailbox)
 CAN_TxStatus_Failed	..\lib\inc\stm8s_can.h	227;"	enumerator	enum:__anon233
 CAN_TxStatus_MailBox0Ok	..\lib\inc\stm8s_can.h	232;"	enumerator	enum:__anon233
 CAN_TxStatus_MailBox1Ok	..\lib\inc\stm8s_can.h	233;"	enumerator	enum:__anon233
@@ -638,6 +701,7 @@ CAN_TxStatus_Pending	..\lib\inc\stm8s_can.h	229;"	enumerator	enum:__anon233
 CAN_TxStatus_TypeDef	..\lib\inc\stm8s_can.h	235;"	typedef	typeref:enum:__anon233
 CAN_TypeDef	..\lib\inc\stm8s.h	2212;"	typedef	typeref:struct:__anon13
 CAN_WakeUp	..\lib\inc\stm8s_can.h	500;"	prototype	signature:(void)
+CAN_WakeUp	..\lib\src\stm8s_can.c	942;"	function	signature:(void)
 CAN_WakeUp_Failed	..\lib\inc\stm8s_can.h	248;"	enumerator	enum:__anon235
 CAN_WakeUp_Ok	..\lib\inc\stm8s_can.h	249;"	enumerator	enum:__anon235
 CAN_WakeUp_TypeDef	..\lib\inc\stm8s_can.h	250;"	typedef	typeref:enum:__anon235
@@ -734,8 +798,8 @@ CLK_ClockSwitchCmd	..\lib\inc\stm8s_clk.h	351;"	prototype	signature:(FunctionalS
 CLK_ClockSwitchCmd	..\lib\src\stm8s_clk.c	218;"	function	signature:(FunctionalState NewState)
 CLK_ClockSwitchConfig	..\lib\inc\stm8s_clk.h	355;"	prototype	signature:(CLK_SwitchMode_TypeDef CLK_SwitchMode, CLK_Source_TypeDef CLK_NewClock, FunctionalState ITState, CLK_CurrentClockState_TypeDef CLK_CurrentClockState)
 CLK_ClockSwitchConfig	..\lib\src\stm8s_clk.c	319;"	function	signature:(CLK_SwitchMode_TypeDef CLK_SwitchMode, CLK_Source_TypeDef CLK_NewClock, FunctionalState ITState, CLK_CurrentClockState_TypeDef CLK_CurrentClockState)
-CLK_Config	main.c	104;"	function	signature:(void)
-CLK_Config	main.c	20;"	prototype	file:	signature:(void)
+CLK_Config	main.c	120;"	function	signature:(void)
+CLK_Config	main.c	23;"	prototype	file:	signature:(void)
 CLK_CurrentClockState_TypeDef	..\lib\inc\stm8s_clk.h	50;"	typedef	typeref:enum:__anon39
 CLK_DeInit	..\lib\inc\stm8s_clk.h	346;"	prototype	signature:(void)
 CLK_DeInit	..\lib\src\stm8s_clk.c	66;"	function	signature:(void)
@@ -884,7 +948,7 @@ CLK_SwitchMode_TypeDef	..\lib\inc\stm8s_clk.h	42;"	typedef	typeref:enum:__anon38
 CLK_TIMEOUT	..\lib\inc\stm8s_clk.h	206;"	macro
 CLK_TypeDef	..\lib\inc\stm8s.h	509;"	typedef	typeref:struct:CLK_struct
 CLK_struct	..\lib\inc\stm8s.h	492;"	struct
-CMD_HEAD	..\app\comm.h	29;"	macro
+CMD_HEAD	..\app\comm.h	31;"	macro
 CMSR	..\lib\inc\stm8s.h	497;"	member	struct:CLK_struct
 CNTR	..\lib\inc\stm8s.h	1052;"	member	struct:TIM4_struct
 CNTR	..\lib\inc\stm8s.h	1252;"	member	struct:TIM6_struct
@@ -897,13 +961,15 @@ CNTRL	..\lib\inc\stm8s.h	613;"	member	struct:TIM1_struct
 CNTRL	..\lib\inc\stm8s.h	825;"	member	struct:TIM2_struct
 CNTRL	..\lib\inc\stm8s.h	947;"	member	struct:TIM3_struct
 COMM_FormFrame	..\app\comm.c	39;"	function	signature:(eKEYTYPE eKey, eKEYSTATE eState, tMSG_CMD *ptCmd)
-COMM_Init	..\app\comm.c	203;"	function
-COMM_Init	..\app\comm.h	69;"	prototype	signature:(void)
-COMM_Lowlevel_Config	..\app\comm.c	137;"	function
-COMM_Lowlevel_Config	..\app\comm.h	71;"	prototype	signature:(void)
-COMM_Process	..\app\comm.h	70;"	prototype	signature:(void)
+COMM_Init	..\app\comm.c	275;"	function
+COMM_Init	..\app\comm.h	74;"	prototype	signature:(void)
+COMM_Lowlevel_Config	..\app\comm.c	207;"	function
+COMM_Lowlevel_Config	..\app\comm.h	76;"	prototype	signature:(void)
+COMM_Process	..\app\comm.h	75;"	prototype	signature:(void)
 COMM_RequestSendCommand	..\app\comm.c	90;"	function	signature:(eKEYTYPE eKey, eKEYSTATE eState)
-COMM_RequestSendCommand	..\app\comm.h	73;"	prototype	signature:(eKEYTYPE eKey, eKEYSTATE eState)
+COMM_RequestSendCommand	..\app\comm.h	77;"	prototype	signature:(eKEYTYPE eKey, eKEYSTATE eState)
+COMM_RequestSendCommand_CAN	..\app\comm.c	150;"	function	signature:(tMSG_CMD *ptCmdMsg)
+COMM_RequestSendCommand_CAN	..\app\comm.h	78;"	prototype	signature:(tMSG_CMD *ptCmdMsg)
 CONST	..\lib\inc\stm8s.h	116;"	macro
 CONST	..\lib\inc\stm8s.h	122;"	macro
 CONST	..\lib\inc\stm8s.h	136;"	macro
@@ -957,7 +1023,9 @@ CSR	..\lib\inc\stm8s.h	426;"	member	struct:AWU_struct
 CSR	..\lib\inc\stm8s.h	466;"	member	struct:BEEP_struct
 CSSR	..\lib\inc\stm8s.h	502;"	member	struct:CLK_struct
 CalChecksum	..\app\comm.c	23;"	function	signature:(u8 *data, u8 u8Len)
-CalChecksum	..\app\comm.h	68;"	prototype	signature:(u8 *data, u8 u8Len)
+CalChecksum	..\app\comm.h	73;"	prototype	signature:(u8 *data, u8 u8Len)
+CheckITStatus	..\lib\src\stm8s_can.c	1426;"	function	file:	signature:(uint8_t CAN_Reg, uint8_t It_Bit)
+CheckITStatus	..\lib\src\stm8s_can.c	43;"	prototype	file:	signature:(uint8_t CAN_Reg, uint8_t It_Bit)
 ChgBit	..\lib\inc\stm8s.h	2677;"	macro
 ClrBit	..\lib\inc\stm8s.h	2675;"	macro
 Config	..\lib\inc\stm8s.h	2189;"	member	union:__anon13::__anon14	typeref:struct:__anon13::__anon14::__anon20
@@ -981,8 +1049,8 @@ DB8RH	..\lib\inc\stm8s.h	300;"	member	struct:ADC1_struct
 DB8RL	..\lib\inc\stm8s.h	301;"	member	struct:ADC1_struct
 DB9RH	..\lib\inc\stm8s.h	302;"	member	struct:ADC1_struct
 DB9RL	..\lib\inc\stm8s.h	303;"	member	struct:ADC1_struct
-DBG_Config	main.c	129;"	function
-DBG_Config	main.c	21;"	prototype	file:	signature:(void)
+DBG_Config	main.c	144;"	function
+DBG_Config	main.c	24;"	prototype	file:	signature:(void)
 DDR	..\lib\inc\stm8s.h	257;"	member	struct:GPIO_struct
 DET_DETECTING	..\app\key.h	20;"	enumerator	enum:__anon4
 DET_IDLE	..\app\key.h	19;"	enumerator	enum:__anon4
@@ -1002,10 +1070,14 @@ DRL	..\lib\inc\stm8s.h	310;"	member	struct:ADC1_struct
 DRL	..\lib\inc\stm8s.h	381;"	member	struct:ADC2_struct
 DTR	..\lib\inc\stm8s.h	628;"	member	struct:TIM1_struct
 DUKR	..\lib\inc\stm8s.h	1510;"	member	struct:FLASH_struct
-Delay	..\app\utility.c	50;"	function	signature:(uint32_t nCount)
-Delay	..\app\utility.h	12;"	prototype	signature:(uint32_t nCount)
+D_OFFSET	..\app\can.h	16;"	macro
+Data	..\app\can.h	41;"	member	struct:CAN_MSGTag
+Delay	..\app\utility.c	59;"	function	signature:(uint32_t nCount)
+Delay	..\app\utility.h	13;"	prototype	signature:(uint32_t nCount)
 Delay_1ms	..\app\utility.c	44;"	function
 Delay_1ms	..\app\utility.h	11;"	prototype	signature:(void)
+Delay_nms	..\app\utility.c	49;"	function	signature:(u16 u16Num)
+Delay_nms	..\app\utility.h	12;"	prototype	signature:(u16 u16Num)
 ECKR	..\lib\inc\stm8s.h	495;"	member	struct:CLK_struct
 EEPROM	..\lib\inc\stm8s.h	115;"	macro
 EEPROM	..\lib\inc\stm8s.h	121;"	macro
@@ -1039,7 +1111,7 @@ EXTI_GetExtIntSensitivity	..\lib\inc\stm8s_exti.h	118;"	prototype	signature:(EXT
 EXTI_GetExtIntSensitivity	..\lib\src\stm8s_exti.c	121;"	function	signature:(EXTI_Port_TypeDef Port)
 EXTI_GetTLISensitivity	..\lib\inc\stm8s_exti.h	119;"	prototype	signature:(void)
 EXTI_GetTLISensitivity	..\lib\src\stm8s_exti.c	157;"	function	signature:(void)
-EXTI_IR_PORT	..\app\periph.h	86;"	macro
+EXTI_IR_PORT	..\app\periph.h	90;"	macro
 EXTI_PORTA_IRQHandler	stm8s_it.h	43;"	prototype	signature:(void)
 EXTI_PORTB_IRQHandler	stm8s_it.h	44;"	prototype	signature:(void)
 EXTI_PORTC_IRQHandler	stm8s_it.h	45;"	prototype	signature:(void)
@@ -1123,6 +1195,8 @@ FAR	..\lib\inc\stm8s.h	132;"	macro
 FCR1	..\lib\inc\stm8s.h	2184;"	member	struct:__anon13::__anon14::__anon20
 FCR2	..\lib\inc\stm8s.h	2185;"	member	struct:__anon13::__anon14::__anon20
 FCR3	..\lib\inc\stm8s.h	2186;"	member	struct:__anon13::__anon14::__anon20
+FCW_DISTANCE	..\app\periph.h	135;"	enumerator	enum:__anon7
+FCW_WARNING	..\app\periph.h	136;"	enumerator	enum:__anon7
 FLAG_Mask	..\lib\src\stm8s_i2c.c	40;"	macro	file:
 FLASH	..\lib\inc\stm8s.h	2512;"	macro
 FLASH_BLOCK_SIZE	..\lib\inc\stm8s_flash.h	43;"	macro
@@ -1289,12 +1363,14 @@ GPIO_ACC_PIN	..\app\periph.h	12;"	macro
 GPIO_ACC_PORT	..\app\periph.h	11;"	macro
 GPIO_BEEP_PIN	..\app\periph.h	28;"	macro
 GPIO_BEEP_PORT	..\app\periph.h	27;"	macro
-GPIO_CAN_RX_PIN	..\app\periph.h	57;"	macro
-GPIO_CAN_RX_PORT	..\app\periph.h	56;"	macro
-GPIO_CAN_STB_PIN	..\app\periph.h	63;"	macro
-GPIO_CAN_STB_PORT	..\app\periph.h	62;"	macro
-GPIO_CAN_TX_PIN	..\app\periph.h	60;"	macro
-GPIO_CAN_TX_PORT	..\app\periph.h	59;"	macro
+GPIO_CANSTB_PIN	..\app\periph.h	40;"	macro
+GPIO_CANSTB_PORT	..\app\periph.h	39;"	macro
+GPIO_CAN_RX_PIN	..\app\periph.h	61;"	macro
+GPIO_CAN_RX_PORT	..\app\periph.h	60;"	macro
+GPIO_CAN_STB_PIN	..\app\periph.h	67;"	macro
+GPIO_CAN_STB_PORT	..\app\periph.h	66;"	macro
+GPIO_CAN_TX_PIN	..\app\periph.h	64;"	macro
+GPIO_CAN_TX_PORT	..\app\periph.h	63;"	macro
 GPIO_CR1_RESET_VALUE	..\lib\inc\stm8s.h	269;"	macro
 GPIO_CR2_RESET_VALUE	..\lib\inc\stm8s.h	270;"	macro
 GPIO_DDR_RESET_VALUE	..\lib\inc\stm8s.h	268;"	macro
@@ -1302,22 +1378,22 @@ GPIO_DeInit	..\lib\inc\stm8s_gpio.h	133;"	prototype	signature:(GPIO_TypeDef* GPI
 GPIO_DeInit	..\lib\src\stm8s_gpio.c	47;"	function	signature:(GPIO_TypeDef* GPIOx)
 GPIO_ExternalPullUpConfig	..\lib\inc\stm8s_gpio.h	142;"	prototype	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, FunctionalState NewState)
 GPIO_ExternalPullUpConfig	..\lib\src\stm8s_gpio.c	219;"	function	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, FunctionalState NewState)
-GPIO_GSENSOR_CTL_PIN	..\app\periph.h	81;"	macro
-GPIO_GSENSOR_CTL_PORT	..\app\periph.h	80;"	macro
-GPIO_GSENSOR_INT1_PIN	..\app\periph.h	75;"	macro
-GPIO_GSENSOR_INT1_PORT	..\app\periph.h	74;"	macro
-GPIO_GSENSOR_INT2_PIN	..\app\periph.h	78;"	macro
-GPIO_GSENSOR_INT2_PORT	..\app\periph.h	77;"	macro
-GPIO_GSENSOR_SCL_PIN	..\app\periph.h	69;"	macro
-GPIO_GSENSOR_SCL_PORT	..\app\periph.h	68;"	macro
-GPIO_GSENSOR_SDA_PIN	..\app\periph.h	72;"	macro
-GPIO_GSENSOR_SDA_PORT	..\app\periph.h	71;"	macro
+GPIO_GSENSOR_CTL_PIN	..\app\periph.h	85;"	macro
+GPIO_GSENSOR_CTL_PORT	..\app\periph.h	84;"	macro
+GPIO_GSENSOR_INT1_PIN	..\app\periph.h	79;"	macro
+GPIO_GSENSOR_INT1_PORT	..\app\periph.h	78;"	macro
+GPIO_GSENSOR_INT2_PIN	..\app\periph.h	82;"	macro
+GPIO_GSENSOR_INT2_PORT	..\app\periph.h	81;"	macro
+GPIO_GSENSOR_SCL_PIN	..\app\periph.h	73;"	macro
+GPIO_GSENSOR_SCL_PORT	..\app\periph.h	72;"	macro
+GPIO_GSENSOR_SDA_PIN	..\app\periph.h	76;"	macro
+GPIO_GSENSOR_SDA_PORT	..\app\periph.h	75;"	macro
 GPIO_IRCTL_PIN	..\app\periph.h	32;"	macro
 GPIO_IRCTL_PORT	..\app\periph.h	31;"	macro
-GPIO_IR_CTRL_PIN	..\app\periph.h	101;"	macro
-GPIO_IR_CTRL_PORT	..\app\periph.h	100;"	macro
-GPIO_IR_PIN	..\app\periph.h	85;"	macro
-GPIO_IR_PORT	..\app\periph.h	84;"	macro
+GPIO_IR_CTRL_PIN	..\app\periph.h	105;"	macro
+GPIO_IR_CTRL_PORT	..\app\periph.h	104;"	macro
+GPIO_IR_PIN	..\app\periph.h	89;"	macro
+GPIO_IR_PORT	..\app\periph.h	88;"	macro
 GPIO_Init	..\lib\inc\stm8s_gpio.h	134;"	prototype	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, GPIO_Mode_TypeDef GPIO_Mode)
 GPIO_Init	..\lib\src\stm8s_gpio.c	65;"	function	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, GPIO_Mode_TypeDef GPIO_Mode)
 GPIO_LEFT_PIN	..\app\periph.h	16;"	macro
@@ -1358,19 +1434,19 @@ GPIO_ReadInputPin	..\lib\inc\stm8s_gpio.h	141;"	prototype	signature:(GPIO_TypeDe
 GPIO_ReadInputPin	..\lib\src\stm8s_gpio.c	207;"	function	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin)
 GPIO_ReadOutputData	..\lib\inc\stm8s_gpio.h	140;"	prototype	signature:(GPIO_TypeDef* GPIOx)
 GPIO_ReadOutputData	..\lib\src\stm8s_gpio.c	185;"	function	signature:(GPIO_TypeDef* GPIOx)
-GPIO_SPI_CS_PIN	..\app\periph.h	43;"	macro
-GPIO_SPI_CS_PORT	..\app\periph.h	42;"	macro
-GPIO_SPI_MISO_PIN	..\app\periph.h	49;"	macro
-GPIO_SPI_MISO_PORT	..\app\periph.h	48;"	macro
-GPIO_SPI_MOSI_PIN	..\app\periph.h	52;"	macro
-GPIO_SPI_MOSI_PORT	..\app\periph.h	51;"	macro
-GPIO_SPI_SCK_PIN	..\app\periph.h	46;"	macro
-GPIO_SPI_SCK_PORT	..\app\periph.h	45;"	macro
+GPIO_SPI_CS_PIN	..\app\periph.h	47;"	macro
+GPIO_SPI_CS_PORT	..\app\periph.h	46;"	macro
+GPIO_SPI_MISO_PIN	..\app\periph.h	53;"	macro
+GPIO_SPI_MISO_PORT	..\app\periph.h	52;"	macro
+GPIO_SPI_MOSI_PIN	..\app\periph.h	56;"	macro
+GPIO_SPI_MOSI_PORT	..\app\periph.h	55;"	macro
+GPIO_SPI_SCK_PIN	..\app\periph.h	50;"	macro
+GPIO_SPI_SCK_PORT	..\app\periph.h	49;"	macro
 GPIO_TypeDef	..\lib\inc\stm8s.h	261;"	typedef	typeref:struct:GPIO_struct
 GPIO_UARTCTL_PIN	..\app\periph.h	36;"	macro
 GPIO_UARTCTL_PORT	..\app\periph.h	35;"	macro
-GPIO_WDG_PIN	..\app\periph.h	107;"	macro
-GPIO_WDG_PORT	..\app\periph.h	106;"	macro
+GPIO_WDG_PIN	..\app\periph.h	111;"	macro
+GPIO_WDG_PORT	..\app\periph.h	110;"	macro
 GPIO_Write	..\lib\inc\stm8s_gpio.h	135;"	prototype	signature:(GPIO_TypeDef* GPIOx, uint8_t PortVal)
 GPIO_Write	..\lib\src\stm8s_gpio.c	135;"	function	signature:(GPIO_TypeDef* GPIOx, uint8_t PortVal)
 GPIO_WriteHigh	..\lib\inc\stm8s_gpio.h	136;"	prototype	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef PortPins)
@@ -1382,12 +1458,12 @@ GPIO_WriteReverse	..\lib\src\stm8s_gpio.c	174;"	function	signature:(GPIO_TypeDef
 GPIO_struct	..\lib\inc\stm8s.h	253;"	struct
 GTR	..\lib\inc\stm8s.h	1762;"	member	struct:UART1_struct
 GTR	..\lib\inc\stm8s.h	1861;"	member	struct:UART2_struct
-GetVar_NbrOfDataToRead1	stm8s_it.c	41;"	prototype	file:	signature:(void)
-GetVar_NbrOfDataToTransfer1	stm8s_it.c	39;"	prototype	file:	signature:(void)
-GetVar_NbrOfDataToTransfer2	stm8s_it.c	40;"	prototype	file:	signature:(void)
-GetVar_RxCounter1	stm8s_it.c	35;"	prototype	file:	signature:(void)
-GetVar_TxCounter1	stm8s_it.c	33;"	prototype	file:	signature:(void)
-GetVar_TxCounter2	stm8s_it.c	34;"	prototype	file:	signature:(void)
+GetVar_NbrOfDataToRead1	stm8s_it.c	42;"	prototype	file:	signature:(void)
+GetVar_NbrOfDataToTransfer1	stm8s_it.c	40;"	prototype	file:	signature:(void)
+GetVar_NbrOfDataToTransfer2	stm8s_it.c	41;"	prototype	file:	signature:(void)
+GetVar_RxCounter1	stm8s_it.c	36;"	prototype	file:	signature:(void)
+GetVar_TxCounter1	stm8s_it.c	34;"	prototype	file:	signature:(void)
+GetVar_TxCounter2	stm8s_it.c	35;"	prototype	file:	signature:(void)
 HSE_VALUE	..\lib\inc\stm8s.h	101;"	macro
 HSE_VALUE	..\lib\inc\stm8s.h	99;"	macro
 HSIDivFactor	..\lib\src\stm8s_clk.c	42;"	variable
@@ -1563,6 +1639,8 @@ IAPSR	..\lib\inc\stm8s.h	1505;"	member	struct:FLASH_struct
 ICKR	..\lib\inc\stm8s.h	494;"	member	struct:CLK_struct
 ICR	..\lib\inc\stm8s.h	1684;"	member	struct:SPI_struct
 IDR	..\lib\inc\stm8s.h	256;"	member	struct:GPIO_struct
+ID_DIST	..\app\can.h	14;"	macro
+ID_WARN	..\app\can.h	19;"	macro
 IER	..\lib\inc\stm8s.h	1049;"	member	struct:TIM4_struct
 IER	..\lib\inc\stm8s.h	1110;"	member	struct:TIM5_struct
 IER	..\lib\inc\stm8s.h	1249;"	member	struct:TIM6_struct
@@ -1578,7 +1656,7 @@ INTERRUPT_HANDLER	..\lib\inc\stm8s.h	2645;"	macro
 INTERRUPT_HANDLER_TRAP	..\lib\inc\stm8s.h	2634;"	macro
 INTERRUPT_HANDLER_TRAP	..\lib\inc\stm8s.h	2639;"	macro
 INTERRUPT_HANDLER_TRAP	..\lib\inc\stm8s.h	2648;"	macro
-INTERRUPT_HANDLER_TRAP	stm8s_it.c	97;"	function
+INTERRUPT_HANDLER_TRAP	stm8s_it.c	98;"	function
 IN_RAM	..\lib\inc\stm8s.h	159;"	macro
 IN_RAM	..\lib\inc\stm8s.h	161;"	macro
 IN_RAM	..\lib\inc\stm8s.h	163;"	macro
@@ -1613,7 +1691,7 @@ ISPR7	..\lib\inc\stm8s.h	1427;"	member	struct:ITC_struct
 ISPR8	..\lib\inc\stm8s.h	1428;"	member	struct:ITC_struct
 ISR_IRReceive	..\app\ir.c	208;"	function	signature:(void)
 ISR_IRReceive	..\app\ir.h	131;"	prototype	signature:(void)
-ISR_InputIOHandle	stm8s_it.c	43;"	prototype	file:
+ISR_InputIOHandle	stm8s_it.c	44;"	prototype	file:
 ISR_Key	..\app\key.h	34;"	prototype	signature:(void)
 IS_ADC1_ALIGN_OK	..\lib\inc\stm8s_adc1.h	201;"	macro
 IS_ADC1_BUFFER_OK	..\lib\inc\stm8s_adc1.h	284;"	macro
@@ -1959,8 +2037,8 @@ ITR	..\lib\inc\stm8s.h	1324;"	member	struct:I2C_struct
 ITStatus	..\lib\inc\stm8s.h	221;"	typedef	typeref:enum:__anon10
 IWDG	..\lib\inc\stm8s.h	2542;"	macro
 IWDG_BaseAddress	..\lib\inc\stm8s.h	2461;"	macro
-IWDG_Config	main.c	164;"	function	signature:(void)
-IWDG_Config	main.c	25;"	prototype	file:	signature:(void)
+IWDG_Config	main.c	179;"	function	signature:(void)
+IWDG_Config	main.c	28;"	prototype	file:	signature:(void)
 IWDG_Enable	..\lib\inc\stm8s_iwdg.h	112;"	prototype	signature:(void)
 IWDG_Enable	..\lib\src\stm8s_iwdg.c	93;"	function	signature:(void)
 IWDG_KEY_ENABLE	..\lib\inc\stm8s_iwdg.h	45;"	macro
@@ -1988,14 +2066,14 @@ IWDG_WriteAccess_Disable	..\lib\inc\stm8s_iwdg.h	85;"	enumerator	enum:__anon70
 IWDG_WriteAccess_Enable	..\lib\inc\stm8s_iwdg.h	84;"	enumerator	enum:__anon70
 IWDG_WriteAccess_TypeDef	..\lib\inc\stm8s_iwdg.h	86;"	typedef	typeref:enum:__anon70
 IWDG_struct	..\lib\inc\stm8s.h	1593;"	struct
-IncrementVar_RxCounter1	stm8s_it.c	38;"	prototype	file:	signature:(void)
-IncrementVar_TxCounter1	stm8s_it.c	36;"	prototype	file:	signature:(void)
-IncrementVar_TxCounter2	stm8s_it.c	37;"	prototype	file:	signature:(void)
+IncrementVar_RxCounter1	stm8s_it.c	39;"	prototype	file:	signature:(void)
+IncrementVar_TxCounter1	stm8s_it.c	37;"	prototype	file:	signature:(void)
+IncrementVar_TxCounter2	stm8s_it.c	38;"	prototype	file:	signature:(void)
 Isr_IR_Timeout100us	..\app\ir.c	472;"	function	signature:(void)
 Isr_IR_Timeout100us	..\app\ir.h	130;"	prototype	signature:(void)
 Isr_IR_Timeout10ms	..\app\ir.c	446;"	function	signature:(void)
 Isr_IR_Timeout10ms	..\app\ir.h	129;"	prototype	signature:(void)
-KEY_ACC	..\app\periph.h	111;"	enumerator	enum:__anon7
+KEY_ACC	..\app\periph.h	115;"	enumerator	enum:__anon7
 KEY_ACTIVED	..\app\key.h	13;"	enumerator	enum:__anon3
 KEY_DET_ACC	..\app\key.h	40;"	enumerator	enum:__anon6
 KEY_DET_END	..\app\key.h	43;"	enumerator	enum:__anon6
@@ -2003,8 +2081,9 @@ KEY_DET_IDLE	..\app\key.h	47;"	enumerator	enum:__anon6
 KEY_DET_LEFT	..\app\key.h	45;"	enumerator	enum:__anon6
 KEY_DET_REAR	..\app\key.h	42;"	enumerator	enum:__anon6
 KEY_DET_RIGHT	..\app\key.h	46;"	enumerator	enum:__anon6
-KEY_END	..\app\periph.h	124;"	enumerator	enum:__anon7
-KEY_FRONT	..\app\periph.h	112;"	enumerator	enum:__anon7
+KEY_END	..\app\periph.h	138;"	enumerator	enum:__anon7
+KEY_FRONT	..\app\periph.h	116;"	enumerator	enum:__anon7
+KEY_FULL	..\app\periph.h	129;"	enumerator	enum:__anon7
 KEY_GetCurrentState	..\app\key.c	166;"	function	signature:(eKEYTYPE eType)
 KEY_GetCurrentState	..\app\key.c	32;"	prototype	file:	signature:(eKEYTYPE eType)
 KEY_HIGH	..\app\key.c	24;"	macro	file:
@@ -2012,21 +2091,24 @@ KEY_IO_Init	..\app\key.c	109;"	function
 KEY_IO_Init	..\app\key.c	33;"	prototype	file:	signature:(void)
 KEY_Init	..\app\key.c	134;"	function
 KEY_Init	..\app\key.h	33;"	prototype	signature:(void)
-KEY_LEFT	..\app\periph.h	113;"	enumerator	enum:__anon7
+KEY_LEFT	..\app\periph.h	117;"	enumerator	enum:__anon7
 KEY_LOW	..\app\key.c	23;"	macro	file:
 KEY_NORMAL	..\app\key.h	12;"	enumerator	enum:__anon3
 KEY_Process	..\app\key.c	38;"	function
 KEY_Process	..\app\key.h	32;"	prototype	signature:(void)
-KEY_REAR	..\app\periph.h	115;"	enumerator	enum:__anon7
-KEY_RIGHT	..\app\periph.h	114;"	enumerator	enum:__anon7
+KEY_REAR	..\app\periph.h	119;"	enumerator	enum:__anon7
+KEY_RESERVED_1	..\app\periph.h	131;"	enumerator	enum:__anon7
+KEY_RESERVED_2	..\app\periph.h	132;"	enumerator	enum:__anon7
+KEY_RIGHT	..\app\periph.h	118;"	enumerator	enum:__anon7
 KEY_TIMER_Config	..\app\key.c	200;"	function	signature:(void)
 KEY_TIMER_Config	..\app\key.c	34;"	prototype	file:	signature:(void)
 KEY_UNKNOWN	..\app\key.h	14;"	enumerator	enum:__anon3
 KR	..\lib\inc\stm8s.h	1595;"	member	struct:IWDG_struct
+K_SCALE	..\app\can.h	15;"	macro
 LED_OFF	..\app\ir.c	10;"	macro	file:
 LED_ON	..\app\ir.c	9;"	macro	file:
-LSIMeasurment	main.c	198;"	function	signature:(void)
-LSIMeasurment	main.c	26;"	prototype	file:	signature:(void)
+LSIMeasurment	main.c	213;"	function	signature:(void)
+LSIMeasurment	main.c	29;"	prototype	file:	signature:(void)
 LSI_FREQUENCY_MAX	..\lib\inc\stm8s_awu.h	71;"	macro
 LSI_FREQUENCY_MAX	..\lib\inc\stm8s_beep.h	58;"	macro
 LSI_FREQUENCY_MIN	..\lib\inc\stm8s_awu.h	70;"	macro
@@ -2034,7 +2116,7 @@ LSI_FREQUENCY_MIN	..\lib\inc\stm8s_beep.h	57;"	macro
 LSI_VALUE	..\lib\inc\stm8s.h	109;"	macro
 LTRH	..\lib\inc\stm8s.h	315;"	member	struct:ADC1_struct
 LTRL	..\lib\inc\stm8s.h	316;"	member	struct:ADC1_struct
-LsiFreq	main.c	24;"	variable
+LsiFreq	main.c	27;"	variable
 MCR	..\lib\inc\stm8s.h	2052;"	member	struct:__anon13
 MCSR	..\lib\inc\stm8s.h	2065;"	member	struct:__anon13::__anon14::__anon15
 MDAR1	..\lib\inc\stm8s.h	2071;"	member	struct:__anon13::__anon14::__anon15
@@ -2057,13 +2139,13 @@ MDLCR	..\lib\inc\stm8s.h	2066;"	member	struct:__anon13::__anon14::__anon15
 MDLCR	..\lib\inc\stm8s.h	2194;"	member	struct:__anon13::__anon14::__anon21
 MEMCPY	..\lib\inc\stm8s.h	126;"	macro
 MEMCPY	..\lib\inc\stm8s.h	129;"	macro
-MENU_BACK	..\app\periph.h	117;"	enumerator	enum:__anon7
-MENU_DOWN	..\app\periph.h	121;"	enumerator	enum:__anon7
-MENU_LEFT	..\app\periph.h	118;"	enumerator	enum:__anon7
-MENU_OK	..\app\periph.h	122;"	enumerator	enum:__anon7
-MENU_POWER	..\app\periph.h	123;"	enumerator	enum:__anon7
-MENU_RIGHT	..\app\periph.h	119;"	enumerator	enum:__anon7
-MENU_UP	..\app\periph.h	120;"	enumerator	enum:__anon7
+MENU_BACK	..\app\periph.h	121;"	enumerator	enum:__anon7
+MENU_DOWN	..\app\periph.h	125;"	enumerator	enum:__anon7
+MENU_LEFT	..\app\periph.h	122;"	enumerator	enum:__anon7
+MENU_OK	..\app\periph.h	126;"	enumerator	enum:__anon7
+MENU_POWER	..\app\periph.h	127;"	enumerator	enum:__anon7
+MENU_RIGHT	..\app\periph.h	123;"	enumerator	enum:__anon7
+MENU_UP	..\app\periph.h	124;"	enumerator	enum:__anon7
 MFMI	..\lib\inc\stm8s.h	2193;"	member	struct:__anon13::__anon14::__anon21
 MIDR1	..\lib\inc\stm8s.h	2067;"	member	struct:__anon13::__anon14::__anon15
 MIDR1	..\lib\inc\stm8s.h	2195;"	member	struct:__anon13::__anon14::__anon21
@@ -2073,24 +2155,26 @@ MIDR3	..\lib\inc\stm8s.h	2069;"	member	struct:__anon13::__anon14::__anon15
 MIDR3	..\lib\inc\stm8s.h	2197;"	member	struct:__anon13::__anon14::__anon21
 MIDR4	..\lib\inc\stm8s.h	2070;"	member	struct:__anon13::__anon14::__anon15
 MIDR4	..\lib\inc\stm8s.h	2198;"	member	struct:__anon13::__anon14::__anon21
-MSG_ALLVIEW	..\app\comm.h	15;"	enumerator	enum:_eMSG_TYPE
-MSG_CALIBRATING	..\app\comm.h	17;"	enumerator	enum:_eMSG_TYPE
-MSG_FRONT	..\app\comm.h	8;"	enumerator	enum:_eMSG_TYPE
-MSG_FRONT_FULLVIEW	..\app\comm.h	9;"	enumerator	enum:_eMSG_TYPE
-MSG_LEFT	..\app\comm.h	10;"	enumerator	enum:_eMSG_TYPE
-MSG_LEFT_FULLVIEW	..\app\comm.h	11;"	enumerator	enum:_eMSG_TYPE
-MSG_MENU_BACK	..\app\comm.h	19;"	enumerator	enum:_eMSG_TYPE
-MSG_MENU_DOWN	..\app\comm.h	23;"	enumerator	enum:_eMSG_TYPE
-MSG_MENU_LEFT	..\app\comm.h	20;"	enumerator	enum:_eMSG_TYPE
-MSG_MENU_OK	..\app\comm.h	24;"	enumerator	enum:_eMSG_TYPE
-MSG_MENU_POWER	..\app\comm.h	25;"	enumerator	enum:_eMSG_TYPE
-MSG_MENU_RIGHT	..\app\comm.h	21;"	enumerator	enum:_eMSG_TYPE
-MSG_MENU_UP	..\app\comm.h	22;"	enumerator	enum:_eMSG_TYPE
-MSG_REAR	..\app\comm.h	14;"	enumerator	enum:_eMSG_TYPE
-MSG_RIGHT	..\app\comm.h	12;"	enumerator	enum:_eMSG_TYPE
-MSG_RIGHT_FULLVIEW	..\app\comm.h	13;"	enumerator	enum:_eMSG_TYPE
-MSG_SLEEP	..\app\comm.h	18;"	enumerator	enum:_eMSG_TYPE
-MSG_SNAPSHOT	..\app\comm.h	16;"	enumerator	enum:_eMSG_TYPE
+MSG_ALLVIEW	..\app\comm.h	17;"	enumerator	enum:_eMSG_TYPE
+MSG_CALIBRATING	..\app\comm.h	19;"	enumerator	enum:_eMSG_TYPE
+MSG_FRONT	..\app\comm.h	10;"	enumerator	enum:_eMSG_TYPE
+MSG_FRONT_FULLVIEW	..\app\comm.h	11;"	enumerator	enum:_eMSG_TYPE
+MSG_INVALID	..\app\can.c	11;"	macro	file:
+MSG_LEFT	..\app\comm.h	12;"	enumerator	enum:_eMSG_TYPE
+MSG_LEFT_FULLVIEW	..\app\comm.h	13;"	enumerator	enum:_eMSG_TYPE
+MSG_MENU_BACK	..\app\comm.h	21;"	enumerator	enum:_eMSG_TYPE
+MSG_MENU_DOWN	..\app\comm.h	25;"	enumerator	enum:_eMSG_TYPE
+MSG_MENU_LEFT	..\app\comm.h	22;"	enumerator	enum:_eMSG_TYPE
+MSG_MENU_OK	..\app\comm.h	26;"	enumerator	enum:_eMSG_TYPE
+MSG_MENU_POWER	..\app\comm.h	27;"	enumerator	enum:_eMSG_TYPE
+MSG_MENU_RIGHT	..\app\comm.h	23;"	enumerator	enum:_eMSG_TYPE
+MSG_MENU_UP	..\app\comm.h	24;"	enumerator	enum:_eMSG_TYPE
+MSG_REAR	..\app\comm.h	16;"	enumerator	enum:_eMSG_TYPE
+MSG_RIGHT	..\app\comm.h	14;"	enumerator	enum:_eMSG_TYPE
+MSG_RIGHT_FULLVIEW	..\app\comm.h	15;"	enumerator	enum:_eMSG_TYPE
+MSG_SLEEP	..\app\comm.h	20;"	enumerator	enum:_eMSG_TYPE
+MSG_SNAPSHOT	..\app\comm.h	18;"	enumerator	enum:_eMSG_TYPE
+MSG_VALID	..\app\can.c	10;"	macro	file:
 MSR	..\lib\inc\stm8s.h	2053;"	member	struct:__anon13
 MTSRH	..\lib\inc\stm8s.h	2080;"	member	struct:__anon13::__anon14::__anon15
 MTSRH	..\lib\inc\stm8s.h	2208;"	member	struct:__anon13::__anon14::__anon21
@@ -2144,7 +2228,7 @@ PSCRH	..\lib\inc\stm8s.h	614;"	member	struct:TIM1_struct
 PSCRL	..\lib\inc\stm8s.h	615;"	member	struct:TIM1_struct
 PSR	..\lib\inc\stm8s.h	2059;"	member	struct:__anon13
 PUKR	..\lib\inc\stm8s.h	1508;"	member	struct:FLASH_struct
-PUTCHAR_PROTOTYPE	main.c	16;"	macro	file:
+PUTCHAR_PROTOTYPE	main.c	18;"	macro	file:
 Page	..\lib\inc\stm8s.h	2211;"	member	struct:__anon13	typeref:union:__anon13::__anon14
 PointerAttr	..\lib\inc\stm8s.h	146;"	macro
 PointerAttr	..\lib\inc\stm8s.h	149;"	macro
@@ -4148,15 +4232,20 @@ UART3_WordLength_TypeDef	..\lib\inc\stm8s_uart3.h	74;"	typedef	typeref:enum:__an
 UART3_struct	..\lib\inc\stm8s.h	1957;"	struct
 UART_A8	..\app\periph.h	5;"	macro
 UART_DBG	..\app\periph.h	6;"	macro
-UART_Init	..\app\comm.h	67;"	prototype	signature:(void)
+UART_Init	..\app\comm.h	72;"	prototype	signature:(void)
 USE_FULL_ASSERT	stm8s_conf.h	84;"	macro
 USE_STDPERIPH_DRIVER	..\lib\inc\stm8s.h	86;"	macro
-VDD12_OFF	main.c	33;"	macro	file:
-VDD12_ON	main.c	32;"	macro	file:
-VDD3V3_OFF	main.c	30;"	macro	file:
-VDD3V3_ON	main.c	29;"	macro	file:
+VDD12_OFF	main.c	36;"	macro	file:
+VDD12_ON	main.c	35;"	macro	file:
+VDD3V3_OFF	main.c	33;"	macro	file:
+VDD3V3_ON	main.c	32;"	macro	file:
 VECTOR_ID	..\lib\inc\stm8s.h	2644;"	macro
 ValBit	..\lib\inc\stm8s.h	2683;"	macro
+WARN_L_1	..\app\can.h	22;"	macro
+WARN_L_2	..\app\can.h	23;"	macro
+WARN_L_4	..\app\can.h	24;"	macro
+WARN_NONE	..\app\can.h	20;"	macro
+WARN_SAFE	..\app\can.h	21;"	macro
 WR	..\lib\inc\stm8s.h	1620;"	member	struct:WWDG_struct
 WWDG	..\lib\inc\stm8s.h	2541;"	macro
 WWDG_BaseAddress	..\lib\inc\stm8s.h	2460;"	macro
@@ -4187,7 +4276,11 @@ _CHANGE_IR_INPORT_	..\app\config.h	9;"	macro
 _COMM_H_	..\app\comm.h	2;"	macro
 _CONFIG_H_	..\app\config.h	2;"	macro
 _COSMIC_	..\lib\inc\stm8s.h	73;"	macro
+_DLC	..\lib\src\stm8s_can.c	39;"	variable
+_Data	..\lib\src\stm8s_can.c	40;"	variable
+_FMI	..\lib\src\stm8s_can.c	41;"	variable
 _IAR_	..\lib\inc\stm8s.h	77;"	macro
+_IDE	..\lib\src\stm8s_can.c	37;"	variable
 _IR_CODE_TIME_0	..\app\ir.h	68;"	macro
 _IR_CODE_TIME_1	..\app\ir.h	69;"	macro
 _IR_CODE_TIME_BIAS	..\app\ir.h	70;"	macro
@@ -4200,16 +4293,18 @@ _IR_RECEIVEDSTATUS_IDLE	..\app\ir.h	91;"	macro
 _IR_RECEIVEDSTATUS_INTERVAL	..\app\ir.h	94;"	macro
 _IR_RECEIVEDSTATUS_START	..\app\ir.h	92;"	macro
 _IR_RECEIVE_TIMEOUT_	..\app\ir.h	95;"	macro
+_Id	..\lib\src\stm8s_can.c	36;"	variable
 _KEY_H_	..\app\key.h	2;"	macro
 _LEFT_PULSE_	..\app\config.h	15;"	macro
 _PERIPH_H_	..\app\periph.h	2;"	macro
 _RAISONANCE_	..\lib\inc\stm8s.h	75;"	macro
 _RIGHT_PULSE_	..\app\config.h	16;"	macro
+_RTR	..\lib\src\stm8s_can.c	38;"	variable
 _UTILITY_H_	..\app\utility.h	2;"	macro
 __DEBUG__	..\app\config.h	7;"	macro
 __I	..\lib\inc\stm8s.h	194;"	macro
 __IO	..\lib\inc\stm8s.h	196;"	macro
-__MODS0__	c:\cosmic\cxstm8_32k\hstm8\mods0.h	11;"	macro
+__MODSL0__	c:\cosmic\cxstm8_32k\hstm8\modsl0.h	8;"	macro
 __O	..\lib\inc\stm8s.h	195;"	macro
 __PRINTF__	..\app\printf.h	2;"	macro
 __SIZE_T__	c:\cosmic\cxstm8_32k\hstm8\stdio.h	9;"	macro
@@ -4247,31 +4342,31 @@ __STM8S_UART2_H	..\lib\inc\stm8s_uart2.h	24;"	macro
 __STM8S_UART3_H	..\lib\inc\stm8s_uart3.h	24;"	macro
 __STM8S_WWDG_H	..\lib\inc\stm8s_wwdg.h	24;"	macro
 _eKEYDETTYPE	..\app\key.h	49;"	typedef	typeref:enum:__anon6
-_eMSG_TYPE	..\app\comm.h	7;"	enum
+_eMSG_TYPE	..\app\comm.h	9;"	enum
 _stext	stm8_interrupt_vector.c	21;"	prototype	file:
 _stext	stm8s_it.h	34;"	prototype	signature:(void)
-_tMSG_ACK	..\app\comm.h	48;"	struct
-_tMSG_CMD	..\app\comm.h	40;"	struct
-_tRINGBUF	..\app\comm.h	59;"	struct
+_tMSG_ACK	..\app\comm.h	53;"	struct
+_tMSG_CMD	..\app\comm.h	44;"	struct
+_tRINGBUF	..\app\comm.h	64;"	struct
 _vectab	stm8_interrupt_vector.c	23;"	variable
-assert_failed	main.c	285;"	function	signature:(uint8_t* file, uint32_t line)
+assert_failed	main.c	300;"	function	signature:(uint8_t* file, uint32_t line)
 assert_failed	stm8s_conf.h	99;"	prototype	signature:(uint8_t* file, uint32_t line)
 assert_param	stm8s_conf.h	101;"	macro
 assert_param	stm8s_conf.h	97;"	macro
 bool	..\lib\inc\stm8s.h	219;"	typedef	typeref:enum:__anon9
-buf	..\app\comm.h	60;"	member	struct:_tRINGBUF
-checksum	..\app\comm.h	44;"	member	struct:_tMSG_CMD
-checksum	..\app\comm.h	52;"	member	struct:_tMSG_ACK
-cmd	..\app\comm.h	42;"	member	struct:_tMSG_CMD
-cmd	..\app\comm.h	50;"	member	struct:_tMSG_ACK
+buf	..\app\comm.h	65;"	member	struct:_tRINGBUF
+checksum	..\app\comm.h	48;"	member	struct:_tMSG_CMD
+checksum	..\app\comm.h	57;"	member	struct:_tMSG_ACK
+cmd	..\app\comm.h	46;"	member	struct:_tMSG_CMD
+cmd	..\app\comm.h	55;"	member	struct:_tMSG_ACK
 disableInterrupts	..\lib\inc\stm8s.h	2602;"	macro
 disableInterrupts	..\lib\inc\stm8s.h	2611;"	macro
 disableInterrupts	..\lib\inc\stm8s.h	2621;"	macro
 eDET	..\app\key.h	21;"	typedef	typeref:enum:__anon4
 eDetState	..\app\key.h	26;"	member	struct:__anon5
 eKEYSTATE	..\app\key.h	15;"	typedef	typeref:enum:__anon3
-eKEYTYPE	..\app\periph.h	125;"	typedef	typeref:enum:__anon7
-eMSG_TYPE	..\app\comm.h	26;"	typedef	typeref:enum:_eMSG_TYPE
+eKEYTYPE	..\app\periph.h	139;"	typedef	typeref:enum:__anon7
+eMSG_TYPE	..\app\comm.h	28;"	typedef	typeref:enum:_eMSG_TYPE
 enableInterrupts	..\lib\inc\stm8s.h	2601;"	macro
 enableInterrupts	..\lib\inc\stm8s.h	2610;"	macro
 enableInterrupts	..\lib\inc\stm8s.h	2620;"	macro
@@ -4287,8 +4382,8 @@ gets	c:\cosmic\cxstm8_32k\hstm8\stdio.h	16;"	prototype	signature:(char *s)
 halt	..\lib\inc\stm8s.h	2608;"	macro
 halt	..\lib\inc\stm8s.h	2617;"	macro
 halt	..\lib\inc\stm8s.h	2627;"	macro
-head	..\app\comm.h	41;"	member	struct:_tMSG_CMD
-head	..\app\comm.h	49;"	member	struct:_tMSG_ACK
+head	..\app\comm.h	45;"	member	struct:_tMSG_CMD
+head	..\app\comm.h	54;"	member	struct:_tMSG_ACK
 int16_t	..\lib\inc\stm8s.h	200;"	typedef
 int32_t	..\lib\inc\stm8s.h	201;"	typedef
 int8_t	..\lib\inc\stm8s.h	199;"	typedef
@@ -4301,29 +4396,34 @@ l_KeyDetStat	..\app\key.c	21;"	variable	file:
 l_RxRBuf	..\app\comm.c	12;"	variable
 l_TxRBuf	..\app\comm.c	11;"	variable
 l_TxRBuf_Dbg	..\app\comm.c	16;"	variable
-main	main.c	301;"	function
-main	main.c	330;"	function
-main	main.c	38;"	function
+l_tMsgQ	..\app\can.c	36;"	variable	file:
+m_Queue	..\app\can.c	27;"	member	struct:CAN_MSGQUEUETag	file:
+m_Valid	..\app\can.c	28;"	member	struct:CAN_MSGQUEUETag	file:
+m_u16Read	..\app\can.c	30;"	member	struct:CAN_MSGQUEUETag	file:
+m_u16Write	..\app\can.c	29;"	member	struct:CAN_MSGQUEUETag	file:
+main	main.c	316;"	function
+main	main.c	345;"	function
+main	main.c	41;"	function
 nop	..\lib\inc\stm8s.h	2605;"	macro
 nop	..\lib\inc\stm8s.h	2614;"	macro
 nop	..\lib\inc\stm8s.h	2624;"	macro
-param	..\app\comm.h	43;"	member	struct:_tMSG_CMD
+param	..\app\comm.h	47;"	member	struct:_tMSG_CMD
 printf	..\app\ir.c	25;"	prototype	file:	signature:(const char FAR *format, ...)
 printf	c:\cosmic\cxstm8_32k\hstm8\stdio.h	17;"	prototype	signature:(char *format, ...)
 pu8Buffer_Rx	..\app\ir.h	122;"	member	struct:__anon2
 putchar	..\app\ir.c	24;"	prototype	file:	signature:(char)
 putchar	c:\cosmic\cxstm8_32k\hstm8\stdio.h	18;"	prototype	signature:(char c)
 puts	c:\cosmic\cxstm8_32k\hstm8\stdio.h	19;"	prototype	signature:(char *s)
-read	..\app\comm.h	61;"	member	struct:_tRINGBUF
-ret	..\app\comm.h	51;"	member	struct:_tMSG_ACK
+read	..\app\comm.h	66;"	member	struct:_tRINGBUF
+ret	..\app\comm.h	56;"	member	struct:_tMSG_ACK
 rim	..\lib\inc\stm8s.h	2603;"	macro
 rim	..\lib\inc\stm8s.h	2612;"	macro
 rim	..\lib\inc\stm8s.h	2622;"	macro
 s16	..\lib\inc\stm8s.h	211;"	typedef
 s32	..\lib\inc\stm8s.h	210;"	typedef
 s8	..\lib\inc\stm8s.h	212;"	typedef
-s_KeyDetCunt	stm8s_it.c	155;"	variable	file:
-s_u8KeyLRLine	stm8s_it.c	154;"	variable	file:
+s_KeyDetCunt	stm8s_it.c	156;"	variable	file:
+s_u8KeyLRLine	stm8s_it.c	155;"	variable	file:
 scanf	c:\cosmic\cxstm8_32k\hstm8\stdio.h	20;"	prototype	signature:(char *format, ...)
 sim	..\lib\inc\stm8s.h	2604;"	macro
 sim	..\lib\inc\stm8s.h	2613;"	macro
@@ -4331,12 +4431,14 @@ sim	..\lib\inc\stm8s.h	2623;"	macro
 size_t	c:\cosmic\cxstm8_32k\hstm8\stdio.h	10;"	typedef
 sprintf	c:\cosmic\cxstm8_32k\hstm8\stdio.h	22;"	prototype	signature:(char *s, char *format, ...)
 sscanf	c:\cosmic\cxstm8_32k\hstm8\stdio.h	21;"	prototype	signature:(char *s, char *format, ...)
+tCAN_MSG	..\app\can.h	42;"	typedef	typeref:struct:CAN_MSGTag
+tCAN_MSGQUEUE	..\app\can.c	31;"	typedef	typeref:struct:CAN_MSGQUEUETag	file:
 tIRFSM	..\app\ir.c	15;"	variable	file:
 tIRFSMType	..\app\ir.h	125;"	typedef	typeref:struct:__anon2
 tKEYDET	..\app\key.h	29;"	typedef	typeref:struct:__anon5
-tMSG_ACK	..\app\comm.h	53;"	typedef	typeref:struct:_tMSG_ACK
-tMSG_CMD	..\app\comm.h	45;"	typedef	typeref:struct:_tMSG_CMD
-tRINGBUF	..\app\comm.h	64;"	typedef	typeref:struct:_tRINGBUF
+tMSG_ACK	..\app\comm.h	58;"	typedef	typeref:struct:_tMSG_ACK
+tMSG_CMD	..\app\comm.h	49;"	typedef	typeref:struct:_tMSG_CMD
+tRINGBUF	..\app\comm.h	69;"	typedef	typeref:struct:_tRINGBUF
 trap	..\lib\inc\stm8s.h	2606;"	macro
 trap	..\lib\inc\stm8s.h	2615;"	macro
 trap	..\lib\inc\stm8s.h	2625;"	macro
@@ -4345,10 +4447,12 @@ u16Counts	..\app\key.h	28;"	member	struct:__anon5
 u16Delay	..\app\key.h	27;"	member	struct:__anon5
 u32	..\lib\inc\stm8s.h	214;"	typedef
 u32CodeTime	..\app\ir.h	117;"	member	struct:__anon2
+u32ID	..\app\can.h	39;"	member	struct:CAN_MSGTag
 u32Recieved32Bits	..\app\ir.h	112;"	member	struct:__anon2
 u8	..\lib\inc\stm8s.h	216;"	typedef
 u8Available_Rx	..\app\ir.h	121;"	member	struct:__anon2
 u8BitsLength	..\app\ir.h	114;"	member	struct:__anon2
+u8DLC	..\app\can.h	40;"	member	struct:CAN_MSGTag
 u8Read_Rx	..\app\ir.h	120;"	member	struct:__anon2
 u8ReceiveTimeout	..\app\ir.h	124;"	member	struct:__anon2
 u8ReceivedStatus	..\app\ir.h	108;"	member	struct:__anon2
@@ -4360,4 +4464,4 @@ uint8_t	..\lib\inc\stm8s.h	204;"	typedef
 wfi	..\lib\inc\stm8s.h	2607;"	macro
 wfi	..\lib\inc\stm8s.h	2616;"	macro
 wfi	..\lib\inc\stm8s.h	2626;"	macro
-write	..\app\comm.h	62;"	member	struct:_tRINGBUF
+write	..\app\comm.h	67;"	member	struct:_tRINGBUF

@@ -46,6 +46,15 @@ void Delay_1ms()
 	Delay(0x100);
 }
 
+void Delay_nms(u16 u16Num)
+{
+	u16 i = 0;
+
+	while(i++ < u16Num)
+	{
+		Delay_1ms();
+	}
+}
 
 void Delay(uint32_t nCount)
 {

@@ -23,7 +23,7 @@ FormatWatch4=0
 FormatViewType4=1
 FormatViewAddress4=1
 WatchRWOnFlyTab4=0
-FormatLocals=0
+FormatLocals=1
 FormatParameters=0
 [DebugState_v1-Debug.AddOn.St7Watchpoint]
 NbDataBreakpoint=0
@@ -69,4 +69,4 @@ xml_checksum=151
 [DebugState_v1-Debug.AddOn.St7McuIcdConf]
 McuName=STM8S208C6
 [DebugState_v1-Debug.AddOn.IcdBreak]
-ICDBreak0=CR:0x00000000,BK1:0x00000000,BK2:0x00000000
+ICDBreak0=CR:0x00000000,BK1:0x00ffffff,BK2:0x00ffffff

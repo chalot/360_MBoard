@@ -146,130 +146,130 @@
  426  00a1               L731:
  427                     ; 120 }
  430  00a1 81            	ret
- 484                     	switch	.const
- 485  0022               L42:
- 486  0022 0001adb0      	dc.l	110000
- 487  0026               L62:
- 488  0026 000249f1      	dc.l	150001
- 489  002a               L23:
- 490  002a 000003e8      	dc.l	1000
- 491                     ; 135 void AWU_LSICalibrationConfig(uint32_t LSIFreqHz)
- 491                     ; 136 {
- 492                     	switch	.text
- 493  00a2               _AWU_LSICalibrationConfig:
- 495  00a2 5206          	subw	sp,#6
- 496       00000006      OFST:	set	6
- 499                     ; 138     uint16_t lsifreqkhz = 0x0;
- 501                     ; 139     uint16_t A = 0x0;
- 503                     ; 142     assert_param(IS_LSI_FREQUENCY_OK(LSIFreqHz));
- 505  00a4 96            	ldw	x,sp
- 506  00a5 1c0009        	addw	x,#OFST+3
- 507  00a8 cd0000        	call	c_ltor
- 509  00ab ae0022        	ldw	x,#L42
- 510  00ae cd0000        	call	c_lcmp
- 512  00b1 2512          	jrult	L22
- 513  00b3 96            	ldw	x,sp
- 514  00b4 1c0009        	addw	x,#OFST+3
- 515  00b7 cd0000        	call	c_ltor
- 517  00ba ae0026        	ldw	x,#L62
- 518  00bd cd0000        	call	c_lcmp
- 520  00c0 2403          	jruge	L22
- 521  00c2 4f            	clr	a
- 522  00c3 2010          	jra	L03
- 523  00c5               L22:
- 524  00c5 ae008e        	ldw	x,#142
- 525  00c8 89            	pushw	x
- 526  00c9 ae0000        	ldw	x,#0
- 527  00cc 89            	pushw	x
- 528  00cd ae002e        	ldw	x,#L501
- 529  00d0 cd0000        	call	_assert_failed
- 531  00d3 5b04          	addw	sp,#4
- 532  00d5               L03:
- 533                     ; 144     lsifreqkhz = (uint16_t)(LSIFreqHz / 1000); /* Converts value in kHz */
- 535  00d5 96            	ldw	x,sp
- 536  00d6 1c0009        	addw	x,#OFST+3
- 537  00d9 cd0000        	call	c_ltor
- 539  00dc ae002a        	ldw	x,#L23
- 540  00df cd0000        	call	c_ludv
- 542  00e2 be02          	ldw	x,c_lreg+2
- 543  00e4 1f03          	ldw	(OFST-3,sp),x
- 544                     ; 148     A = (uint16_t)(lsifreqkhz >> 2U); /* Division by 4, keep integer part only */
- 546  00e6 1e03          	ldw	x,(OFST-3,sp)
- 547  00e8 54            	srlw	x
- 548  00e9 54            	srlw	x
- 549  00ea 1f05          	ldw	(OFST-1,sp),x
- 550                     ; 150     if ((4U * A) >= ((lsifreqkhz - (4U * A)) * (1U + (2U * A))))
- 552  00ec 1e05          	ldw	x,(OFST-1,sp)
- 553  00ee 58            	sllw	x
- 554  00ef 58            	sllw	x
- 555  00f0 1f01          	ldw	(OFST-5,sp),x
- 556  00f2 1e03          	ldw	x,(OFST-3,sp)
- 557  00f4 72f001        	subw	x,(OFST-5,sp)
- 558  00f7 1605          	ldw	y,(OFST-1,sp)
- 559  00f9 9058          	sllw	y
- 560  00fb 905c          	incw	y
- 561  00fd cd0000        	call	c_imul
- 563  0100 1605          	ldw	y,(OFST-1,sp)
- 564  0102 9058          	sllw	y
- 565  0104 9058          	sllw	y
- 566  0106 bf00          	ldw	c_x,x
- 567  0108 90b300        	cpw	y,c_x
- 568  010b 2509          	jrult	L761
- 569                     ; 152         AWU->APR = (uint8_t)(A - 2U);
- 571  010d 7b06          	ld	a,(OFST+0,sp)
- 572  010f a002          	sub	a,#2
- 573  0111 c750f1        	ld	20721,a
- 575  0114 2006          	jra	L171
- 576  0116               L761:
- 577                     ; 156         AWU->APR = (uint8_t)(A - 1U);
- 579  0116 7b06          	ld	a,(OFST+0,sp)
- 580  0118 4a            	dec	a
- 581  0119 c750f1        	ld	20721,a
- 582  011c               L171:
- 583                     ; 158 }
- 586  011c 5b06          	addw	sp,#6
- 587  011e 81            	ret
- 610                     ; 165 void AWU_IdleModeEnable(void)
- 610                     ; 166 {
- 611                     	switch	.text
- 612  011f               _AWU_IdleModeEnable:
- 616                     ; 168     AWU->CSR &= (uint8_t)(~AWU_CSR_AWUEN);
- 618  011f 721950f0      	bres	20720,#4
- 619                     ; 171     AWU->TBR = (uint8_t)(~AWU_TBR_AWUTB);
- 621  0123 35f050f2      	mov	20722,#240
- 622                     ; 172 }
- 625  0127 81            	ret
- 669                     ; 180 FlagStatus AWU_GetFlagStatus(void)
- 669                     ; 181 {
- 670                     	switch	.text
- 671  0128               _AWU_GetFlagStatus:
- 675                     ; 182     return((FlagStatus)(((uint8_t)(AWU->CSR & AWU_CSR_AWUF) == (uint8_t)0x00) ? RESET : SET));
- 677  0128 c650f0        	ld	a,20720
- 678  012b a520          	bcp	a,#32
- 679  012d 2603          	jrne	L04
- 680  012f 4f            	clr	a
- 681  0130 2002          	jra	L24
- 682  0132               L04:
- 683  0132 a601          	ld	a,#1
- 684  0134               L24:
- 687  0134 81            	ret
- 722                     	xdef	_TBR_Array
- 723                     	xdef	_APR_Array
- 724                     	xdef	_AWU_GetFlagStatus
- 725                     	xdef	_AWU_IdleModeEnable
- 726                     	xdef	_AWU_LSICalibrationConfig
- 727                     	xdef	_AWU_Cmd
- 728                     	xdef	_AWU_Init
- 729                     	xdef	_AWU_DeInit
- 730                     	xref	_assert_failed
- 731                     	switch	.const
- 732  002e               L501:
- 733  002e 2e2e5c6c6962  	dc.b	"..\lib\src\stm8s_a"
- 734  0040 77752e6300    	dc.b	"wu.c",0
- 735                     	xref.b	c_lreg
- 736                     	xref.b	c_x
- 756                     	xref	c_imul
- 757                     	xref	c_ludv
- 758                     	xref	c_lcmp
- 759                     	xref	c_ltor
- 760                     	end
+ 478                     	switch	.const
+ 479  0022               L42:
+ 480  0022 0001adb0      	dc.l	110000
+ 481  0026               L62:
+ 482  0026 000249f1      	dc.l	150001
+ 483  002a               L23:
+ 484  002a 000003e8      	dc.l	1000
+ 485                     ; 135 void AWU_LSICalibrationConfig(uint32_t LSIFreqHz)
+ 485                     ; 136 {
+ 486                     	switch	.text
+ 487  00a2               _AWU_LSICalibrationConfig:
+ 489  00a2 5206          	subw	sp,#6
+ 490       00000006      OFST:	set	6
+ 493                     ; 138     uint16_t lsifreqkhz = 0x0;
+ 495                     ; 139     uint16_t A = 0x0;
+ 497                     ; 142     assert_param(IS_LSI_FREQUENCY_OK(LSIFreqHz));
+ 499  00a4 96            	ldw	x,sp
+ 500  00a5 1c0009        	addw	x,#OFST+3
+ 501  00a8 cd0000        	call	c_ltor
+ 503  00ab ae0022        	ldw	x,#L42
+ 504  00ae cd0000        	call	c_lcmp
+ 506  00b1 2512          	jrult	L22
+ 507  00b3 96            	ldw	x,sp
+ 508  00b4 1c0009        	addw	x,#OFST+3
+ 509  00b7 cd0000        	call	c_ltor
+ 511  00ba ae0026        	ldw	x,#L62
+ 512  00bd cd0000        	call	c_lcmp
+ 514  00c0 2403          	jruge	L22
+ 515  00c2 4f            	clr	a
+ 516  00c3 2010          	jra	L03
+ 517  00c5               L22:
+ 518  00c5 ae008e        	ldw	x,#142
+ 519  00c8 89            	pushw	x
+ 520  00c9 ae0000        	ldw	x,#0
+ 521  00cc 89            	pushw	x
+ 522  00cd ae002e        	ldw	x,#L501
+ 523  00d0 cd0000        	call	_assert_failed
+ 525  00d3 5b04          	addw	sp,#4
+ 526  00d5               L03:
+ 527                     ; 144     lsifreqkhz = (uint16_t)(LSIFreqHz / 1000); /* Converts value in kHz */
+ 529  00d5 96            	ldw	x,sp
+ 530  00d6 1c0009        	addw	x,#OFST+3
+ 531  00d9 cd0000        	call	c_ltor
+ 533  00dc ae002a        	ldw	x,#L23
+ 534  00df cd0000        	call	c_ludv
+ 536  00e2 be02          	ldw	x,c_lreg+2
+ 537  00e4 1f03          	ldw	(OFST-3,sp),x
+ 538                     ; 148     A = (uint16_t)(lsifreqkhz >> 2U); /* Division by 4, keep integer part only */
+ 540  00e6 1e03          	ldw	x,(OFST-3,sp)
+ 541  00e8 54            	srlw	x
+ 542  00e9 54            	srlw	x
+ 543  00ea 1f05          	ldw	(OFST-1,sp),x
+ 544                     ; 150     if ((4U * A) >= ((lsifreqkhz - (4U * A)) * (1U + (2U * A))))
+ 546  00ec 1e05          	ldw	x,(OFST-1,sp)
+ 547  00ee 58            	sllw	x
+ 548  00ef 58            	sllw	x
+ 549  00f0 1f01          	ldw	(OFST-5,sp),x
+ 550  00f2 1e03          	ldw	x,(OFST-3,sp)
+ 551  00f4 72f001        	subw	x,(OFST-5,sp)
+ 552  00f7 1605          	ldw	y,(OFST-1,sp)
+ 553  00f9 9058          	sllw	y
+ 554  00fb 905c          	incw	y
+ 555  00fd cd0000        	call	c_imul
+ 557  0100 1605          	ldw	y,(OFST-1,sp)
+ 558  0102 9058          	sllw	y
+ 559  0104 9058          	sllw	y
+ 560  0106 bf00          	ldw	c_x,x
+ 561  0108 90b300        	cpw	y,c_x
+ 562  010b 2509          	jrult	L161
+ 563                     ; 152         AWU->APR = (uint8_t)(A - 2U);
+ 565  010d 7b06          	ld	a,(OFST+0,sp)
+ 566  010f a002          	sub	a,#2
+ 567  0111 c750f1        	ld	20721,a
+ 569  0114 2006          	jra	L361
+ 570  0116               L161:
+ 571                     ; 156         AWU->APR = (uint8_t)(A - 1U);
+ 573  0116 7b06          	ld	a,(OFST+0,sp)
+ 574  0118 4a            	dec	a
+ 575  0119 c750f1        	ld	20721,a
+ 576  011c               L361:
+ 577                     ; 158 }
+ 580  011c 5b06          	addw	sp,#6
+ 581  011e 81            	ret
+ 604                     ; 165 void AWU_IdleModeEnable(void)
+ 604                     ; 166 {
+ 605                     	switch	.text
+ 606  011f               _AWU_IdleModeEnable:
+ 610                     ; 168     AWU->CSR &= (uint8_t)(~AWU_CSR_AWUEN);
+ 612  011f 721950f0      	bres	20720,#4
+ 613                     ; 171     AWU->TBR = (uint8_t)(~AWU_TBR_AWUTB);
+ 615  0123 35f050f2      	mov	20722,#240
+ 616                     ; 172 }
+ 619  0127 81            	ret
+ 663                     ; 180 FlagStatus AWU_GetFlagStatus(void)
+ 663                     ; 181 {
+ 664                     	switch	.text
+ 665  0128               _AWU_GetFlagStatus:
+ 669                     ; 182     return((FlagStatus)(((uint8_t)(AWU->CSR & AWU_CSR_AWUF) == (uint8_t)0x00) ? RESET : SET));
+ 671  0128 c650f0        	ld	a,20720
+ 672  012b a520          	bcp	a,#32
+ 673  012d 2603          	jrne	L04
+ 674  012f 4f            	clr	a
+ 675  0130 2002          	jra	L24
+ 676  0132               L04:
+ 677  0132 a601          	ld	a,#1
+ 678  0134               L24:
+ 681  0134 81            	ret
+ 716                     	xdef	_TBR_Array
+ 717                     	xdef	_APR_Array
+ 718                     	xdef	_AWU_GetFlagStatus
+ 719                     	xdef	_AWU_IdleModeEnable
+ 720                     	xdef	_AWU_LSICalibrationConfig
+ 721                     	xdef	_AWU_Cmd
+ 722                     	xdef	_AWU_Init
+ 723                     	xdef	_AWU_DeInit
+ 724                     	xref	_assert_failed
+ 725                     	switch	.const
+ 726  002e               L501:
+ 727  002e 2e2e5c6c6962  	dc.b	"..\lib\src\stm8s_a"
+ 728  0040 77752e6300    	dc.b	"wu.c",0
+ 729                     	xref.b	c_lreg
+ 730                     	xref.b	c_x
+ 750                     	xref	c_imul
+ 751                     	xref	c_ludv
+ 752                     	xref	c_lcmp
+ 753                     	xref	c_ltor
+ 754                     	end

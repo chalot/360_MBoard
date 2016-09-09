@@ -12,9 +12,12 @@
 #include "comm.h"
 #include "ir.h"
 #include "config.h"
+#include "can.h"
+#include "utility.h"
 
 #define PUTCHAR_PROTOTYPE char putchar (char c)
 
+//#define _IWDG_
 
 /* Private function prototypes -----------------------------------------------*/
 static void CLK_Config(void);
@@ -37,9 +40,12 @@ uint32_t LSIMeasurment(void);
 /*主程序*/
 void main()
 {	
+	u8 i = 0;
+	
 	 /*时钟初始化*/
   	CLK_Config();
 
+#ifdef _IWDG_
 	/* Check if the system has resumed from IWDG reset */
 	if (RST_GetFlagStatus(RST_FLAG_IWDGF) != RESET)
 	{
@@ -47,18 +53,19 @@ void main()
 	  RST_ClearFlag(RST_FLAG_IWDGF);
 	}
 
+	/* get measured LSI frequency */
+	LsiFreq = LSIMeasurment();
+	
+	/* IWDG Configuration */
+	IWDG_Config();
+#endif
+	
 	/*初始化电源控制*/
 	GPIO_DeInit(GPIOD);	
 	GPIO_Init(GPIOD,GPIO_PIN_3,GPIO_MODE_OUT_PP_LOW_FAST);
 	GPIO_DeInit(GPIOC);	
 	GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_FAST);	
 	
-	/* get measured LSI frequency */
-//	LsiFreq = LSIMeasurment();
-	
-	/* IWDG Configuration */
-//	IWDG_Config();
-
 #ifdef __DEBUG__
 	/*底板MCU调试串口配置*/
 	DBG_Config();
@@ -73,12 +80,16 @@ void main()
 	/*遥控器硬件初始化*/
 	IR_Init();
 	
+	/*初始化CAN*/
+	CAN_Initialize();
+
 	/*打开全局中断*/
 	enableInterrupts();    
 	
 	/*上电,3.3V/12V*/
 	VDD3V3_ON();
 	VDD12_ON();
+
 
 	while (1)
 	{
@@ -87,9 +98,14 @@ void main()
 
 		/*红外遥控器处理*/
 		IR_Process();
-
-		/*喂狗*/
-//		IWDG_ReloadCounter();  
+		
+		/*CAN通信处理*/
+		CAN_Process();
+		
+#ifdef _IWDG_		
+		/*独立看门狗喂狗*/
+		IWDG_ReloadCounter();  
+#endif
 	}
 		
 }
@@ -108,7 +124,6 @@ void CLK_Config(void)
 	CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
 	CLK_SYSCLKConfig(CLK_PRESCALER_CPUDIV1);
 	CLK_HSICmd(ENABLE);
-
 	
 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER1, ENABLE);	
 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER2, ENABLE);	

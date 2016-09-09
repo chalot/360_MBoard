@@ -75,109 +75,109 @@
  256  005c               L501:
  257                     ; 99 }
  260  005c 81            	ret
- 314                     .const:	section	.text
- 315  0000               L42:
- 316  0000 0001adb0      	dc.l	110000
- 317  0004               L62:
- 318  0004 000249f1      	dc.l	150001
- 319  0008               L23:
- 320  0008 000003e8      	dc.l	1000
- 321                     ; 114 void BEEP_LSICalibrationConfig(uint32_t LSIFreqHz)
- 321                     ; 115 {
- 322                     	switch	.text
- 323  005d               _BEEP_LSICalibrationConfig:
- 325  005d 5206          	subw	sp,#6
- 326       00000006      OFST:	set	6
- 329                     ; 121     assert_param(IS_LSI_FREQUENCY_OK(LSIFreqHz));
- 331  005f 96            	ldw	x,sp
- 332  0060 1c0009        	addw	x,#OFST+3
- 333  0063 cd0000        	call	c_ltor
- 335  0066 ae0000        	ldw	x,#L42
- 336  0069 cd0000        	call	c_lcmp
- 338  006c 2512          	jrult	L22
- 339  006e 96            	ldw	x,sp
- 340  006f 1c0009        	addw	x,#OFST+3
- 341  0072 cd0000        	call	c_ltor
- 343  0075 ae0004        	ldw	x,#L62
- 344  0078 cd0000        	call	c_lcmp
- 346  007b 2403          	jruge	L22
- 347  007d 4f            	clr	a
- 348  007e 2010          	jra	L03
- 349  0080               L22:
- 350  0080 ae0079        	ldw	x,#121
- 351  0083 89            	pushw	x
- 352  0084 ae0000        	ldw	x,#0
- 353  0087 89            	pushw	x
- 354  0088 ae000c        	ldw	x,#L15
- 355  008b cd0000        	call	_assert_failed
- 357  008e 5b04          	addw	sp,#4
- 358  0090               L03:
- 359                     ; 123     lsifreqkhz = (uint16_t)(LSIFreqHz / 1000); /* Converts value in kHz */
- 361  0090 96            	ldw	x,sp
- 362  0091 1c0009        	addw	x,#OFST+3
- 363  0094 cd0000        	call	c_ltor
- 365  0097 ae0008        	ldw	x,#L23
- 366  009a cd0000        	call	c_ludv
- 368  009d be02          	ldw	x,c_lreg+2
- 369  009f 1f03          	ldw	(OFST-3,sp),x
- 370                     ; 127     BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPDIV); /* Clear bits */
- 372  00a1 c650f3        	ld	a,20723
- 373  00a4 a4e0          	and	a,#224
- 374  00a6 c750f3        	ld	20723,a
- 375                     ; 129     A = (uint16_t)(lsifreqkhz >> 3U); /* Division by 8, keep integer part only */
- 377  00a9 1e03          	ldw	x,(OFST-3,sp)
- 378  00ab 54            	srlw	x
- 379  00ac 54            	srlw	x
- 380  00ad 54            	srlw	x
- 381  00ae 1f05          	ldw	(OFST-1,sp),x
- 382                     ; 131     if ((8U * A) >= ((lsifreqkhz - (8U * A)) * (1U + (2U * A))))
- 384  00b0 1e05          	ldw	x,(OFST-1,sp)
- 385  00b2 58            	sllw	x
- 386  00b3 58            	sllw	x
- 387  00b4 58            	sllw	x
- 388  00b5 1f01          	ldw	(OFST-5,sp),x
- 389  00b7 1e03          	ldw	x,(OFST-3,sp)
- 390  00b9 72f001        	subw	x,(OFST-5,sp)
- 391  00bc 1605          	ldw	y,(OFST-1,sp)
- 392  00be 9058          	sllw	y
- 393  00c0 905c          	incw	y
- 394  00c2 cd0000        	call	c_imul
- 396  00c5 1605          	ldw	y,(OFST-1,sp)
- 397  00c7 9058          	sllw	y
- 398  00c9 9058          	sllw	y
- 399  00cb 9058          	sllw	y
- 400  00cd bf00          	ldw	c_x,x
- 401  00cf 90b300        	cpw	y,c_x
- 402  00d2 250c          	jrult	L531
- 403                     ; 133         BEEP->CSR |= (uint8_t)(A - 2U);
- 405  00d4 7b06          	ld	a,(OFST+0,sp)
- 406  00d6 a002          	sub	a,#2
- 407  00d8 ca50f3        	or	a,20723
- 408  00db c750f3        	ld	20723,a
- 410  00de 2009          	jra	L731
- 411  00e0               L531:
- 412                     ; 137         BEEP->CSR |= (uint8_t)(A - 1U);
- 414  00e0 7b06          	ld	a,(OFST+0,sp)
- 415  00e2 4a            	dec	a
- 416  00e3 ca50f3        	or	a,20723
- 417  00e6 c750f3        	ld	20723,a
- 418  00e9               L731:
- 419                     ; 139 }
- 422  00e9 5b06          	addw	sp,#6
- 423  00eb 81            	ret
- 436                     	xdef	_BEEP_LSICalibrationConfig
- 437                     	xdef	_BEEP_Cmd
- 438                     	xdef	_BEEP_Init
- 439                     	xdef	_BEEP_DeInit
- 440                     	xref	_assert_failed
- 441                     	switch	.const
- 442  000c               L15:
- 443  000c 2e2e5c6c6962  	dc.b	"..\lib\src\stm8s_b"
- 444  001e 6565702e6300  	dc.b	"eep.c",0
- 445                     	xref.b	c_lreg
- 446                     	xref.b	c_x
- 466                     	xref	c_imul
- 467                     	xref	c_ludv
- 468                     	xref	c_lcmp
- 469                     	xref	c_ltor
- 470                     	end
+ 308                     .const:	section	.text
+ 309  0000               L42:
+ 310  0000 0001adb0      	dc.l	110000
+ 311  0004               L62:
+ 312  0004 000249f1      	dc.l	150001
+ 313  0008               L23:
+ 314  0008 000003e8      	dc.l	1000
+ 315                     ; 114 void BEEP_LSICalibrationConfig(uint32_t LSIFreqHz)
+ 315                     ; 115 {
+ 316                     	switch	.text
+ 317  005d               _BEEP_LSICalibrationConfig:
+ 319  005d 5206          	subw	sp,#6
+ 320       00000006      OFST:	set	6
+ 323                     ; 121     assert_param(IS_LSI_FREQUENCY_OK(LSIFreqHz));
+ 325  005f 96            	ldw	x,sp
+ 326  0060 1c0009        	addw	x,#OFST+3
+ 327  0063 cd0000        	call	c_ltor
+ 329  0066 ae0000        	ldw	x,#L42
+ 330  0069 cd0000        	call	c_lcmp
+ 332  006c 2512          	jrult	L22
+ 333  006e 96            	ldw	x,sp
+ 334  006f 1c0009        	addw	x,#OFST+3
+ 335  0072 cd0000        	call	c_ltor
+ 337  0075 ae0004        	ldw	x,#L62
+ 338  0078 cd0000        	call	c_lcmp
+ 340  007b 2403          	jruge	L22
+ 341  007d 4f            	clr	a
+ 342  007e 2010          	jra	L03
+ 343  0080               L22:
+ 344  0080 ae0079        	ldw	x,#121
+ 345  0083 89            	pushw	x
+ 346  0084 ae0000        	ldw	x,#0
+ 347  0087 89            	pushw	x
+ 348  0088 ae000c        	ldw	x,#L15
+ 349  008b cd0000        	call	_assert_failed
+ 351  008e 5b04          	addw	sp,#4
+ 352  0090               L03:
+ 353                     ; 123     lsifreqkhz = (uint16_t)(LSIFreqHz / 1000); /* Converts value in kHz */
+ 355  0090 96            	ldw	x,sp
+ 356  0091 1c0009        	addw	x,#OFST+3
+ 357  0094 cd0000        	call	c_ltor
+ 359  0097 ae0008        	ldw	x,#L23
+ 360  009a cd0000        	call	c_ludv
+ 362  009d be02          	ldw	x,c_lreg+2
+ 363  009f 1f03          	ldw	(OFST-3,sp),x
+ 364                     ; 127     BEEP->CSR &= (uint8_t)(~BEEP_CSR_BEEPDIV); /* Clear bits */
+ 366  00a1 c650f3        	ld	a,20723
+ 367  00a4 a4e0          	and	a,#224
+ 368  00a6 c750f3        	ld	20723,a
+ 369                     ; 129     A = (uint16_t)(lsifreqkhz >> 3U); /* Division by 8, keep integer part only */
+ 371  00a9 1e03          	ldw	x,(OFST-3,sp)
+ 372  00ab 54            	srlw	x
+ 373  00ac 54            	srlw	x
+ 374  00ad 54            	srlw	x
+ 375  00ae 1f05          	ldw	(OFST-1,sp),x
+ 376                     ; 131     if ((8U * A) >= ((lsifreqkhz - (8U * A)) * (1U + (2U * A))))
+ 378  00b0 1e05          	ldw	x,(OFST-1,sp)
+ 379  00b2 58            	sllw	x
+ 380  00b3 58            	sllw	x
+ 381  00b4 58            	sllw	x
+ 382  00b5 1f01          	ldw	(OFST-5,sp),x
+ 383  00b7 1e03          	ldw	x,(OFST-3,sp)
+ 384  00b9 72f001        	subw	x,(OFST-5,sp)
+ 385  00bc 1605          	ldw	y,(OFST-1,sp)
+ 386  00be 9058          	sllw	y
+ 387  00c0 905c          	incw	y
+ 388  00c2 cd0000        	call	c_imul
+ 390  00c5 1605          	ldw	y,(OFST-1,sp)
+ 391  00c7 9058          	sllw	y
+ 392  00c9 9058          	sllw	y
+ 393  00cb 9058          	sllw	y
+ 394  00cd bf00          	ldw	c_x,x
+ 395  00cf 90b300        	cpw	y,c_x
+ 396  00d2 250c          	jrult	L721
+ 397                     ; 133         BEEP->CSR |= (uint8_t)(A - 2U);
+ 399  00d4 7b06          	ld	a,(OFST+0,sp)
+ 400  00d6 a002          	sub	a,#2
+ 401  00d8 ca50f3        	or	a,20723
+ 402  00db c750f3        	ld	20723,a
+ 404  00de 2009          	jra	L131
+ 405  00e0               L721:
+ 406                     ; 137         BEEP->CSR |= (uint8_t)(A - 1U);
+ 408  00e0 7b06          	ld	a,(OFST+0,sp)
+ 409  00e2 4a            	dec	a
+ 410  00e3 ca50f3        	or	a,20723
+ 411  00e6 c750f3        	ld	20723,a
+ 412  00e9               L131:
+ 413                     ; 139 }
+ 416  00e9 5b06          	addw	sp,#6
+ 417  00eb 81            	ret
+ 430                     	xdef	_BEEP_LSICalibrationConfig
+ 431                     	xdef	_BEEP_Cmd
+ 432                     	xdef	_BEEP_Init
+ 433                     	xdef	_BEEP_DeInit
+ 434                     	xref	_assert_failed
+ 435                     	switch	.const
+ 436  000c               L15:
+ 437  000c 2e2e5c6c6962  	dc.b	"..\lib\src\stm8s_b"
+ 438  001e 6565702e6300  	dc.b	"eep.c",0
+ 439                     	xref.b	c_lreg
+ 440                     	xref.b	c_x
+ 460                     	xref	c_imul
+ 461                     	xref	c_ludv
+ 462                     	xref	c_lcmp
+ 463                     	xref	c_ltor
+ 464                     	end

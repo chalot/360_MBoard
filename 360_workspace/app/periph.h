@@ -35,6 +35,10 @@
 #define GPIO_UARTCTL_PORT		GPIOD
 #define GPIO_UARTCTL_PIN		GPIO_PIN_3
 
+/*CAN STB，PC4*/
+#define GPIO_CANSTB_PORT		GPIOC
+#define GPIO_CANSTB_PIN		GPIO_PIN_4
+
 
 
 /*SPI flash*/
@@ -121,6 +125,16 @@ typedef enum {
 	MENU_DOWN,	//下翻
 	MENU_OK,		//确定
 	MENU_POWER,	//电源
+	
+	KEY_FULL,	//四个视图
+	
+	KEY_RESERVED_1,
+	KEY_RESERVED_2,
+
+/*CAN消息*/
+	FCW_DISTANCE,	/*前车距离*/
+	FCW_WARNING,	/*报警等级*/
+	
 	KEY_END
 } eKEYTYPE;
 

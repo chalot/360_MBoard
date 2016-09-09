@@ -52,12 +52,14 @@ crtsi0.sm8
 #<BEGIN OBJECT_FILES>
 Debug\main.o
 Debug\stm8s_it.o
+Debug\can.o
 Debug\beep.o
 Debug\comm.o
 Debug\ir.o
 Debug\key.o
 Debug\periph.o
 Debug\utility.o
+Debug\stm8s_can.o
 Debug\stm8s_awu.o
 Debug\stm8s_beep.o
 Debug\stm8s_clk.o
@@ -81,7 +83,7 @@ Debug\stm8s_wwdg.o
 
 # Library list - section reserved for STVD
 #<BEGIN LIBRARY_FILES>
-libis0.sm8
+libisl0.sm8
 libm0.sm8
 #<END LIBRARY_FILES>
 

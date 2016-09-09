@@ -69,38 +69,38 @@
  247                     ; 63 }
  250  0056 84            	pop	a
  251  0057 81            	ret
- 285                     ; 72 void IWDG_SetReload(uint8_t IWDG_Reload)
- 285                     ; 73 {
- 286                     	switch	.text
- 287  0058               _IWDG_SetReload:
- 291                     ; 74     IWDG->RLR = IWDG_Reload;
- 293  0058 c750e2        	ld	20706,a
- 294                     ; 75 }
- 297  005b 81            	ret
- 320                     ; 83 void IWDG_ReloadCounter(void)
- 320                     ; 84 {
- 321                     	switch	.text
- 322  005c               _IWDG_ReloadCounter:
- 326                     ; 85     IWDG->KR = IWDG_KEY_REFRESH;
- 328  005c 35aa50e0      	mov	20704,#170
- 329                     ; 86 }
- 332  0060 81            	ret
- 355                     ; 93 void IWDG_Enable(void)
- 355                     ; 94 {
- 356                     	switch	.text
- 357  0061               _IWDG_Enable:
- 361                     ; 95     IWDG->KR = IWDG_KEY_ENABLE;
- 363  0061 35cc50e0      	mov	20704,#204
- 364                     ; 96 }
- 367  0065 81            	ret
- 380                     	xdef	_IWDG_Enable
- 381                     	xdef	_IWDG_ReloadCounter
- 382                     	xdef	_IWDG_SetReload
- 383                     	xdef	_IWDG_SetPrescaler
- 384                     	xdef	_IWDG_WriteAccessCmd
- 385                     	xref	_assert_failed
- 386                     .const:	section	.text
- 387  0000               L73:
- 388  0000 2e2e5c6c6962  	dc.b	"..\lib\src\stm8s_i"
- 389  0012 7764672e6300  	dc.b	"wdg.c",0
- 409                     	end
+ 283                     ; 72 void IWDG_SetReload(uint8_t IWDG_Reload)
+ 283                     ; 73 {
+ 284                     	switch	.text
+ 285  0058               _IWDG_SetReload:
+ 289                     ; 74     IWDG->RLR = IWDG_Reload;
+ 291  0058 c750e2        	ld	20706,a
+ 292                     ; 75 }
+ 295  005b 81            	ret
+ 318                     ; 83 void IWDG_ReloadCounter(void)
+ 318                     ; 84 {
+ 319                     	switch	.text
+ 320  005c               _IWDG_ReloadCounter:
+ 324                     ; 85     IWDG->KR = IWDG_KEY_REFRESH;
+ 326  005c 35aa50e0      	mov	20704,#170
+ 327                     ; 86 }
+ 330  0060 81            	ret
+ 353                     ; 93 void IWDG_Enable(void)
+ 353                     ; 94 {
+ 354                     	switch	.text
+ 355  0061               _IWDG_Enable:
+ 359                     ; 95     IWDG->KR = IWDG_KEY_ENABLE;
+ 361  0061 35cc50e0      	mov	20704,#204
+ 362                     ; 96 }
+ 365  0065 81            	ret
+ 378                     	xdef	_IWDG_Enable
+ 379                     	xdef	_IWDG_ReloadCounter
+ 380                     	xdef	_IWDG_SetReload
+ 381                     	xdef	_IWDG_SetPrescaler
+ 382                     	xdef	_IWDG_WriteAccessCmd
+ 383                     	xref	_assert_failed
+ 384                     .const:	section	.text
+ 385  0000               L73:
+ 386  0000 2e2e5c6c6962  	dc.b	"..\lib\src\stm8s_i"
+ 387  0012 7764672e6300  	dc.b	"wdg.c",0
+ 407                     	end

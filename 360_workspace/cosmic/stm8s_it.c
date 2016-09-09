@@ -29,6 +29,7 @@
 #include "ir.h"
 #include "config.h"
 #include "key.h"
+#include "can.h"
 
 extern uint8_t GetVar_TxCounter1(void);
 extern uint8_t GetVar_TxCounter2(void);
@@ -169,7 +170,8 @@ INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
 	if ((GPIO_ReadInputData(GPIO_LEFT_PORT) & GPIO_LEFT_PIN) == 0x00)
 	{
 		/*若是首次出现电平跳变，立即发送转向信息保证实时性，同时开启计时器，检测电平跳变何时结束*/
-		if(s_u8KeyLRLine == KEY_DET_IDLE) {
+		if((s_u8KeyLRLine == KEY_DET_IDLE) ||
+		    ((s_u8KeyLRLine != KEY_DET_IDLE) && (s_u8KeyLRLine == KEY_DET_RIGHT))) {
 				s_u8KeyLRLine = KEY_DET_LEFT;
 				TIM2_Cmd(ENABLE);
 				/*发送左转向信号*/
@@ -184,7 +186,8 @@ INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
 	/*右转向*/
 	if ((GPIO_ReadInputData(GPIO_RIGHT_PORT) & GPIO_RIGHT_PIN) == 0x00)
 	{	
-		if(s_u8KeyLRLine == KEY_DET_IDLE) {
+		if((s_u8KeyLRLine == KEY_DET_IDLE) || 
+		    ((s_u8KeyLRLine != KEY_DET_IDLE) && (s_u8KeyLRLine == KEY_DET_LEFT))) {
 				s_u8KeyLRLine = KEY_DET_RIGHT;
 				TIM2_Cmd(ENABLE);
 				/*发送右转向信号*/
@@ -271,6 +274,27 @@ INTERRUPT_HANDLER(EXTI_PORTE_IRQHandler, 7)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+
+  	static tCAN_MSG can_msg;
+	static unsigned int cnt = 0;
+	/* 接收一帧 */
+	CAN_Receive();
+	cnt++;
+
+	can_msg.u32ID = CAN_GetReceivedId();
+	can_msg.u8DLC = CAN_GetReceivedDLC();
+
+	can_msg.Data[0] = CAN_GetReceivedData(0);
+	can_msg.Data[1] = CAN_GetReceivedData(1);
+	can_msg.Data[2] = CAN_GetReceivedData(2);
+	can_msg.Data[3] = CAN_GetReceivedData(3);
+	can_msg.Data[4] = CAN_GetReceivedData(4);
+	can_msg.Data[5] = CAN_GetReceivedData(5);
+	can_msg.Data[6] = CAN_GetReceivedData(6);
+	can_msg.Data[7] = CAN_GetReceivedData(7);
+
+	CAN_AddMsg(&can_msg);
+
  }
 
 /**
@@ -375,7 +399,7 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
 		/*超时计数，2秒内无刷新，视为转向恢复*/
 		s_KeyDetCunt ++;
 	
-		if(s_KeyDetCunt > 5) {
+		if(s_KeyDetCunt > 3) {
 			s_KeyDetCunt = 0;
 			TIM2_Cmd(DISABLE);		
 			

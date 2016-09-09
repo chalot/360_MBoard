@@ -103,11 +103,26 @@ void COMM_RequestSendCommand(eKEYTYPE eKey, eKEYSTATE eState)
 	UART2_ITConfig(UART2_IT_TXE, DISABLE);
 #endif
 #ifdef _A8_COMM_UART1_
-		UART1_ITConfig(UART1_IT_TXE, DISABLE);
+
+//		UART1_ITConfig(UART1_IT_TXE, DISABLE);
+#ifndef	UART_TX_NON_INTERUPTABLE_
+	UART1_ITConfig(UART1_IT_TXE, DISABLE);
+#else
+	for(i = 0; i < sizeof(tMSG_CMD); i++) 
+	{
+		/* Write a character to the UART1 */
+		UART1_SendData8(*pMsg++);
+		/* Loop until the end of transmission */
+		while (UART1_GetFlagStatus(UART1_FLAG_TXE) == RESET);
+	}
 #endif
+#endif //_A8_COMM_UART1_
+
 #ifdef _A8_COMM_UART3_
 		UART3_ITConfig(UART3_IT_TXE, DISABLE);
 #endif
+
+#ifndef	UART_TX_NON_INTERUPTABLE_
 		while(i < sizeof(tMSG_CMD))
 		{
 			l_TxRBuf.buf[l_TxRBuf.write++] = *pMsg++;
@@ -125,7 +140,62 @@ void COMM_RequestSendCommand(eKEYTYPE eKey, eKEYSTATE eState)
 #ifdef _A8_COMM_UART3_
 		UART3_ITConfig(UART3_IT_TXE, ENABLE);
 #endif
+#endif //UART_TX_NON_INTERUPTABLE_
 	}
+}
+
+/**
+*	发送CAN距离和报警信息给A8
+*/
+void COMM_RequestSendCommand_CAN(tMSG_CMD *ptCmdMsg)
+{
+	int ret = 0;
+	u8 i = 0;
+	u8 *pMsg;
+
+	assert_param((void*)ptCmdMsg != (void*)0);
+	if(ptCmdMsg == (void*)0) {
+		return;
+	}
+	
+	pMsg = (u8*)ptCmdMsg;
+
+#ifdef _A8_COMM_UART1_
+#ifndef	UART_TX_NON_INTERUPTABLE_
+	UART1_ITConfig(UART1_IT_TXE, DISABLE);
+#else
+	for(i = 0; i < sizeof(tMSG_CMD); i++) 
+	{
+		/* Write a character to the UART1 */
+		UART1_SendData8(*pMsg++);
+		/* Loop until the end of transmission */
+		while (UART1_GetFlagStatus(UART1_FLAG_TXE) == RESET);
+	}
+#endif
+#endif //_A8_COMM_UART1_
+
+#ifdef _A8_COMM_UART3_
+		UART3_ITConfig(UART3_IT_TXE, DISABLE);
+#endif
+
+#ifndef	UART_TX_NON_INTERUPTABLE_
+		while(i < sizeof(tMSG_CMD))
+		{
+			l_TxRBuf.buf[l_TxRBuf.write] = *pMsg++;
+			l_TxRBuf.write++;
+			if(l_TxRBuf.write >= BUF_SIZE)
+				l_TxRBuf.write = 0;
+			
+			i ++;
+		}
+
+#ifdef _A8_COMM_UART1_
+		UART1_ITConfig(UART1_IT_TXE, ENABLE);
+#endif
+#ifdef _A8_COMM_UART3_
+		UART3_ITConfig(UART3_IT_TXE, ENABLE);
+#endif
+#endif //UART_TX_NON_INTERUPTABLE_
 }
 
 
@@ -181,9 +251,11 @@ void COMM_Lowlevel_Config()
     /* 配置通信串口 UART1 */
     UART1_Init((uint32_t)115200, UART1_WORDLENGTH_8D, UART1_STOPBITS_1, UART1_PARITY_NO,
                 UART1_SYNCMODE_CLOCK_DISABLE, UART1_MODE_TXRX_ENABLE);
-    
+
+#ifndef	UART_TX_NON_INTERUPTABLE_    
     /* Enable UART1 Transmit interrupt*/
     UART1_ITConfig(UART1_IT_TXE | UART1_IT_RXNE, ENABLE);
+#endif
 #endif
 
 #ifdef __DEBUG__ 

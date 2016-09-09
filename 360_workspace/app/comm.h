@@ -4,6 +4,8 @@
 #include "stm8s.h"
 #include "key.h"
 
+//#define	UART_TX_NON_INTERUPTABLE_	/*非中断方式发送*/
+
 typedef enum _eMSG_TYPE {
 	MSG_FRONT = 0,		/*方向前*/
 	MSG_FRONT_FULLVIEW,	/*方向前-全屏*/
@@ -36,6 +38,8 @@ typedef enum _eMSG_TYPE {
 //	RET_TOUT = 0, 		/*超时*/
 //} eRET;
 
+#pragma pack(1)
+
 /*控制命令数据格式*/
 typedef struct _tMSG_CMD {
 	u8 head;		/*消息头，0x55*/
@@ -43,6 +47,7 @@ typedef struct _tMSG_CMD {
 	u8 param[4];	/*命令参数*/
 	u8 checksum;	/*校验和*/
 } tMSG_CMD;
+#pragma pack()
 
 /*应答命令数据格式*/
 typedef struct _tMSG_ACK {
@@ -53,7 +58,7 @@ typedef struct _tMSG_ACK {
 } tMSG_ACK;
 
 
-#define BUF_SIZE	50
+#define BUF_SIZE	(30*8)
 
 ///循环数组
 typedef struct  _tRINGBUF {
@@ -69,9 +74,8 @@ u8 CalChecksum(u8 *data, u8 u8Len);
 void COMM_Init(void);
 void COMM_Process(void);
 void COMM_Lowlevel_Config(void);
-
 void COMM_RequestSendCommand(eKEYTYPE eKey, eKEYSTATE eState);
-
+void COMM_RequestSendCommand_CAN(tMSG_CMD *ptCmdMsg);
 
 
 #endif

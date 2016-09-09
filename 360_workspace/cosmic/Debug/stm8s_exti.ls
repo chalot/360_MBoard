@@ -192,131 +192,131 @@
  446                     ; 114 }
  449  00fe 84            	pop	a
  450  00ff 81            	ret
- 497                     ; 121 EXTI_Sensitivity_TypeDef EXTI_GetExtIntSensitivity(EXTI_Port_TypeDef Port)
- 497                     ; 122 {
- 498                     	switch	.text
- 499  0100               _EXTI_GetExtIntSensitivity:
- 501  0100 88            	push	a
- 502  0101 88            	push	a
- 503       00000001      OFST:	set	1
- 506                     ; 123     uint8_t value = 0;
- 508  0102 0f01          	clr	(OFST+0,sp)
- 509                     ; 126     assert_param(IS_EXTI_PORT_OK(Port));
- 511  0104 4d            	tnz	a
- 512  0105 2710          	jreq	L04
- 513  0107 a101          	cp	a,#1
- 514  0109 270c          	jreq	L04
- 515  010b a102          	cp	a,#2
- 516  010d 2708          	jreq	L04
- 517  010f a103          	cp	a,#3
- 518  0111 2704          	jreq	L04
- 519  0113 a104          	cp	a,#4
- 520  0115 2603          	jrne	L63
- 521  0117               L04:
- 522  0117 4f            	clr	a
- 523  0118 2010          	jra	L24
- 524  011a               L63:
- 525  011a ae007e        	ldw	x,#126
- 526  011d 89            	pushw	x
- 527  011e ae0000        	ldw	x,#0
- 528  0121 89            	pushw	x
- 529  0122 ae0000        	ldw	x,#L111
- 530  0125 cd0000        	call	_assert_failed
- 532  0128 5b04          	addw	sp,#4
- 533  012a               L24:
- 534                     ; 128     switch (Port)
- 536  012a 7b02          	ld	a,(OFST+1,sp)
- 538                     ; 145     default:
- 538                     ; 146         break;
- 539  012c 4d            	tnz	a
- 540  012d 270e          	jreq	L541
- 541  012f 4a            	dec	a
- 542  0130 2714          	jreq	L741
- 543  0132 4a            	dec	a
- 544  0133 271c          	jreq	L151
- 545  0135 4a            	dec	a
- 546  0136 2725          	jreq	L351
- 547  0138 4a            	dec	a
- 548  0139 2730          	jreq	L551
- 549  013b 2035          	jra	L502
- 550  013d               L541:
- 551                     ; 130     case EXTI_PORT_GPIOA:
- 551                     ; 131         value = (uint8_t)(EXTI->CR1 & EXTI_CR1_PAIS);
- 553  013d c650a0        	ld	a,20640
- 554  0140 a403          	and	a,#3
- 555  0142 6b01          	ld	(OFST+0,sp),a
- 556                     ; 132         break;
- 558  0144 202c          	jra	L502
- 559  0146               L741:
- 560                     ; 133     case EXTI_PORT_GPIOB:
- 560                     ; 134         value = (uint8_t)((uint8_t)(EXTI->CR1 & EXTI_CR1_PBIS) >> 2);
- 562  0146 c650a0        	ld	a,20640
- 563  0149 a40c          	and	a,#12
- 564  014b 44            	srl	a
- 565  014c 44            	srl	a
- 566  014d 6b01          	ld	(OFST+0,sp),a
- 567                     ; 135         break;
- 569  014f 2021          	jra	L502
- 570  0151               L151:
- 571                     ; 136     case EXTI_PORT_GPIOC:
- 571                     ; 137         value = (uint8_t)((uint8_t)(EXTI->CR1 & EXTI_CR1_PCIS) >> 4);
- 573  0151 c650a0        	ld	a,20640
- 574  0154 a430          	and	a,#48
- 575  0156 4e            	swap	a
- 576  0157 a40f          	and	a,#15
- 577  0159 6b01          	ld	(OFST+0,sp),a
- 578                     ; 138         break;
- 580  015b 2015          	jra	L502
- 581  015d               L351:
- 582                     ; 139     case EXTI_PORT_GPIOD:
- 582                     ; 140         value = (uint8_t)((uint8_t)(EXTI->CR1 & EXTI_CR1_PDIS) >> 6);
- 584  015d c650a0        	ld	a,20640
- 585  0160 a4c0          	and	a,#192
- 586  0162 4e            	swap	a
- 587  0163 44            	srl	a
- 588  0164 44            	srl	a
- 589  0165 a403          	and	a,#3
- 590  0167 6b01          	ld	(OFST+0,sp),a
- 591                     ; 141         break;
- 593  0169 2007          	jra	L502
- 594  016b               L551:
- 595                     ; 142     case EXTI_PORT_GPIOE:
- 595                     ; 143         value = (uint8_t)(EXTI->CR2 & EXTI_CR2_PEIS);
- 597  016b c650a1        	ld	a,20641
- 598  016e a403          	and	a,#3
- 599  0170 6b01          	ld	(OFST+0,sp),a
- 600                     ; 144         break;
- 602  0172               L751:
- 603                     ; 145     default:
- 603                     ; 146         break;
- 605  0172               L502:
- 606                     ; 149     return((EXTI_Sensitivity_TypeDef)value);
- 608  0172 7b01          	ld	a,(OFST+0,sp)
- 611  0174 85            	popw	x
- 612  0175 81            	ret
- 648                     ; 157 EXTI_TLISensitivity_TypeDef EXTI_GetTLISensitivity(void)
- 648                     ; 158 {
- 649                     	switch	.text
- 650  0176               _EXTI_GetTLISensitivity:
- 652  0176 88            	push	a
- 653       00000001      OFST:	set	1
- 656                     ; 160     uint8_t value = 0;
- 658                     ; 163     value = (uint8_t)(EXTI->CR2 & EXTI_CR2_TLIS);
- 660  0177 c650a1        	ld	a,20641
- 661  017a a404          	and	a,#4
- 662  017c 6b01          	ld	(OFST+0,sp),a
- 663                     ; 165     return((EXTI_TLISensitivity_TypeDef)value);
- 665  017e 7b01          	ld	a,(OFST+0,sp)
- 668  0180 5b01          	addw	sp,#1
- 669  0182 81            	ret
- 682                     	xdef	_EXTI_GetTLISensitivity
- 683                     	xdef	_EXTI_GetExtIntSensitivity
- 684                     	xdef	_EXTI_SetTLISensitivity
- 685                     	xdef	_EXTI_SetExtIntSensitivity
- 686                     	xdef	_EXTI_DeInit
- 687                     	xref	_assert_failed
- 688                     .const:	section	.text
- 689  0000               L111:
- 690  0000 2e2e5c6c6962  	dc.b	"..\lib\src\stm8s_e"
- 691  0012 7874692e6300  	dc.b	"xti.c",0
- 711                     	end
+ 495                     ; 121 EXTI_Sensitivity_TypeDef EXTI_GetExtIntSensitivity(EXTI_Port_TypeDef Port)
+ 495                     ; 122 {
+ 496                     	switch	.text
+ 497  0100               _EXTI_GetExtIntSensitivity:
+ 499  0100 88            	push	a
+ 500  0101 88            	push	a
+ 501       00000001      OFST:	set	1
+ 504                     ; 123     uint8_t value = 0;
+ 506  0102 0f01          	clr	(OFST+0,sp)
+ 507                     ; 126     assert_param(IS_EXTI_PORT_OK(Port));
+ 509  0104 4d            	tnz	a
+ 510  0105 2710          	jreq	L04
+ 511  0107 a101          	cp	a,#1
+ 512  0109 270c          	jreq	L04
+ 513  010b a102          	cp	a,#2
+ 514  010d 2708          	jreq	L04
+ 515  010f a103          	cp	a,#3
+ 516  0111 2704          	jreq	L04
+ 517  0113 a104          	cp	a,#4
+ 518  0115 2603          	jrne	L63
+ 519  0117               L04:
+ 520  0117 4f            	clr	a
+ 521  0118 2010          	jra	L24
+ 522  011a               L63:
+ 523  011a ae007e        	ldw	x,#126
+ 524  011d 89            	pushw	x
+ 525  011e ae0000        	ldw	x,#0
+ 526  0121 89            	pushw	x
+ 527  0122 ae0000        	ldw	x,#L111
+ 528  0125 cd0000        	call	_assert_failed
+ 530  0128 5b04          	addw	sp,#4
+ 531  012a               L24:
+ 532                     ; 128     switch (Port)
+ 534  012a 7b02          	ld	a,(OFST+1,sp)
+ 536                     ; 145     default:
+ 536                     ; 146         break;
+ 537  012c 4d            	tnz	a
+ 538  012d 270e          	jreq	L541
+ 539  012f 4a            	dec	a
+ 540  0130 2714          	jreq	L741
+ 541  0132 4a            	dec	a
+ 542  0133 271c          	jreq	L151
+ 543  0135 4a            	dec	a
+ 544  0136 2725          	jreq	L351
+ 545  0138 4a            	dec	a
+ 546  0139 2730          	jreq	L551
+ 547  013b 2035          	jra	L302
+ 548  013d               L541:
+ 549                     ; 130     case EXTI_PORT_GPIOA:
+ 549                     ; 131         value = (uint8_t)(EXTI->CR1 & EXTI_CR1_PAIS);
+ 551  013d c650a0        	ld	a,20640
+ 552  0140 a403          	and	a,#3
+ 553  0142 6b01          	ld	(OFST+0,sp),a
+ 554                     ; 132         break;
+ 556  0144 202c          	jra	L302
+ 557  0146               L741:
+ 558                     ; 133     case EXTI_PORT_GPIOB:
+ 558                     ; 134         value = (uint8_t)((uint8_t)(EXTI->CR1 & EXTI_CR1_PBIS) >> 2);
+ 560  0146 c650a0        	ld	a,20640
+ 561  0149 a40c          	and	a,#12
+ 562  014b 44            	srl	a
+ 563  014c 44            	srl	a
+ 564  014d 6b01          	ld	(OFST+0,sp),a
+ 565                     ; 135         break;
+ 567  014f 2021          	jra	L302
+ 568  0151               L151:
+ 569                     ; 136     case EXTI_PORT_GPIOC:
+ 569                     ; 137         value = (uint8_t)((uint8_t)(EXTI->CR1 & EXTI_CR1_PCIS) >> 4);
+ 571  0151 c650a0        	ld	a,20640
+ 572  0154 a430          	and	a,#48
+ 573  0156 4e            	swap	a
+ 574  0157 a40f          	and	a,#15
+ 575  0159 6b01          	ld	(OFST+0,sp),a
+ 576                     ; 138         break;
+ 578  015b 2015          	jra	L302
+ 579  015d               L351:
+ 580                     ; 139     case EXTI_PORT_GPIOD:
+ 580                     ; 140         value = (uint8_t)((uint8_t)(EXTI->CR1 & EXTI_CR1_PDIS) >> 6);
+ 582  015d c650a0        	ld	a,20640
+ 583  0160 a4c0          	and	a,#192
+ 584  0162 4e            	swap	a
+ 585  0163 44            	srl	a
+ 586  0164 44            	srl	a
+ 587  0165 a403          	and	a,#3
+ 588  0167 6b01          	ld	(OFST+0,sp),a
+ 589                     ; 141         break;
+ 591  0169 2007          	jra	L302
+ 592  016b               L551:
+ 593                     ; 142     case EXTI_PORT_GPIOE:
+ 593                     ; 143         value = (uint8_t)(EXTI->CR2 & EXTI_CR2_PEIS);
+ 595  016b c650a1        	ld	a,20641
+ 596  016e a403          	and	a,#3
+ 597  0170 6b01          	ld	(OFST+0,sp),a
+ 598                     ; 144         break;
+ 600  0172               L751:
+ 601                     ; 145     default:
+ 601                     ; 146         break;
+ 603  0172               L302:
+ 604                     ; 149     return((EXTI_Sensitivity_TypeDef)value);
+ 606  0172 7b01          	ld	a,(OFST+0,sp)
+ 609  0174 85            	popw	x
+ 610  0175 81            	ret
+ 644                     ; 157 EXTI_TLISensitivity_TypeDef EXTI_GetTLISensitivity(void)
+ 644                     ; 158 {
+ 645                     	switch	.text
+ 646  0176               _EXTI_GetTLISensitivity:
+ 648  0176 88            	push	a
+ 649       00000001      OFST:	set	1
+ 652                     ; 160     uint8_t value = 0;
+ 654                     ; 163     value = (uint8_t)(EXTI->CR2 & EXTI_CR2_TLIS);
+ 656  0177 c650a1        	ld	a,20641
+ 657  017a a404          	and	a,#4
+ 658  017c 6b01          	ld	(OFST+0,sp),a
+ 659                     ; 165     return((EXTI_TLISensitivity_TypeDef)value);
+ 661  017e 7b01          	ld	a,(OFST+0,sp)
+ 664  0180 5b01          	addw	sp,#1
+ 665  0182 81            	ret
+ 678                     	xdef	_EXTI_GetTLISensitivity
+ 679                     	xdef	_EXTI_GetExtIntSensitivity
+ 680                     	xdef	_EXTI_SetTLISensitivity
+ 681                     	xdef	_EXTI_SetExtIntSensitivity
+ 682                     	xdef	_EXTI_DeInit
+ 683                     	xref	_assert_failed
+ 684                     .const:	section	.text
+ 685  0000               L111:
+ 686  0000 2e2e5c6c6962  	dc.b	"..\lib\src\stm8s_e"
+ 687  0012 7874692e6300  	dc.b	"xti.c",0
+ 707                     	end

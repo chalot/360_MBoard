@@ -52,12 +52,14 @@ crtsi0.sm8
 #<BEGIN OBJECT_FILES>
 Release\main.o
 Release\stm8s_it.o
+Release\can.o
 Release\beep.o
 Release\comm.o
 Release\ir.o
 Release\key.o
 Release\periph.o
 Release\utility.o
+Release\stm8s_can.o
 Release\stm8s_awu.o
 Release\stm8s_beep.o
 Release\stm8s_clk.o
