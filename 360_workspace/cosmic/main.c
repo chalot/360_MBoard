@@ -35,7 +35,7 @@ uint32_t LSIMeasurment(void);
 #define VDD12_ON()  GPIO_WriteHigh(GPIOC,GPIO_PIN_1)
 #define VDD12_OFF() GPIO_WriteLow(GPIOC,GPIO_PIN_1)
 
-#if 1
+#if 0
 
 /*主程序*/
 void main()
@@ -374,3 +374,43 @@ void main()
 }
 #endif
 
+#define _RTC_MAIN_
+
+#ifdef _RTC_MAIN_
+#include "rtc.h"
+
+int main(void)
+{
+		TIME  time;
+		
+		 /*时钟初始化*/
+		CLK_Config();
+			
+		/*初始化电源控制*/
+		GPIO_DeInit(GPIOD); 
+		GPIO_Init(GPIOD,GPIO_PIN_3,GPIO_MODE_OUT_PP_LOW_FAST);
+		GPIO_DeInit(GPIOC); 
+		GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_FAST);	
+	
+		/*上电,3.3V/12V*/
+		VDD3V3_ON();
+		VDD12_ON();
+	
+		RTC_Init();
+
+
+		while (1)
+		{
+			RTC_ReadDate(&time);
+
+		  
+		}
+			
+
+	
+
+
+	return 0;
+}
+
+#endif

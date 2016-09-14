@@ -43,7 +43,7 @@ void	ZeroMem(u8* pu8Mem, u32 u32Size)
 
 void Delay_1ms()
 {
-	Delay(0x100);
+	Delay(0x120);
 }
 
 void Delay_nms(u16 u16Num)

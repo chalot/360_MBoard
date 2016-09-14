@@ -4,307 +4,288 @@
   15                     	switch	.data
   16  0000               _LsiFreq:
   17  0000 00000000      	dc.l	0
-  68                     ; 41 void main()
-  68                     ; 42 {	
-  70                     	switch	.text
-  71  0000               _main:
-  73  0000 88            	push	a
-  74       00000001      OFST:	set	1
-  77                     ; 43 	u8 i = 0;
-  79  0001 0f01          	clr	(OFST+0,sp)
-  80                     ; 46   	CLK_Config();
-  82  0003 ad4e          	call	L3_CLK_Config
-  84                     ; 64 	GPIO_DeInit(GPIOD);	
-  86  0005 ae500f        	ldw	x,#20495
-  87  0008 cd0000        	call	_GPIO_DeInit
-  89                     ; 65 	GPIO_Init(GPIOD,GPIO_PIN_3,GPIO_MODE_OUT_PP_LOW_FAST);
-  91  000b 4be0          	push	#224
-  92  000d 4b08          	push	#8
-  93  000f ae500f        	ldw	x,#20495
-  94  0012 cd0000        	call	_GPIO_Init
-  96  0015 85            	popw	x
-  97                     ; 66 	GPIO_DeInit(GPIOC);	
-  99  0016 ae500a        	ldw	x,#20490
- 100  0019 cd0000        	call	_GPIO_DeInit
- 102                     ; 67 	GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_FAST);	
- 104  001c 4be0          	push	#224
- 105  001e 4b02          	push	#2
- 106  0020 ae500a        	ldw	x,#20490
- 107  0023 cd0000        	call	_GPIO_Init
- 109  0026 85            	popw	x
- 110                     ; 71 	DBG_Config();
- 112  0027 ad6f          	call	L5_DBG_Config
- 114                     ; 75 	KEY_Init();
- 116  0029 cd0000        	call	_KEY_Init
- 118                     ; 78 	COMM_Init();
- 120  002c cd0000        	call	_COMM_Init
- 122                     ; 81 	IR_Init();
- 124  002f cd0000        	call	_IR_Init
- 126                     ; 84 	CAN_Initialize();
- 128  0032 cd0000        	call	_CAN_Initialize
- 130                     ; 87 	enableInterrupts();    
- 133  0035 9a            rim
- 135                     ; 90 	VDD3V3_ON();
- 138  0036 4b08          	push	#8
- 139  0038 ae500f        	ldw	x,#20495
- 140  003b cd0000        	call	_GPIO_WriteHigh
- 142  003e 84            	pop	a
- 143                     ; 91 	VDD12_ON();
- 145  003f 4b02          	push	#2
- 146  0041 ae500a        	ldw	x,#20490
- 147  0044 cd0000        	call	_GPIO_WriteHigh
- 149  0047 84            	pop	a
- 150  0048               L13:
- 151                     ; 97 		KEY_Process();
- 153  0048 cd0000        	call	_KEY_Process
- 155                     ; 100 		IR_Process();
- 157  004b cd0000        	call	_IR_Process
- 159                     ; 103 		CAN_Process();
- 161  004e cd0000        	call	_CAN_Process
- 164  0051 20f5          	jra	L13
- 191                     ; 120 void CLK_Config(void)
- 191                     ; 121 {
- 192                     	switch	.text
- 193  0053               L3_CLK_Config:
- 197                     ; 124 	CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
- 199  0053 4f            	clr	a
- 200  0054 cd0000        	call	_CLK_HSIPrescalerConfig
- 202                     ; 125 	CLK_SYSCLKConfig(CLK_PRESCALER_CPUDIV1);
- 204  0057 a680          	ld	a,#128
- 205  0059 cd0000        	call	_CLK_SYSCLKConfig
- 207                     ; 126 	CLK_HSICmd(ENABLE);
- 209  005c a601          	ld	a,#1
- 210  005e cd0000        	call	_CLK_HSICmd
- 212                     ; 128 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER1, ENABLE);	
- 214  0061 ae0001        	ldw	x,#1
- 215  0064 a607          	ld	a,#7
- 216  0066 95            	ld	xh,a
- 217  0067 cd0000        	call	_CLK_PeripheralClockConfig
- 219                     ; 129 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER2, ENABLE);	
- 221  006a ae0001        	ldw	x,#1
- 222  006d a605          	ld	a,#5
- 223  006f 95            	ld	xh,a
- 224  0070 cd0000        	call	_CLK_PeripheralClockConfig
- 226                     ; 130 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER3, ENABLE);	
- 228  0073 ae0001        	ldw	x,#1
- 229  0076 a606          	ld	a,#6
- 230  0078 95            	ld	xh,a
- 231  0079 cd0000        	call	_CLK_PeripheralClockConfig
- 233                     ; 131 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER4, ENABLE);	
- 235  007c ae0001        	ldw	x,#1
- 236  007f a604          	ld	a,#4
- 237  0081 95            	ld	xh,a
- 238  0082 cd0000        	call	_CLK_PeripheralClockConfig
- 240                     ; 132 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART1, ENABLE);
- 242  0085 ae0001        	ldw	x,#1
- 243  0088 a602          	ld	a,#2
- 244  008a 95            	ld	xh,a
- 245  008b cd0000        	call	_CLK_PeripheralClockConfig
- 247                     ; 134 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART3, ENABLE);
- 249  008e ae0001        	ldw	x,#1
- 250  0091 a603          	ld	a,#3
- 251  0093 95            	ld	xh,a
- 252  0094 cd0000        	call	_CLK_PeripheralClockConfig
- 254                     ; 136 }
- 257  0097 81            	ret
- 283                     ; 144 void DBG_Config()
- 283                     ; 145 {
- 284                     	switch	.text
- 285  0098               L5_DBG_Config:
- 289                     ; 147 	UART3_DeInit();
- 291  0098 cd0000        	call	_UART3_DeInit
- 293                     ; 149 	UART3_Init((uint32_t)115200, UART3_WORDLENGTH_8D, UART3_STOPBITS_1, UART3_PARITY_NO,
- 293                     ; 150 			UART3_MODE_TX_DISABLE | UART3_MODE_RX_DISABLE);
- 295  009b 4bc0          	push	#192
- 296  009d 4b00          	push	#0
- 297  009f 4b00          	push	#0
- 298  00a1 4b00          	push	#0
- 299  00a3 aec200        	ldw	x,#49664
- 300  00a6 89            	pushw	x
- 301  00a7 ae0001        	ldw	x,#1
- 302  00aa 89            	pushw	x
- 303  00ab cd0000        	call	_UART3_Init
- 305  00ae 5b08          	addw	sp,#8
- 306                     ; 152 	UART3_ITConfig(UART3_IT_TXE, DISABLE);
- 308  00b0 4b00          	push	#0
- 309  00b2 ae0277        	ldw	x,#631
- 310  00b5 cd0000        	call	_UART3_ITConfig
- 312  00b8 84            	pop	a
- 313                     ; 153 }
- 316  00b9 81            	ret
- 350                     ; 160 PUTCHAR_PROTOTYPE
- 350                     ; 161 {
- 351                     	switch	.text
- 352  00ba               _putchar:
- 354  00ba 88            	push	a
- 355       00000000      OFST:	set	0
- 358                     ; 164   UART3_SendData8(c);
- 360  00bb cd0000        	call	_UART3_SendData8
- 363  00be               L37:
- 364                     ; 166   while (UART3_GetFlagStatus(UART3_FLAG_TXE) == RESET);
- 366  00be ae0080        	ldw	x,#128
- 367  00c1 cd0000        	call	_UART3_GetFlagStatus
- 369  00c4 4d            	tnz	a
- 370  00c5 27f7          	jreq	L37
- 371                     ; 168   return (c);
- 373  00c7 7b01          	ld	a,(OFST+1,sp)
- 376  00c9 5b01          	addw	sp,#1
- 377  00cb 81            	ret
- 406                     ; 179 void IWDG_Config(void)
- 406                     ; 180 {
- 407                     	switch	.text
- 408  00cc               _IWDG_Config:
- 412                     ; 184   IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
- 414  00cc a655          	ld	a,#85
- 415  00ce cd0000        	call	_IWDG_WriteAccessCmd
- 417                     ; 187   IWDG_SetPrescaler(IWDG_Prescaler_128);
- 419  00d1 a605          	ld	a,#5
- 420  00d3 cd0000        	call	_IWDG_SetPrescaler
- 422                     ; 196   IWDG_SetReload((uint8_t)(LsiFreq/512));
- 424  00d6 ae0000        	ldw	x,#_LsiFreq
- 425  00d9 cd0000        	call	c_ltor
- 427  00dc a609          	ld	a,#9
- 428  00de cd0000        	call	c_lursh
- 430  00e1 b603          	ld	a,c_lreg+3
- 431  00e3 cd0000        	call	_IWDG_SetReload
- 433                     ; 199   IWDG_ReloadCounter();
- 435  00e6 cd0000        	call	_IWDG_ReloadCounter
- 437                     ; 202   IWDG_Enable();
- 439  00e9 cd0000        	call	_IWDG_Enable
- 441                     ; 203 }
- 444  00ec 81            	ret
- 502                     ; 213 u32 LSIMeasurment(void)
- 502                     ; 214 {
- 503                     	switch	.text
- 504  00ed               _LSIMeasurment:
- 506  00ed 520c          	subw	sp,#12
- 507       0000000c      OFST:	set	12
- 510                     ; 216   uint32_t lsi_freq_hz = 0x0;
- 512                     ; 217   uint32_t fmaster = 0x0;
- 514                     ; 218   uint16_t ICValue1 = 0x0;
- 516                     ; 219   uint16_t ICValue2 = 0x0;
- 518                     ; 222   fmaster = CLK_GetClockFreq();
- 520  00ef cd0000        	call	_CLK_GetClockFreq
- 522  00f2 96            	ldw	x,sp
- 523  00f3 1c0009        	addw	x,#OFST-3
- 524  00f6 cd0000        	call	c_rtol
- 526                     ; 225   AWU->CSR |= AWU_CSR_MSR;
- 528  00f9 721050f0      	bset	20720,#0
- 529                     ; 260   TIM3_ICInit(TIM3_CHANNEL_1, TIM3_ICPOLARITY_RISING, TIM3_ICSELECTION_DIRECTTI,
- 529                     ; 261               TIM3_ICPSC_DIV8, 0);
- 531  00fd 4b00          	push	#0
- 532  00ff 4b0c          	push	#12
- 533  0101 4b01          	push	#1
- 534  0103 5f            	clrw	x
- 535  0104 4f            	clr	a
- 536  0105 95            	ld	xh,a
- 537  0106 cd0000        	call	_TIM3_ICInit
- 539  0109 5b03          	addw	sp,#3
- 540                     ; 264   TIM3_Cmd(ENABLE);
- 542  010b a601          	ld	a,#1
- 543  010d cd0000        	call	_TIM3_Cmd
- 546  0110               L331:
- 547                     ; 267   while ((TIM3->SR1 & TIM3_FLAG_CC1) != TIM3_FLAG_CC1);
- 549  0110 c65322        	ld	a,21282
- 550  0113 a402          	and	a,#2
- 551  0115 a102          	cp	a,#2
- 552  0117 26f7          	jrne	L331
- 553                     ; 269   ICValue1 = TIM3_GetCapture1();
- 555  0119 cd0000        	call	_TIM3_GetCapture1
- 557  011c 1f05          	ldw	(OFST-7,sp),x
- 558                     ; 270   TIM3_ClearFlag(TIM3_FLAG_CC1);
- 560  011e ae0002        	ldw	x,#2
- 561  0121 cd0000        	call	_TIM3_ClearFlag
- 564  0124               L141:
- 565                     ; 273   while ((TIM3->SR1 & TIM3_FLAG_CC1) != TIM3_FLAG_CC1);
- 567  0124 c65322        	ld	a,21282
- 568  0127 a402          	and	a,#2
- 569  0129 a102          	cp	a,#2
- 570  012b 26f7          	jrne	L141
- 571                     ; 275   ICValue2 = TIM3_GetCapture1();
- 573  012d cd0000        	call	_TIM3_GetCapture1
- 575  0130 1f07          	ldw	(OFST-5,sp),x
- 576                     ; 276   TIM3_ClearFlag(TIM3_FLAG_CC1);
- 578  0132 ae0002        	ldw	x,#2
- 579  0135 cd0000        	call	_TIM3_ClearFlag
- 581                     ; 279   TIM3->CCER1 &= (uint8_t)(~TIM3_CCER1_CC1E);
- 583  0138 72115327      	bres	21287,#0
- 584                     ; 281   TIM3_Cmd(DISABLE);
- 586  013c 4f            	clr	a
- 587  013d cd0000        	call	_TIM3_Cmd
- 589                     ; 285   lsi_freq_hz = (8 * fmaster) / (ICValue2 - ICValue1);
- 591  0140 1e07          	ldw	x,(OFST-5,sp)
- 592  0142 72f005        	subw	x,(OFST-7,sp)
- 593  0145 cd0000        	call	c_uitolx
- 595  0148 96            	ldw	x,sp
- 596  0149 1c0001        	addw	x,#OFST-11
- 597  014c cd0000        	call	c_rtol
- 599  014f 96            	ldw	x,sp
- 600  0150 1c0009        	addw	x,#OFST-3
- 601  0153 cd0000        	call	c_ltor
- 603  0156 a603          	ld	a,#3
- 604  0158 cd0000        	call	c_llsh
- 606  015b 96            	ldw	x,sp
- 607  015c 1c0001        	addw	x,#OFST-11
- 608  015f cd0000        	call	c_ludv
- 610  0162 96            	ldw	x,sp
- 611  0163 1c0009        	addw	x,#OFST-3
- 612  0166 cd0000        	call	c_rtol
- 614                     ; 288   AWU->CSR &= (uint8_t)(~AWU_CSR_MSR);
- 616  0169 721150f0      	bres	20720,#0
- 617                     ; 290  return (lsi_freq_hz);
- 619  016d 96            	ldw	x,sp
- 620  016e 1c0009        	addw	x,#OFST-3
- 621  0171 cd0000        	call	c_ltor
- 625  0174 5b0c          	addw	sp,#12
- 626  0176 81            	ret
- 661                     ; 300 void assert_failed(uint8_t* file, uint32_t line)
- 661                     ; 301 { 
- 662                     	switch	.text
- 663  0177               _assert_failed:
- 667  0177               L361:
- 668  0177 20fe          	jra	L361
- 692                     	xdef	_main
- 693                     	xdef	_LSIMeasurment
- 694                     	xdef	_IWDG_Config
- 695                     	xdef	_LsiFreq
- 696                     	xref	_CAN_Initialize
- 697                     	xref	_CAN_Process
- 698                     	xref	_IR_Process
- 699                     	xref	_IR_Init
- 700                     	xref	_COMM_Init
- 701                     	xref	_KEY_Init
- 702                     	xref	_KEY_Process
- 703                     	xdef	_putchar
- 704                     	xdef	_assert_failed
- 705                     	xref	_UART3_GetFlagStatus
- 706                     	xref	_UART3_SendData8
- 707                     	xref	_UART3_ITConfig
- 708                     	xref	_UART3_Init
- 709                     	xref	_UART3_DeInit
- 710                     	xref	_TIM3_ClearFlag
- 711                     	xref	_TIM3_GetCapture1
- 712                     	xref	_TIM3_Cmd
- 713                     	xref	_TIM3_ICInit
- 714                     	xref	_IWDG_Enable
- 715                     	xref	_IWDG_ReloadCounter
- 716                     	xref	_IWDG_SetReload
- 717                     	xref	_IWDG_SetPrescaler
- 718                     	xref	_IWDG_WriteAccessCmd
- 719                     	xref	_GPIO_WriteHigh
- 720                     	xref	_GPIO_Init
- 721                     	xref	_GPIO_DeInit
- 722                     	xref	_CLK_GetClockFreq
- 723                     	xref	_CLK_SYSCLKConfig
- 724                     	xref	_CLK_HSIPrescalerConfig
- 725                     	xref	_CLK_PeripheralClockConfig
- 726                     	xref	_CLK_HSICmd
- 727                     	xref.b	c_lreg
- 728                     	xref.b	c_x
- 747                     	xref	c_ludv
- 748                     	xref	c_uitolx
- 749                     	xref	c_llsh
- 750                     	xref	c_rtol
- 751                     	xref	c_lursh
- 752                     	xref	c_ltor
- 753                     	end
+  50                     ; 120 void CLK_Config(void)
+  50                     ; 121 {
+  52                     	switch	.text
+  53  0000               L3_CLK_Config:
+  57                     ; 124 	CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
+  59  0000 4f            	clr	a
+  60  0001 cd0000        	call	_CLK_HSIPrescalerConfig
+  62                     ; 125 	CLK_SYSCLKConfig(CLK_PRESCALER_CPUDIV1);
+  64  0004 a680          	ld	a,#128
+  65  0006 cd0000        	call	_CLK_SYSCLKConfig
+  67                     ; 126 	CLK_HSICmd(ENABLE);
+  69  0009 a601          	ld	a,#1
+  70  000b cd0000        	call	_CLK_HSICmd
+  72                     ; 128 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER1, ENABLE);	
+  74  000e ae0001        	ldw	x,#1
+  75  0011 a607          	ld	a,#7
+  76  0013 95            	ld	xh,a
+  77  0014 cd0000        	call	_CLK_PeripheralClockConfig
+  79                     ; 129 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER2, ENABLE);	
+  81  0017 ae0001        	ldw	x,#1
+  82  001a a605          	ld	a,#5
+  83  001c 95            	ld	xh,a
+  84  001d cd0000        	call	_CLK_PeripheralClockConfig
+  86                     ; 130 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER3, ENABLE);	
+  88  0020 ae0001        	ldw	x,#1
+  89  0023 a606          	ld	a,#6
+  90  0025 95            	ld	xh,a
+  91  0026 cd0000        	call	_CLK_PeripheralClockConfig
+  93                     ; 131 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER4, ENABLE);	
+  95  0029 ae0001        	ldw	x,#1
+  96  002c a604          	ld	a,#4
+  97  002e 95            	ld	xh,a
+  98  002f cd0000        	call	_CLK_PeripheralClockConfig
+ 100                     ; 132 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART1, ENABLE);
+ 102  0032 ae0001        	ldw	x,#1
+ 103  0035 a602          	ld	a,#2
+ 104  0037 95            	ld	xh,a
+ 105  0038 cd0000        	call	_CLK_PeripheralClockConfig
+ 107                     ; 134 	CLK_PeripheralClockConfig(CLK_PERIPHERAL_UART3, ENABLE);
+ 109  003b ae0001        	ldw	x,#1
+ 110  003e a603          	ld	a,#3
+ 111  0040 95            	ld	xh,a
+ 112  0041 cd0000        	call	_CLK_PeripheralClockConfig
+ 114                     ; 136 }
+ 117  0044 81            	ret
+ 143                     ; 144 void DBG_Config()
+ 143                     ; 145 {
+ 144                     	switch	.text
+ 145  0045               L5_DBG_Config:
+ 149                     ; 147 	UART3_DeInit();
+ 151  0045 cd0000        	call	_UART3_DeInit
+ 153                     ; 149 	UART3_Init((uint32_t)115200, UART3_WORDLENGTH_8D, UART3_STOPBITS_1, UART3_PARITY_NO,
+ 153                     ; 150 			UART3_MODE_TX_DISABLE | UART3_MODE_RX_DISABLE);
+ 155  0048 4bc0          	push	#192
+ 156  004a 4b00          	push	#0
+ 157  004c 4b00          	push	#0
+ 158  004e 4b00          	push	#0
+ 159  0050 aec200        	ldw	x,#49664
+ 160  0053 89            	pushw	x
+ 161  0054 ae0001        	ldw	x,#1
+ 162  0057 89            	pushw	x
+ 163  0058 cd0000        	call	_UART3_Init
+ 165  005b 5b08          	addw	sp,#8
+ 166                     ; 152 	UART3_ITConfig(UART3_IT_TXE, DISABLE);
+ 168  005d 4b00          	push	#0
+ 169  005f ae0277        	ldw	x,#631
+ 170  0062 cd0000        	call	_UART3_ITConfig
+ 172  0065 84            	pop	a
+ 173                     ; 153 }
+ 176  0066 81            	ret
+ 210                     ; 160 PUTCHAR_PROTOTYPE
+ 210                     ; 161 {
+ 211                     	switch	.text
+ 212  0067               _putchar:
+ 214  0067 88            	push	a
+ 215       00000000      OFST:	set	0
+ 218                     ; 164   UART3_SendData8(c);
+ 220  0068 cd0000        	call	_UART3_SendData8
+ 223  006b               L35:
+ 224                     ; 166   while (UART3_GetFlagStatus(UART3_FLAG_TXE) == RESET);
+ 226  006b ae0080        	ldw	x,#128
+ 227  006e cd0000        	call	_UART3_GetFlagStatus
+ 229  0071 4d            	tnz	a
+ 230  0072 27f7          	jreq	L35
+ 231                     ; 168   return (c);
+ 233  0074 7b01          	ld	a,(OFST+1,sp)
+ 236  0076 5b01          	addw	sp,#1
+ 237  0078 81            	ret
+ 266                     ; 179 void IWDG_Config(void)
+ 266                     ; 180 {
+ 267                     	switch	.text
+ 268  0079               _IWDG_Config:
+ 272                     ; 184   IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
+ 274  0079 a655          	ld	a,#85
+ 275  007b cd0000        	call	_IWDG_WriteAccessCmd
+ 277                     ; 187   IWDG_SetPrescaler(IWDG_Prescaler_128);
+ 279  007e a605          	ld	a,#5
+ 280  0080 cd0000        	call	_IWDG_SetPrescaler
+ 282                     ; 196   IWDG_SetReload((uint8_t)(LsiFreq/512));
+ 284  0083 ae0000        	ldw	x,#_LsiFreq
+ 285  0086 cd0000        	call	c_ltor
+ 287  0089 a609          	ld	a,#9
+ 288  008b cd0000        	call	c_lursh
+ 290  008e b603          	ld	a,c_lreg+3
+ 291  0090 cd0000        	call	_IWDG_SetReload
+ 293                     ; 199   IWDG_ReloadCounter();
+ 295  0093 cd0000        	call	_IWDG_ReloadCounter
+ 297                     ; 202   IWDG_Enable();
+ 299  0096 cd0000        	call	_IWDG_Enable
+ 301                     ; 203 }
+ 304  0099 81            	ret
+ 362                     ; 213 u32 LSIMeasurment(void)
+ 362                     ; 214 {
+ 363                     	switch	.text
+ 364  009a               _LSIMeasurment:
+ 366  009a 520c          	subw	sp,#12
+ 367       0000000c      OFST:	set	12
+ 370                     ; 216   uint32_t lsi_freq_hz = 0x0;
+ 372                     ; 217   uint32_t fmaster = 0x0;
+ 374                     ; 218   uint16_t ICValue1 = 0x0;
+ 376                     ; 219   uint16_t ICValue2 = 0x0;
+ 378                     ; 222   fmaster = CLK_GetClockFreq();
+ 380  009c cd0000        	call	_CLK_GetClockFreq
+ 382  009f 96            	ldw	x,sp
+ 383  00a0 1c0009        	addw	x,#OFST-3
+ 384  00a3 cd0000        	call	c_rtol
+ 386                     ; 225   AWU->CSR |= AWU_CSR_MSR;
+ 388  00a6 721050f0      	bset	20720,#0
+ 389                     ; 260   TIM3_ICInit(TIM3_CHANNEL_1, TIM3_ICPOLARITY_RISING, TIM3_ICSELECTION_DIRECTTI,
+ 389                     ; 261               TIM3_ICPSC_DIV8, 0);
+ 391  00aa 4b00          	push	#0
+ 392  00ac 4b0c          	push	#12
+ 393  00ae 4b01          	push	#1
+ 394  00b0 5f            	clrw	x
+ 395  00b1 4f            	clr	a
+ 396  00b2 95            	ld	xh,a
+ 397  00b3 cd0000        	call	_TIM3_ICInit
+ 399  00b6 5b03          	addw	sp,#3
+ 400                     ; 264   TIM3_Cmd(ENABLE);
+ 402  00b8 a601          	ld	a,#1
+ 403  00ba cd0000        	call	_TIM3_Cmd
+ 406  00bd               L311:
+ 407                     ; 267   while ((TIM3->SR1 & TIM3_FLAG_CC1) != TIM3_FLAG_CC1);
+ 409  00bd c65322        	ld	a,21282
+ 410  00c0 a402          	and	a,#2
+ 411  00c2 a102          	cp	a,#2
+ 412  00c4 26f7          	jrne	L311
+ 413                     ; 269   ICValue1 = TIM3_GetCapture1();
+ 415  00c6 cd0000        	call	_TIM3_GetCapture1
+ 417  00c9 1f05          	ldw	(OFST-7,sp),x
+ 418                     ; 270   TIM3_ClearFlag(TIM3_FLAG_CC1);
+ 420  00cb ae0002        	ldw	x,#2
+ 421  00ce cd0000        	call	_TIM3_ClearFlag
+ 424  00d1               L121:
+ 425                     ; 273   while ((TIM3->SR1 & TIM3_FLAG_CC1) != TIM3_FLAG_CC1);
+ 427  00d1 c65322        	ld	a,21282
+ 428  00d4 a402          	and	a,#2
+ 429  00d6 a102          	cp	a,#2
+ 430  00d8 26f7          	jrne	L121
+ 431                     ; 275   ICValue2 = TIM3_GetCapture1();
+ 433  00da cd0000        	call	_TIM3_GetCapture1
+ 435  00dd 1f07          	ldw	(OFST-5,sp),x
+ 436                     ; 276   TIM3_ClearFlag(TIM3_FLAG_CC1);
+ 438  00df ae0002        	ldw	x,#2
+ 439  00e2 cd0000        	call	_TIM3_ClearFlag
+ 441                     ; 279   TIM3->CCER1 &= (uint8_t)(~TIM3_CCER1_CC1E);
+ 443  00e5 72115327      	bres	21287,#0
+ 444                     ; 281   TIM3_Cmd(DISABLE);
+ 446  00e9 4f            	clr	a
+ 447  00ea cd0000        	call	_TIM3_Cmd
+ 449                     ; 285   lsi_freq_hz = (8 * fmaster) / (ICValue2 - ICValue1);
+ 451  00ed 1e07          	ldw	x,(OFST-5,sp)
+ 452  00ef 72f005        	subw	x,(OFST-7,sp)
+ 453  00f2 cd0000        	call	c_uitolx
+ 455  00f5 96            	ldw	x,sp
+ 456  00f6 1c0001        	addw	x,#OFST-11
+ 457  00f9 cd0000        	call	c_rtol
+ 459  00fc 96            	ldw	x,sp
+ 460  00fd 1c0009        	addw	x,#OFST-3
+ 461  0100 cd0000        	call	c_ltor
+ 463  0103 a603          	ld	a,#3
+ 464  0105 cd0000        	call	c_llsh
+ 466  0108 96            	ldw	x,sp
+ 467  0109 1c0001        	addw	x,#OFST-11
+ 468  010c cd0000        	call	c_ludv
+ 470  010f 96            	ldw	x,sp
+ 471  0110 1c0009        	addw	x,#OFST-3
+ 472  0113 cd0000        	call	c_rtol
+ 474                     ; 288   AWU->CSR &= (uint8_t)(~AWU_CSR_MSR);
+ 476  0116 721150f0      	bres	20720,#0
+ 477                     ; 290  return (lsi_freq_hz);
+ 479  011a 96            	ldw	x,sp
+ 480  011b 1c0009        	addw	x,#OFST-3
+ 481  011e cd0000        	call	c_ltor
+ 485  0121 5b0c          	addw	sp,#12
+ 486  0123 81            	ret
+ 521                     ; 300 void assert_failed(uint8_t* file, uint32_t line)
+ 521                     ; 301 { 
+ 522                     	switch	.text
+ 523  0124               _assert_failed:
+ 527  0124               L341:
+ 528  0124 20fe          	jra	L341
+ 618                     ; 382 int main(void)
+ 618                     ; 383 {
+ 619                     	switch	.text
+ 620  0126               _main:
+ 622  0126 5206          	subw	sp,#6
+ 623       00000006      OFST:	set	6
+ 626                     ; 387 		CLK_Config();
+ 628  0128 cd0000        	call	L3_CLK_Config
+ 630                     ; 390 		GPIO_DeInit(GPIOD); 
+ 632  012b ae500f        	ldw	x,#20495
+ 633  012e cd0000        	call	_GPIO_DeInit
+ 635                     ; 391 		GPIO_Init(GPIOD,GPIO_PIN_3,GPIO_MODE_OUT_PP_LOW_FAST);
+ 637  0131 4be0          	push	#224
+ 638  0133 4b08          	push	#8
+ 639  0135 ae500f        	ldw	x,#20495
+ 640  0138 cd0000        	call	_GPIO_Init
+ 642  013b 85            	popw	x
+ 643                     ; 392 		GPIO_DeInit(GPIOC); 
+ 645  013c ae500a        	ldw	x,#20490
+ 646  013f cd0000        	call	_GPIO_DeInit
+ 648                     ; 393 		GPIO_Init(GPIOC,GPIO_PIN_1,GPIO_MODE_OUT_PP_LOW_FAST);	
+ 650  0142 4be0          	push	#224
+ 651  0144 4b02          	push	#2
+ 652  0146 ae500a        	ldw	x,#20490
+ 653  0149 cd0000        	call	_GPIO_Init
+ 655  014c 85            	popw	x
+ 656                     ; 396 		VDD3V3_ON();
+ 658  014d 4b08          	push	#8
+ 659  014f ae500f        	ldw	x,#20495
+ 660  0152 cd0000        	call	_GPIO_WriteHigh
+ 662  0155 84            	pop	a
+ 663                     ; 397 		VDD12_ON();
+ 665  0156 4b02          	push	#2
+ 666  0158 ae500a        	ldw	x,#20490
+ 667  015b cd0000        	call	_GPIO_WriteHigh
+ 669  015e 84            	pop	a
+ 670                     ; 399 		RTC_Init();
+ 672  015f cd0000        	call	_RTC_Init
+ 674  0162               L502:
+ 675                     ; 404 			RTC_ReadDate(&time);
+ 677  0162 96            	ldw	x,sp
+ 678  0163 1c0001        	addw	x,#OFST-5
+ 679  0166 cd0000        	call	_RTC_ReadDate
+ 682  0169 20f7          	jra	L502
+ 706                     	xdef	_main
+ 707                     	xref	_RTC_ReadDate
+ 708                     	xref	_RTC_Init
+ 709                     	xdef	_LSIMeasurment
+ 710                     	xdef	_IWDG_Config
+ 711                     	xdef	_LsiFreq
+ 712                     	xdef	_putchar
+ 713                     	xdef	_assert_failed
+ 714                     	xref	_UART3_GetFlagStatus
+ 715                     	xref	_UART3_SendData8
+ 716                     	xref	_UART3_ITConfig
+ 717                     	xref	_UART3_Init
+ 718                     	xref	_UART3_DeInit
+ 719                     	xref	_TIM3_ClearFlag
+ 720                     	xref	_TIM3_GetCapture1
+ 721                     	xref	_TIM3_Cmd
+ 722                     	xref	_TIM3_ICInit
+ 723                     	xref	_IWDG_Enable
+ 724                     	xref	_IWDG_ReloadCounter
+ 725                     	xref	_IWDG_SetReload
+ 726                     	xref	_IWDG_SetPrescaler
+ 727                     	xref	_IWDG_WriteAccessCmd
+ 728                     	xref	_GPIO_WriteHigh
+ 729                     	xref	_GPIO_Init
+ 730                     	xref	_GPIO_DeInit
+ 731                     	xref	_CLK_GetClockFreq
+ 732                     	xref	_CLK_SYSCLKConfig
+ 733                     	xref	_CLK_HSIPrescalerConfig
+ 734                     	xref	_CLK_PeripheralClockConfig
+ 735                     	xref	_CLK_HSICmd
+ 736                     	xref.b	c_lreg
+ 737                     	xref.b	c_x
+ 756                     	xref	c_ludv
+ 757                     	xref	c_uitolx
+ 758                     	xref	c_llsh
+ 759                     	xref	c_rtol
+ 760                     	xref	c_lursh
+ 761                     	xref	c_ltor
+ 762                     	end

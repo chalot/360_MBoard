@@ -71,8 +71,8 @@
  245                     ; 45 {
  246                     	switch	.text
  247  0051               _Delay_1ms:
- 251                     ; 46 	Delay(0x100);
- 253  0051 ae0100        	ldw	x,#256
+ 251                     ; 46 	Delay(0x120);
+ 253  0051 ae0120        	ldw	x,#288
  254  0054 89            	pushw	x
  255  0055 ae0000        	ldw	x,#0
  256  0058 89            	pushw	x

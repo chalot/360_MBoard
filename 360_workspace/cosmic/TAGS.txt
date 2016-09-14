@@ -1111,7 +1111,7 @@ EXTI_GetExtIntSensitivity	..\lib\inc\stm8s_exti.h	118;"	prototype	signature:(EXT
 EXTI_GetExtIntSensitivity	..\lib\src\stm8s_exti.c	121;"	function	signature:(EXTI_Port_TypeDef Port)
 EXTI_GetTLISensitivity	..\lib\inc\stm8s_exti.h	119;"	prototype	signature:(void)
 EXTI_GetTLISensitivity	..\lib\src\stm8s_exti.c	157;"	function	signature:(void)
-EXTI_IR_PORT	..\app\periph.h	90;"	macro
+EXTI_IR_PORT	..\app\periph.h	100;"	macro
 EXTI_PORTA_IRQHandler	stm8s_it.h	43;"	prototype	signature:(void)
 EXTI_PORTB_IRQHandler	stm8s_it.h	44;"	prototype	signature:(void)
 EXTI_PORTC_IRQHandler	stm8s_it.h	45;"	prototype	signature:(void)
@@ -1195,8 +1195,8 @@ FAR	..\lib\inc\stm8s.h	132;"	macro
 FCR1	..\lib\inc\stm8s.h	2184;"	member	struct:__anon13::__anon14::__anon20
 FCR2	..\lib\inc\stm8s.h	2185;"	member	struct:__anon13::__anon14::__anon20
 FCR3	..\lib\inc\stm8s.h	2186;"	member	struct:__anon13::__anon14::__anon20
-FCW_DISTANCE	..\app\periph.h	135;"	enumerator	enum:__anon7
-FCW_WARNING	..\app\periph.h	136;"	enumerator	enum:__anon7
+FCW_DISTANCE	..\app\periph.h	145;"	enumerator	enum:__anon7
+FCW_WARNING	..\app\periph.h	146;"	enumerator	enum:__anon7
 FLAG_Mask	..\lib\src\stm8s_i2c.c	40;"	macro	file:
 FLASH	..\lib\inc\stm8s.h	2512;"	macro
 FLASH_BLOCK_SIZE	..\lib\inc\stm8s_flash.h	43;"	macro
@@ -1390,10 +1390,10 @@ GPIO_GSENSOR_SDA_PIN	..\app\periph.h	76;"	macro
 GPIO_GSENSOR_SDA_PORT	..\app\periph.h	75;"	macro
 GPIO_IRCTL_PIN	..\app\periph.h	32;"	macro
 GPIO_IRCTL_PORT	..\app\periph.h	31;"	macro
-GPIO_IR_CTRL_PIN	..\app\periph.h	105;"	macro
-GPIO_IR_CTRL_PORT	..\app\periph.h	104;"	macro
-GPIO_IR_PIN	..\app\periph.h	89;"	macro
-GPIO_IR_PORT	..\app\periph.h	88;"	macro
+GPIO_IR_CTRL_PIN	..\app\periph.h	115;"	macro
+GPIO_IR_CTRL_PORT	..\app\periph.h	114;"	macro
+GPIO_IR_PIN	..\app\periph.h	99;"	macro
+GPIO_IR_PORT	..\app\periph.h	98;"	macro
 GPIO_Init	..\lib\inc\stm8s_gpio.h	134;"	prototype	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, GPIO_Mode_TypeDef GPIO_Mode)
 GPIO_Init	..\lib\src\stm8s_gpio.c	65;"	function	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, GPIO_Mode_TypeDef GPIO_Mode)
 GPIO_LEFT_PIN	..\app\periph.h	16;"	macro
@@ -1428,6 +1428,12 @@ GPIO_REAR_PIN	..\app\periph.h	24;"	macro
 GPIO_REAR_PORT	..\app\periph.h	23;"	macro
 GPIO_RIGHT_PIN	..\app\periph.h	20;"	macro
 GPIO_RIGHT_PORT	..\app\periph.h	19;"	macro
+GPIO_RTC_CLK_PIN	..\app\periph.h	88;"	macro
+GPIO_RTC_CLK_PORT	..\app\periph.h	87;"	macro
+GPIO_RTC_DAT_PIN	..\app\periph.h	91;"	macro
+GPIO_RTC_DAT_PORT	..\app\periph.h	90;"	macro
+GPIO_RTC_RST_PIN	..\app\periph.h	94;"	macro
+GPIO_RTC_RST_PORT	..\app\periph.h	93;"	macro
 GPIO_ReadInputData	..\lib\inc\stm8s_gpio.h	139;"	prototype	signature:(GPIO_TypeDef* GPIOx)
 GPIO_ReadInputData	..\lib\src\stm8s_gpio.c	196;"	function	signature:(GPIO_TypeDef* GPIOx)
 GPIO_ReadInputPin	..\lib\inc\stm8s_gpio.h	141;"	prototype	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin)
@@ -1445,8 +1451,8 @@ GPIO_SPI_SCK_PORT	..\app\periph.h	49;"	macro
 GPIO_TypeDef	..\lib\inc\stm8s.h	261;"	typedef	typeref:struct:GPIO_struct
 GPIO_UARTCTL_PIN	..\app\periph.h	36;"	macro
 GPIO_UARTCTL_PORT	..\app\periph.h	35;"	macro
-GPIO_WDG_PIN	..\app\periph.h	111;"	macro
-GPIO_WDG_PORT	..\app\periph.h	110;"	macro
+GPIO_WDG_PIN	..\app\periph.h	121;"	macro
+GPIO_WDG_PORT	..\app\periph.h	120;"	macro
 GPIO_Write	..\lib\inc\stm8s_gpio.h	135;"	prototype	signature:(GPIO_TypeDef* GPIOx, uint8_t PortVal)
 GPIO_Write	..\lib\src\stm8s_gpio.c	135;"	function	signature:(GPIO_TypeDef* GPIOx, uint8_t PortVal)
 GPIO_WriteHigh	..\lib\inc\stm8s_gpio.h	136;"	prototype	signature:(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef PortPins)
@@ -2073,7 +2079,7 @@ Isr_IR_Timeout100us	..\app\ir.c	472;"	function	signature:(void)
 Isr_IR_Timeout100us	..\app\ir.h	130;"	prototype	signature:(void)
 Isr_IR_Timeout10ms	..\app\ir.c	446;"	function	signature:(void)
 Isr_IR_Timeout10ms	..\app\ir.h	129;"	prototype	signature:(void)
-KEY_ACC	..\app\periph.h	115;"	enumerator	enum:__anon7
+KEY_ACC	..\app\periph.h	125;"	enumerator	enum:__anon7
 KEY_ACTIVED	..\app\key.h	13;"	enumerator	enum:__anon3
 KEY_DET_ACC	..\app\key.h	40;"	enumerator	enum:__anon6
 KEY_DET_END	..\app\key.h	43;"	enumerator	enum:__anon6
@@ -2081,9 +2087,9 @@ KEY_DET_IDLE	..\app\key.h	47;"	enumerator	enum:__anon6
 KEY_DET_LEFT	..\app\key.h	45;"	enumerator	enum:__anon6
 KEY_DET_REAR	..\app\key.h	42;"	enumerator	enum:__anon6
 KEY_DET_RIGHT	..\app\key.h	46;"	enumerator	enum:__anon6
-KEY_END	..\app\periph.h	138;"	enumerator	enum:__anon7
-KEY_FRONT	..\app\periph.h	116;"	enumerator	enum:__anon7
-KEY_FULL	..\app\periph.h	129;"	enumerator	enum:__anon7
+KEY_END	..\app\periph.h	148;"	enumerator	enum:__anon7
+KEY_FRONT	..\app\periph.h	126;"	enumerator	enum:__anon7
+KEY_FULL	..\app\periph.h	139;"	enumerator	enum:__anon7
 KEY_GetCurrentState	..\app\key.c	166;"	function	signature:(eKEYTYPE eType)
 KEY_GetCurrentState	..\app\key.c	32;"	prototype	file:	signature:(eKEYTYPE eType)
 KEY_HIGH	..\app\key.c	24;"	macro	file:
@@ -2091,15 +2097,15 @@ KEY_IO_Init	..\app\key.c	109;"	function
 KEY_IO_Init	..\app\key.c	33;"	prototype	file:	signature:(void)
 KEY_Init	..\app\key.c	134;"	function
 KEY_Init	..\app\key.h	33;"	prototype	signature:(void)
-KEY_LEFT	..\app\periph.h	117;"	enumerator	enum:__anon7
+KEY_LEFT	..\app\periph.h	127;"	enumerator	enum:__anon7
 KEY_LOW	..\app\key.c	23;"	macro	file:
 KEY_NORMAL	..\app\key.h	12;"	enumerator	enum:__anon3
 KEY_Process	..\app\key.c	38;"	function
 KEY_Process	..\app\key.h	32;"	prototype	signature:(void)
-KEY_REAR	..\app\periph.h	119;"	enumerator	enum:__anon7
-KEY_RESERVED_1	..\app\periph.h	131;"	enumerator	enum:__anon7
-KEY_RESERVED_2	..\app\periph.h	132;"	enumerator	enum:__anon7
-KEY_RIGHT	..\app\periph.h	118;"	enumerator	enum:__anon7
+KEY_REAR	..\app\periph.h	129;"	enumerator	enum:__anon7
+KEY_RESERVED_1	..\app\periph.h	141;"	enumerator	enum:__anon7
+KEY_RESERVED_2	..\app\periph.h	142;"	enumerator	enum:__anon7
+KEY_RIGHT	..\app\periph.h	128;"	enumerator	enum:__anon7
 KEY_TIMER_Config	..\app\key.c	200;"	function	signature:(void)
 KEY_TIMER_Config	..\app\key.c	34;"	prototype	file:	signature:(void)
 KEY_UNKNOWN	..\app\key.h	14;"	enumerator	enum:__anon3
@@ -2139,13 +2145,13 @@ MDLCR	..\lib\inc\stm8s.h	2066;"	member	struct:__anon13::__anon14::__anon15
 MDLCR	..\lib\inc\stm8s.h	2194;"	member	struct:__anon13::__anon14::__anon21
 MEMCPY	..\lib\inc\stm8s.h	126;"	macro
 MEMCPY	..\lib\inc\stm8s.h	129;"	macro
-MENU_BACK	..\app\periph.h	121;"	enumerator	enum:__anon7
-MENU_DOWN	..\app\periph.h	125;"	enumerator	enum:__anon7
-MENU_LEFT	..\app\periph.h	122;"	enumerator	enum:__anon7
-MENU_OK	..\app\periph.h	126;"	enumerator	enum:__anon7
-MENU_POWER	..\app\periph.h	127;"	enumerator	enum:__anon7
-MENU_RIGHT	..\app\periph.h	123;"	enumerator	enum:__anon7
-MENU_UP	..\app\periph.h	124;"	enumerator	enum:__anon7
+MENU_BACK	..\app\periph.h	131;"	enumerator	enum:__anon7
+MENU_DOWN	..\app\periph.h	135;"	enumerator	enum:__anon7
+MENU_LEFT	..\app\periph.h	132;"	enumerator	enum:__anon7
+MENU_OK	..\app\periph.h	136;"	enumerator	enum:__anon7
+MENU_POWER	..\app\periph.h	137;"	enumerator	enum:__anon7
+MENU_RIGHT	..\app\periph.h	133;"	enumerator	enum:__anon7
+MENU_UP	..\app\periph.h	134;"	enumerator	enum:__anon7
 MFMI	..\lib\inc\stm8s.h	2193;"	member	struct:__anon13::__anon14::__anon21
 MIDR1	..\lib\inc\stm8s.h	2067;"	member	struct:__anon13::__anon14::__anon15
 MIDR1	..\lib\inc\stm8s.h	2195;"	member	struct:__anon13::__anon14::__anon21
@@ -4299,6 +4305,7 @@ _LEFT_PULSE_	..\app\config.h	15;"	macro
 _PERIPH_H_	..\app\periph.h	2;"	macro
 _RAISONANCE_	..\lib\inc\stm8s.h	75;"	macro
 _RIGHT_PULSE_	..\app\config.h	16;"	macro
+_RTC_MAIN_	main.c	377;"	macro	file:
 _RTR	..\lib\src\stm8s_can.c	38;"	variable
 _UTILITY_H_	..\app\utility.h	2;"	macro
 __DEBUG__	..\app\config.h	7;"	macro
@@ -4365,7 +4372,7 @@ disableInterrupts	..\lib\inc\stm8s.h	2621;"	macro
 eDET	..\app\key.h	21;"	typedef	typeref:enum:__anon4
 eDetState	..\app\key.h	26;"	member	struct:__anon5
 eKEYSTATE	..\app\key.h	15;"	typedef	typeref:enum:__anon3
-eKEYTYPE	..\app\periph.h	139;"	typedef	typeref:enum:__anon7
+eKEYTYPE	..\app\periph.h	149;"	typedef	typeref:enum:__anon7
 eMSG_TYPE	..\app\comm.h	28;"	typedef	typeref:enum:_eMSG_TYPE
 enableInterrupts	..\lib\inc\stm8s.h	2601;"	macro
 enableInterrupts	..\lib\inc\stm8s.h	2610;"	macro
@@ -4403,6 +4410,7 @@ m_u16Read	..\app\can.c	30;"	member	struct:CAN_MSGQUEUETag	file:
 m_u16Write	..\app\can.c	29;"	member	struct:CAN_MSGQUEUETag	file:
 main	main.c	316;"	function
 main	main.c	345;"	function
+main	main.c	382;"	function	signature:(void)
 main	main.c	41;"	function
 nop	..\lib\inc\stm8s.h	2605;"	macro
 nop	..\lib\inc\stm8s.h	2614;"	macro

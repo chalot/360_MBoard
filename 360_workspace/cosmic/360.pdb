@@ -3,7 +3,7 @@ DumpRWOnFly1=0
 DumpRWOnFly2=0
 DumpRWOnFly3=0
 DumpRWOnFly4=0
-WatchVariables1=l_KeyDetStat!0;g_KeyState[]!0;g_KeyState[KEY_DET_END]!0;KEY_DET_END!0;g_KeyState[4]!0;KEY_DET_ACC!0;tIRFSM!0;tIRFSM.u8ReceiveTimeout!0;tIRFSM.u32CodeTime!0;tIRFSM.u8Available_Rx!0;tIRFSM.u32CodeTime!0;tIRFSM.u8ReceivedStatus!0;tIRFSM.u32CodeTime!0;
+WatchVariables1=l_KeyDetStat!0;g_KeyState[]!0;g_KeyState[KEY_DET_END]!0;KEY_DET_END!0;g_KeyState[4]!0;KEY_DET_ACC!0;tIRFSM!0;tIRFSM.u8ReceiveTimeout!0;tIRFSM.u32CodeTime!0;tIRFSM.u8Available_Rx!0;tIRFSM.u32CodeTime!0;tIRFSM.u8ReceivedStatus!0;tIRFSM.u32CodeTime!0;dat!1;
 FormatWatch1=0
 FormatViewType1=1
 FormatViewAddress1=1
@@ -23,7 +23,7 @@ FormatWatch4=0
 FormatViewType4=1
 FormatViewAddress4=1
 WatchRWOnFlyTab4=0
-FormatLocals=1
+FormatLocals=2
 FormatParameters=0
 [DebugState_v1-Debug.AddOn.St7Watchpoint]
 NbDataBreakpoint=0
